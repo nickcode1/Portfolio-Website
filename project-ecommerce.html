@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce Solution - Your Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="project-style.css">
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">YOUR NAME</a>
+        <ul>
+            <li><a href="index.html#about">About</a></li>
+            <li><a href="index.html#projects">Projects</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section class="project-hero">
+        <a href="index.html#projects" class="back-link">← Back to Projects</a>
+        <h1>E-Commerce Solution</h1>
+        <p class="subtitle">Full-stack e-commerce platform with advanced features including AI recommendations and inventory management</p>
+        
+        <div class="project-meta">
+            <div class="meta-item">
+                <div class="meta-label">Role</div>
+                <div class="meta-value">Full Stack Architect</div>
+            </div>
+            <div class="meta-item">
+                <div class="meta-label">Year</div>
+                <div class="meta-value">2024</div>
+            </div>
+            <div class="meta-item">
+                <div class="meta-label">Duration</div>
+                <div class="meta-value">12 Months</div>
+            </div>
+            <div class="meta-item">
+                <div class="meta-label">Status</div>
+                <div class="meta-value">Production</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="project-image-large">
+        <div class="image-container"></div>
+    </section>
+
+    <section class="project-content">
+        <div class="content-section">
+            <h2>Overview</h2>
+            <p>
+                This comprehensive e-commerce platform serves as the digital storefront for a multi-million dollar retail operation. Built to handle high traffic volumes and complex inventory scenarios, it seamlessly integrates with existing warehouse management systems and payment processors.
+            </p>
+            <p>
+                The platform features intelligent product recommendations powered by machine learning, real-time inventory synchronization across multiple warehouses, and a sophisticated admin dashboard for managing products, orders, and customer relationships.
+            </p>
+        </div>
+
+        <div class="content-section">
+            <h2>The Challenge</h2>
+            <p>
+                The client was operating on an outdated platform that couldn't scale with their growing customer base. Pages loaded slowly, checkout abandonment was high, and the admin interface made inventory management a daily headache.
+            </p>
+            <p>
+                Critical requirements included:
+            </p>
+            <ul>
+                <li>Supporting 10,000+ concurrent users during flash sales</li>
+                <li>Maintaining real-time inventory accuracy across 5 warehouses</li>
+                <li>Implementing PCI-compliant payment processing</li>
+                <li>Providing personalized product recommendations that drive conversions</li>
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <h2>The Solution</h2>
+            <p>
+                We built a headless architecture using Django for the backend API and Next.js for the customer-facing storefront. This separation allows for independent scaling and enables future integrations with mobile apps or other frontend channels.
+            </p>
+            <p>
+                The recommendation engine uses collaborative filtering on user behavior data, achieving a 32% improvement in click-through rates. Stripe handles payment processing with custom fraud detection rules. The inventory system uses PostgreSQL with row-level locking to prevent overselling, while Redis caches frequently accessed product data. Celery manages background tasks like email notifications and inventory sync operations.
+            </p>
+        </div>
+
+        <div class="project-gallery">
+            <div class="gallery-item"></div>
+            <div class="gallery-item"></div>
+            <div class="gallery-item"></div>
+        </div>
+
+        <div class="content-section">
+            <h2>Technology Stack</h2>
+            <div class="tech-stack">
+                <div class="tech-item">
+                    <h3>Frontend</h3>
+                    <p>Next.js 14, React, TailwindCSS, Framer Motion</p>
+                </div>
+                <div class="tech-item">
+                    <h3>Backend</h3>
+                    <p>Django 5, Django REST Framework, Celery</p>
+                </div>
+                <div class="tech-item">
+                    <h3>Database</h3>
+                    <p>PostgreSQL 16, Redis, Elasticsearch</p>
+                </div>
+                <div class="tech-item">
+                    <h3>Payments & Infra</h3>
+                    <p>Stripe, AWS (EC2, S3, RDS), Docker</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Results & Impact</h2>
+            <p>
+                Post-launch metrics exceeded all expectations: page load times decreased by 78%, checkout completion rate increased by 45%, and the AI recommendation system contributes to 23% of all revenue. The platform handled Black Friday traffic (15,000 concurrent users) without any downtime.
+            </p>
+            <p>
+                The admin team reports saving 15 hours per week on inventory management tasks, and customer satisfaction scores have improved from 3.2/5 to 4.6/5. The platform now processes over $5M in annual revenue.
+            </p>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <h2>Interested in Similar Work?</h2>
+        <div class="cta-buttons">
+            <a href="index.html#contact" class="btn btn-primary">Get in Touch</a>
+            <a href="index.html#projects" class="btn btn-secondary">View More Projects</a>
+        </div>
+    </section>
+
+    <footer>
+        <div>© 2026 Your Name. All rights reserved.</div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Experience - Your Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="project-style.css">
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">YOUR NAME</a>
+        <ul>
+            <li><a href="index.html#about">About</a></li>
+            <li><a href="index.html#projects">Projects</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section class="project-hero">
+        <a href="index.html#projects" class="back-link">← Back to Projects</a>
+        <h1>Mobile Experience</h1>
+        <p class="subtitle">A cutting-edge mobile application focused on user engagement and seamless cross-platform functionality</p>
+        
+        <div class="project-meta">
+            <div class="meta-item">
+                <div class="meta-label">Role</div>
+                <div class="meta-value">Mobile Dev Lead</div>
+            </div>
+            <div class="meta-item">
+                <div class="meta-label">Year</div>
+                <div class="meta-value">2024-2025</div>
+            </div>
+            <div class="meta-item">
+                <div class="meta-label">Duration</div>
+                <div class="meta-value">7 Months</div>
+            </div>
+            <div class="meta-item">
+                <div class="meta-label">Status</div>
+                <div class="meta-value">Production</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="project-image-large">
+        <div class="image-container"></div>
+    </section>
+
+    <section class="project-content">
+        <div class="content-section">
+            <h2>Overview</h2>
+            <p>
+                This mobile experience redefines how users interact with content on their devices. Built with React Native for true cross-platform performance, the app delivers native-quality experiences on both iOS and Android from a single codebase.
+            </p>
+            <p>
+                The project focused on creating delightful micro-interactions and seamless navigation patterns that feel intuitive and responsive, with particular attention to performance optimization and offline capabilities.
+            </p>
+        </div>
+
+        <div class="content-section">
+            <h2>The Challenge</h2>
+            <p>
+                Mobile users expect instant responsiveness and flawless experiences regardless of network conditions. Traditional mobile development approaches often sacrifice either development speed or user experience quality.
+            </p>
+            <p>
+                Our goals were to:
+            </p>
+            <ul>
+                <li>Achieve 60fps animations on mid-range devices</li>
+                <li>Provide full offline functionality with intelligent sync</li>
+                <li>Minimize bundle size while maintaining rich features</li>
+                <li>Create a design system that adapts to both iOS and Android conventions</li>
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <h2>The Solution</h2>
+            <p>
+                We leveraged React Native's latest architecture with the new JSI (JavaScript Interface) for direct native module access. This allowed us to achieve native performance for critical paths while maintaining the development velocity of JavaScript.
+            </p>
+            <p>
+                State management through Redux Toolkit with RTK Query handles both local and remote data seamlessly. The offline-first architecture uses Redux Persist with AsyncStorage, implementing conflict resolution for sync operations. Custom native modules were written for performance-critical features like image processing and biometric authentication.
+            </p>
+        </div>
+
+        <div class="project-gallery">
+            <div class="gallery-item"></div>
+            <div class="gallery-item"></div>
+            <div class="gallery-item"></div>
+        </div>
+
+        <div class="content-section">
+            <h2>Technology Stack</h2>
+            <div class="tech-stack">
+                <div class="tech-item">
+                    <h3>Mobile</h3>
+                    <p>React Native 0.74, TypeScript, Expo</p>
+                </div>
+                <div class="tech-item">
+                    <h3>State & Data</h3>
+                    <p>Redux Toolkit, RTK Query, AsyncStorage</p>
+                </div>
+                <div class="tech-item">
+                    <h3>Backend</h3>
+                    <p>Firebase Cloud Functions, Firestore, FCM</p>
+                </div>
+                <div class="tech-item">
+                    <h3>Tools</h3>
+                    <p>Jest, Detox E2E, Fastlane, CodePush</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Results & Impact</h2>
+            <p>
+                The app achieved a 4.7-star rating on both App Store and Google Play, with users particularly praising the smooth animations and offline capabilities. Crash-free rate is 99.8%, and the app consistently loads in under 2 seconds on 4G connections.
+            </p>
+            <p>
+                By using React Native, we reduced development time by 60% compared to native iOS/Android development, while delivering an experience that users describe as "indistinguishable from native apps."
+            </p>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <h2>Interested in Similar Work?</h2>
+        <div class="cta-buttons">
+            <a href="index.html#contact" class="btn btn-primary">Get in Touch</a>
+            <a href="index.html#projects" class="btn btn-secondary">View More Projects</a>
+        </div>
+    </section>
+
+    <footer>
+        <div>© 2026 Your Name. All rights reserved.</div>
+    </footer>
+</body>
+</html>
