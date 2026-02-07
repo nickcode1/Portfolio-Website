@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Home - Nick's Porfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,12 +18,22 @@
             --accent:#0086d4;
             --accent-dim: #457ffb;
             --border: #222222;
+            --safe-top: env(safe-area-inset-top, 0px);
+            --safe-bottom: env(safe-area-inset-bottom, 0px);
+            --safe-left: env(safe-area-inset-left, 0px);
+            --safe-right: env(safe-area-inset-right, 0px);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
         }
 
         body {
@@ -30,10 +42,7 @@
             color: var(--text-primary);
             overflow-x: hidden;
             line-height: 1.6;
-        }
-
-        html {
-            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
         }
 
         nav {
@@ -41,13 +50,14 @@
             top: 0;
             left: 0;
             right: 0;
-            padding: 2rem 4rem;
+            padding: max(2rem, var(--safe-top)) max(4rem, var(--safe-right)) 2rem max(4rem, var(--safe-left));
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
             background: linear-gradient(180deg, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0) 100%);
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             animation: slideDown 0.6s ease-out;
         }
 
@@ -112,17 +122,23 @@
 
         .hero {
             height: 100vh;
+            height: 100dvh;
+            min-height: -webkit-fill-available;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
             overflow: hidden;
+            padding-top: var(--safe-top);
+            padding-bottom: var(--safe-bottom);
+            box-sizing: border-box;
         }
 
         .hero-content {
             text-align: center;
             position: relative;
             z-index: 2;
+            margin-top: 8vh;
         }
 
         .kinetic-text {
@@ -185,6 +201,7 @@
         .cta-button {
             display: inline-block;
             padding: 1.2rem 3rem;
+            margin-bottom: 4rem;
             background: transparent;
             border: 2px solid var(--accent);
             color: var(--accent);
@@ -222,7 +239,7 @@
 
         .scroll-indicator {
             position: absolute;
-            bottom: 3rem;
+            bottom: max(1rem, var(--safe-bottom));
             left: 50%;
             transform: translateX(-50%);
             font-size: 0.85rem;
@@ -257,7 +274,7 @@
         }
 
         section {
-            padding: 8rem 4rem;
+            padding: 8rem max(4rem, var(--safe-right)) 8rem max(4rem, var(--safe-left));
             position: relative;
         }
 
@@ -460,7 +477,7 @@
         }
 
         footer {
-            padding: 3rem 4rem;
+            padding: 3rem max(4rem, var(--safe-right)) max(3rem, var(--safe-bottom)) max(4rem, var(--safe-left));
             background: var(--primary-bg);
             border-top: 1px solid var(--border);
             text-align: center;
@@ -478,7 +495,7 @@
 
         @media (max-width: 768px) {
             nav {
-                padding: 1.5rem 2rem;
+                padding: max(1.5rem, var(--safe-top)) max(2rem, var(--safe-right)) 1.5rem max(2rem, var(--safe-left));
             }
 
             nav ul {
@@ -486,7 +503,7 @@
             }
 
             section {
-                padding: 4rem 2rem;
+                padding: 4rem max(2rem, var(--safe-right)) 4rem max(2rem, var(--safe-left));
             }
 
             .about-content {
