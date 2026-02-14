@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <script>
+        (function(){ var k='portfolio-theme',t; try{t=localStorage.getItem(k);}catch(e){} if(!t&&typeof matchMedia!=='undefined'&&matchMedia('(prefers-color-scheme: light)').matches)t='light'; document.documentElement.setAttribute('data-theme',t||'dark'); })();
+    </script>
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Home - Nick's Porfolio</title>
@@ -10,7 +13,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
     <style>
-        :root {
+        :root,
+        [data-theme="dark"] {
             --primary-bg: #0a0a0a;
             --secondary-bg: #111111;
             --text-primary: #f5f5f5;
@@ -18,10 +22,22 @@
             --accent:#0086d4;
             --accent-dim: #457ffb;
             --border: #222222;
+            --nav-bg: linear-gradient(180deg, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0) 100%);
             --safe-top: env(safe-area-inset-top, 0px);
             --safe-bottom: env(safe-area-inset-bottom, 0px);
             --safe-left: env(safe-area-inset-left, 0px);
             --safe-right: env(safe-area-inset-right, 0px);
+        }
+
+        [data-theme="light"] {
+            --primary-bg: #f8f8f8;
+            --secondary-bg: #eeeeee;
+            --text-primary: #1a1a1a;
+            --text-secondary: #555555;
+            --accent: #0066aa;
+            --accent-dim: #2d6fc9;
+            --border: #dddddd;
+            --nav-bg: linear-gradient(180deg, rgba(248,248,248,0.95) 0%, rgba(248,248,248,0) 100%);
         }
 
         * {
@@ -55,10 +71,16 @@
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
-            background: linear-gradient(180deg, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0) 100%);
+            background: var(--nav-bg);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             animation: slideDown 0.6s ease-out;
+        }
+
+        nav ul {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
         @keyframes slideDown {
@@ -119,6 +141,15 @@
         nav a:hover::after {
             width: 100%;
         }
+
+        .theme-toggle { display: flex; align-items: center; margin-left: 1rem; }
+        #theme-toggle-btn {
+            background: transparent; border: 1px solid var(--border); color: var(--text-primary);
+            width: 2.5rem; height: 2.5rem; border-radius: 50%; cursor: pointer; font-size: 1.2rem;
+            line-height: 1; display: flex; align-items: center; justify-content: center;
+            transition: border-color 0.3s, color 0.3s;
+        }
+        #theme-toggle-btn:hover { border-color: var(--accent); color: var(--accent); }
 
         .hero {
             height: 100vh;
@@ -225,7 +256,7 @@
             width: 100%;
             height: 100%;
             background: var(--accent);
-            transition: left 0.4s;
+            transition: left 0.8s;
             z-index: -1;
         }
 
@@ -450,13 +481,20 @@
             font-weight: 600;
             display: inline-block;
             margin-bottom: 3rem;
-            transition: transform 0.3s;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
         }
 
         .contact-email:hover {
-            transform: scale(1.05);
+            transform: scale(1.08) translateY(-2px);
+            color: var(--accent);
         }
 
+        .contact-email:active {
+            transform: scale(1.02) translateY(0);
+        }
+
+        
         .social-links {
             display: flex;
             gap: 2rem;
@@ -467,18 +505,38 @@
         .social-link {
             color: var(--text-secondary);
             text-decoration: none;
-            font-size: 1rem;
-            transition: color 0.3s;
-            letter-spacing: 0.05em;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem;
+            border-radius: 12px;
+            transition: color 0.3s ease, background-color 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
         }
 
         .social-link:hover {
             color: var(--accent);
+            background-color: color-mix(in srgb, var(--accent) 15%, transparent);
+            transform: translateY(-4px) scale(1.08);
+            box-shadow: 0 8px 25px -5px color-mix(in srgb, var(--accent) 35%, transparent), 0 4px 10px -6px color-mix(in srgb, var(--accent) 25%, transparent);
+        }
+
+        .social-link:active {
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        .social-icon {
+            width: 32px;
+            height: 32px;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .social-link:hover .social-icon {
+            transform: scale(1.1);
         }
 
         footer {
             padding: 3rem max(4rem, var(--safe-right)) max(3rem, var(--safe-bottom)) max(4rem, var(--safe-left));
-            background: var(--primary-bg);
+            background: var(--accent-dim);
             border-top: 1px solid var(--border);
             text-align: center;
             color: var(--text-secondary);
@@ -487,7 +545,7 @@
 
         .footer-content {
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start;
             align-items: center;
             max-width: 1400px;
             margin: 0 auto;
@@ -533,6 +591,9 @@
             <li><a href="#projects">Projects</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
+        <div class="theme-toggle">
+            <button type="button" id="theme-toggle-btn" aria-label="Switch to light mode">☀</button>
+        </div>
     </nav>
 
     <section class="hero">
@@ -544,7 +605,7 @@
                 
             </h1>
             <p class="subtitle">
-                Passion for design
+                <!-- Passion for design -->
             </p>
             <a href="#projects" class="cta-button">View My Work</a>
         </div>
@@ -552,7 +613,7 @@
     </section>
 
     <section id="about" class="about">
-        <div class="about-content" style="text-align: justify;">
+        <div class="about-content" style="text-align: left">
             <div class="about-text">
                 <h2 class="section-title">About Me</h2>
                 <p class="section-subtitle">Passionate about design</p>
@@ -567,7 +628,7 @@
                     I have created this website to showcase these products, some coming from personal endeavors, and some from my schoolwork and design teams.
                 </p>
             </div>
-            <div class="about-image" style="background-image: url('images/profile.jpg');"></div>
+            <div class="about-image" style="background-image: url(images/profile.jpg);"></div>
                 
         </div>
     </section>
@@ -578,7 +639,7 @@
         
         <div class="projects-grid">
             <a href="project-RC Plane1.html" class="project-card">
-                <div class="project-image" style="background-image: url('images/Projects/EFC/top view.png'); 
+                <div class="project-image" style="background-image: url('images/Projects/EFC/top\ view.png'); 
                     background-size: contain;
                     background-position: center;
                     background-repeat: no-repeat;">
@@ -693,25 +754,20 @@
     <section id="contact" class="contact">
         <div class="contact-content">
             <h2 class="section-title">Contact</h2>
-            <p class="contact-text">
-                Interested in collaborating or have a project in mind? I'm always open to discussing new opportunities and creative challenges.
-            </p>
-            <a href="mailto:nharris1@unb.ca" class="contact-email"><span class="__cf_email__" data-cfemail="b5ccdac0c79bd0d8d4dcd9f5d0cdd4d8c5d9d09bd6dad8">[email&#160;me]</span></a>
+            <a href="mailto:nharris1@unb.ca" class="contact-email">[email me]</a>
             
             <div class="social-links">
-                <a href="https://github.com/nickharrisonUNB" class="social-link">GitHub</a>
-                <a href="https://www.linkedin.com/in/nickharrison-" class="social-link">LinkedIn</a>
+                <a href="https://github.com/nickharrisonUNB" class="social-link" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
+                    <svg class="social-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                </a>
+                <a href="https://www.linkedin.com/in/nickharrison-" class="social-link" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+                    <svg class="social-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                </a>
             </div>
         </div>
     </section>
 
-    <footer>
-        <div class="footer-content">
-            <div>Nick Harrison | 2026</div>
-            <div>Maker Portfolio</div>
-        </div>
-    </footer>
-
+    <script src="theme.js"></script>
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -721,7 +777,7 @@
                     const offsetTop = target.offsetTop - 80;
                     window.scrollTo({
                         top: offsetTop,
-                        behavior: 'smooth'
+                        behavior:"instant"
                     });
                 }
             });
@@ -743,3 +799,7 @@
 
         document.querySelectorAll('.project-card').forEach((card, index) => {
             card.style.opacity = '0';})
+
+
+
+
