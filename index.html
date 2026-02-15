@@ -802,9 +802,10 @@
     <script>
         (function(){
             const text = '[email me]';
+            const wrapper = document.querySelector('.typewriter-text');
             const inner = document.querySelector('.typewriter-inner');
             const cursor = document.querySelector('.typewriter-cursor');
-            if (!inner || !cursor) return;
+            if (!inner || !cursor || !wrapper) return;
 
             const baseDelay = 85;
             const jitter = () => baseDelay + Math.random() * 60 - 20;
@@ -814,38 +815,83 @@
             const displayPause = 3500;
             const resetPause = 800;
 
-            function type() {
-                cursor.classList.add('typing');
-                let i = 0;
-                function next() {
-                    if (i < text.length) {
-                        inner.textContent += text[i];
-                        i++;
-                        const delay = text[i - 1] === ' ' ? wordPause : jitter();
-                        setTimeout(next, delay);
-                    } else {
-                        cursor.classList.remove('typing');
-                        setTimeout(backspace, displayPause);
-                    }
-                }
-                setTimeout(next, 400);
+            let timeoutId = null;
+            let isVisible = true;
+            let phase = 'initial'; // 'initial' | 'typing' | 'displaying' | 'backspacing' | 'resetting'
+            let typingIndex = 0;
+
+            function schedule(delay, fn) {
+                if (!isVisible) return;
+                timeoutId = setTimeout(() => {
+                    timeoutId = null;
+                    fn();
+                }, delay);
             }
 
-            function backspace() {
-                cursor.classList.add('typing');
-                function next() {
-                    if (inner.textContent.length > 0) {
-                        inner.textContent = inner.textContent.slice(0, -1);
-                        setTimeout(next, backspaceJitter());
-                    } else {
-                        cursor.classList.remove('typing');
-                        setTimeout(type, resetPause);
-                    }
+            function run() {
+                if (!isVisible) return;
+
+                switch (phase) {
+                    case 'initial':
+                        phase = 'typing';
+                        cursor.classList.add('typing');
+                        typingIndex = 0;
+                        schedule(400, run);
+                        break;
+                    case 'typing':
+                        if (typingIndex < text.length) {
+                            inner.textContent += text[typingIndex];
+                            typingIndex++;
+                            const delay = text[typingIndex - 1] === ' ' ? wordPause : jitter();
+                            schedule(delay, run);
+                        } else {
+                            cursor.classList.remove('typing');
+                            phase = 'displaying';
+                            schedule(displayPause, run);
+                        }
+                        break;
+                    case 'displaying':
+                        phase = 'backspacing';
+                        cursor.classList.add('typing');
+                        run();
+                        break;
+                    case 'backspacing':
+                        if (inner.textContent.length > 0) {
+                            inner.textContent = inner.textContent.slice(0, -1);
+                            schedule(backspaceJitter(), run);
+                        } else {
+                            cursor.classList.remove('typing');
+                            phase = 'resetting';
+                            schedule(resetPause, run);
+                        }
+                        break;
+                    case 'resetting':
+                        phase = 'initial';
+                        run();
+                        break;
                 }
-                next();
             }
 
-            type();
+            function pause() {
+                if (timeoutId) {
+                    clearTimeout(timeoutId);
+                    timeoutId = null;
+                }
+            }
+
+            const io = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    isVisible = entry.isIntersecting;
+                    if (isVisible) {
+                        run();
+                    } else {
+                        pause();
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            io.observe(wrapper);
+            run();
         })();
     </script>
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
