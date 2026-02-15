@@ -474,10 +474,9 @@
             line-height: 1.8;
         }
 
-        .contact-email {
+        .contact-email-wrapper {
             font-size: 2rem;
             color: var(--accent);
-            text-decoration: none;
             font-weight: 600;
             display: inline-block;
             margin-bottom: 3rem;
@@ -485,13 +484,42 @@
             position: relative;
         }
 
-        .contact-email:hover {
+        .contact-email-wrapper:hover {
             transform: scale(1.08) translateY(-2px);
-            color: var(--accent);
         }
 
-        .contact-email:active {
-            transform: scale(1.02) translateY(0);
+        .contact-email-wrapper .contact-email {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            text-decoration: none;
+            color: transparent;
+        }
+
+        .contact-email-wrapper .contact-email:active {
+            transform: none;
+        }
+
+        .typewriter-text {
+            display: inline-block;
+            white-space: nowrap;
+            min-height: 1.2em;
+        }
+
+        .typewriter-cursor {
+            display: inline-block;
+            font-weight: 400;
+            opacity: 1;
+            animation: cursor-blink 0.9s step-end infinite;
+        }
+
+        .typewriter-cursor.typing {
+            animation: none;
+        }
+
+        @keyframes cursor-blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
         }
 
         
@@ -754,7 +782,10 @@
     <section id="contact" class="contact">
         <div class="contact-content">
             <h2 class="section-title">Contact</h2>
-            <a href="mailto:nharris1@unb.ca" class="contact-email">[email me]</a>
+            <div class="contact-email-wrapper">
+                <span class="typewriter-text"><span class="typewriter-inner"></span><span class="typewriter-cursor typing">|</span></span>
+                <a href="mailto:nharris1@unb.ca" class="contact-email" aria-label="Email me">&nbsp;</a>
+            </div>
             
             <div class="social-links">
                 <a href="https://github.com/nickharrisonUNB" class="social-link" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
@@ -768,6 +799,55 @@
     </section>
 
     <script src="theme.js"></script>
+    <script>
+        (function(){
+            const text = '[email me]';
+            const inner = document.querySelector('.typewriter-inner');
+            const cursor = document.querySelector('.typewriter-cursor');
+            if (!inner || !cursor) return;
+
+            const baseDelay = 85;
+            const jitter = () => baseDelay + Math.random() * 60 - 20;
+            const wordPause = 180;
+            const backspaceDelay = 55;
+            const backspaceJitter = () => backspaceDelay + Math.random() * 40 - 15;
+            const displayPause = 3500;
+            const resetPause = 800;
+
+            function type() {
+                cursor.classList.add('typing');
+                let i = 0;
+                function next() {
+                    if (i < text.length) {
+                        inner.textContent += text[i];
+                        i++;
+                        const delay = text[i - 1] === ' ' ? wordPause : jitter();
+                        setTimeout(next, delay);
+                    } else {
+                        cursor.classList.remove('typing');
+                        setTimeout(backspace, displayPause);
+                    }
+                }
+                setTimeout(next, 400);
+            }
+
+            function backspace() {
+                cursor.classList.add('typing');
+                function next() {
+                    if (inner.textContent.length > 0) {
+                        inner.textContent = inner.textContent.slice(0, -1);
+                        setTimeout(next, backspaceJitter());
+                    } else {
+                        cursor.classList.remove('typing');
+                        setTimeout(type, resetPause);
+                    }
+                }
+                next();
+            }
+
+            type();
+        })();
+    </script>
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -798,7 +878,9 @@
         }, observerOptions);
 
         document.querySelectorAll('.project-card').forEach((card, index) => {
-            card.style.opacity = '0';})
+            card.style.opacity = '0';
+        });
+
 
 
 
