@@ -15,12 +15,13 @@
         [data-theme="dark"] {
             --primary-bg: #000000;
             --secondary-bg: #0a0a0a;
-            --surface: #111111;
+            --surface: #0a0a0a;
             --text-primary: #f5f5f7;
             --text-secondary: #86868b;
             --text-tertiary: #6e6e73;
             --accent: #0071e3;
             --accent-hover: #0077ed;
+            --accent-pale: #a0cffd;
             --border: rgba(255,255,255,0.08);
             --nav-bg: rgba(0,0,0,0.72);
             --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
@@ -40,6 +41,7 @@
             --text-tertiary: #86868b;
             --accent: #0071e3;
             --accent-hover: #0077ed;
+            --accent-pale: #408cd8;
             --border: rgba(0,0,0,0.08);
             --nav-bg: rgba(251,251,253,0.8);
             --shadow-subtle: 0 4px 24px rgba(0,0,0,0.06);
@@ -114,9 +116,28 @@
             font-size: 0.875rem;
             font-weight: 400;
             letter-spacing: -0.01em;
-            transition: color 0.2s var(--ease);
+            transition: color 0.3s;
+            position: relative;
         }
-        nav a:hover { color: var(--text-primary); }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--text-primary);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
 
         .back-link {
             color: var(--accent);
@@ -348,7 +369,7 @@
         .btn-primary:hover {
             background: var(--accent-hover);
             border-color: var(--accent-hover);
-            transform: translateY(-4px) scale(1.08);
+            transform:  scale(1.03);
             box-shadow: 0 8px 25px -5px color-mix(in srgb, var(--accent) 35%, transparent), 0 4px 10px -6px color-mix(in srgb, var(--accent) 25%, transparent);
         }
         .btn-primary:active {
@@ -359,9 +380,14 @@
             background: transparent;
             color: var(--accent);
             border: none;
+            transition: transform .5s ease, color .5s ease;
         }
+            
         .btn-secondary:hover {
-            text-decoration: underline;
+            color: var(--accent-pale);
+            transform: scale(1.05);
+          
+    
         }
 
         footer {
