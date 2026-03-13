@@ -11,7 +11,7 @@
     <title>Home - Nick's Porfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;600;700&family=Playfair+Display:wght@700;900&family=Turret+Road:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
         :root,
         [data-theme="dark"] {
@@ -173,7 +173,7 @@
         }
 
         .kinetic-text {
-            font-family: 'Playfair Display', serif;
+            font-family: 'Turret Road', serif;
             font-size: clamp(3rem, 8vw, 7rem);
             font-weight: 900;
             line-height: 1.1;
@@ -305,12 +305,12 @@
         }
 
         section {
-            padding: 8rem max(4rem, var(--safe-right)) 8rem max(4rem, var(--safe-left));
+            padding: 5rem max(4rem, var(--safe-right)) 8rem max(4rem, var(--safe-left));
             position: relative;
         }
 
         .section-title {
-            font-family: 'Playfair Display', serif;
+            font-family: 'Turret Road', serif;
             font-size: clamp(2.5rem, 5vw, 4rem);
             font-weight: 900;
             margin-bottom: 1rem;
@@ -375,13 +375,50 @@
         .projects {
             background: var(--primary-bg);
         }
-
+        
         .projects-grid {
             max-width: 1400px;
             margin: 0 auto;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 2rem;
+        }
+
+        .publications {
+            background: var(--secondary-bg);
+        }
+
+        .publications-list {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .publication {
+            background: var(--primary-bg);
+            border: 1px solid var(--border);
+            padding: 1.75rem 2rem;
+        }
+
+        .publication-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+            color: var(--text-primary);
+        }
+
+        .publication-meta {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+        }
+
+        .publication-description {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
         }
 
         .project-card {
@@ -644,7 +681,7 @@
         <div class="about-content" style="text-align: left">
             <div class="about-text">
                 <h2 class="section-title">About Me</h2>
-                <p class="section-subtitle"></p>
+                
                
                 <p>
                     I'm an <span class="highlight">engineering student</span> with a passion for innovation and cutting-edge technology. Particularly interested in the intersection of artistic and high performing design.
@@ -779,16 +816,32 @@
         </div>
     </section>
 
+    <section id="publications" class="publications">
+        <h2 class="section-title">Publications</h2>
+        <p class="section-subtitle"></p>
+
+        <div class="publications-list">
+            <article class="publication">
+                <!-- <h3 class="publication-title">Example Publication Title</h3>
+                <p class="publication-meta">Author Name — Conference / Journal, Year</p>
+                <p class="publication-description">
+                    Brief description of the publication. Replace this text with a short summary of the work or key contributions.
+                </p> -->
+                <p class="publication-description">Coming Soon...</p>
+            </article>
+        </div>
+    </section>
+
     <section id="contact" class="contact">
         <div class="contact-content">
             <h2 class="section-title">Contact</h2>
             <div class="contact-email-wrapper">
                 <span class="typewriter-text"><span class="typewriter-inner"></span><span class="typewriter-cursor typing">|</span></span>
-                <a href="mailto:nharris1@unb.ca" class="contact-email" aria-label="Email: nharris1@unb.ca">&nbsp;</a>
+                <a href="mailto:nharris1@unb.ca" class="contact-email" aria-label="Email me">&nbsp;</a>
             </div>
             
             <div class="social-links">
-                <a href="https://github.com/nickcode1" class="social-link" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
+                <a href="https://github.com/nickharrisonUNB" class="social-link" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
                     <svg class="social-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
                 </a>
                 <a href="https://www.linkedin.com/in/nickharrison-" class="social-link" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
@@ -812,13 +865,14 @@
             const wordPause = 180;
             const backspaceDelay = 55;
             const backspaceJitter = () => backspaceDelay + Math.random() * 40 - 15;
-            const displayPause = 3500;
+            const displayPause = 2000; // 2 seconds after message is printed
             const resetPause = 800;
 
             let timeoutId = null;
             let isVisible = true;
             let phase = 'initial'; // 'initial' | 'typing' | 'displaying' | 'backspacing' | 'resetting'
             let typingIndex = 0;
+            let displayStartTime = 0;
 
             function schedule(delay, fn) {
                 if (!isVisible) return;
@@ -847,14 +901,21 @@
                         } else {
                             cursor.classList.remove('typing');
                             phase = 'displaying';
+                            displayStartTime = Date.now();
                             schedule(displayPause, run);
                         }
                         break;
-                    case 'displaying':
-                        phase = 'backspacing';
-                        cursor.classList.add('typing');
-                        run();
+                    case 'displaying': {
+                        const elapsed = Date.now() - displayStartTime;
+                        if (elapsed >= displayPause) {
+                            phase = 'backspacing';
+                            cursor.classList.add('typing');
+                            run();
+                        } else {
+                            schedule(displayPause - elapsed, run);
+                        }
                         break;
+                    }
                     case 'backspacing':
                         if (inner.textContent.length > 0) {
                             inner.textContent = inner.textContent.slice(0, -1);
