@@ -560,8 +560,7 @@
             <div class="meta-item">
                 <div class="meta-label">Status</div>
                 <div class="meta-value">Complete</div>
-
-        </div>
+            </div>
     </section>
 
     <section class="project-image-large">
@@ -642,6 +641,24 @@
         </div>
 
         <div class="content-section reveal" data-reveal style="text-align: center;">
+            <video
+                id="flight-video"
+                data-lightbox-video="Videos/Flight 2.mp4"
+                autoplay
+                loop
+                muted
+                playsinline
+                preload="metadata"
+                disablepictureinpicture
+                style="width: min(100%, 960px); height: auto; border-radius: 14px; box-shadow: 0 18px 40px rgba(0,0,0,.18); cursor: pointer;"
+                aria-label="Click to enlarge flight video"
+            >
+                <source src="Videos/Flight 2.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+
+        <div class="content-section reveal" data-reveal style="text-align: center;">
             <h2>Technology Stack</h2>
             <div class="tech-stack">
                         <div class="tech-item">Autodesk CAD</div>
@@ -668,6 +685,10 @@
     <div class="lightbox" id="lightbox" aria-hidden="true">
         <button type="button" class="lightbox-close" id="lightbox-close" aria-label="Close">×</button>
         <img class="lightbox-content" id="lightbox-img" src="" alt="Enlarged view">
+        <video class="lightbox-content" id="lightbox-video" controls playsinline style="display:none;">
+            <source id="lightbox-video-source" src="" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
     </div>
 
     <script src="theme.js"></script>
@@ -702,15 +723,45 @@
             // ----- Gallery lightbox -----
             var lightbox = document.getElementById('lightbox');
             var lightboxImg = document.getElementById('lightbox-img');
+            var lightboxVideo = document.getElementById('lightbox-video');
+            var lightboxVideoSource = document.getElementById('lightbox-video-source');
             var lightboxClose = document.getElementById('lightbox-close');
             var galleryTriggers = document.querySelectorAll('[data-lightbox]');
+            var videoTriggers = document.querySelectorAll('[data-lightbox-video]');
 
-            function openLightbox(src) {
+            function openLightboxImage(src) {
                 if (!lightbox || !lightboxImg) return;
+                if (lightboxVideo) {
+                    lightboxVideo.pause();
+                    lightboxVideo.currentTime = 0;
+                    lightboxVideo.style.display = 'none';
+                }
+                if (lightboxVideoSource) lightboxVideoSource.src = '';
+                if (lightboxVideo) lightboxVideo.load();
+
+                lightboxImg.style.display = '';
                 lightboxImg.src = src;
                 lightbox.classList.add('active');
                 lightbox.setAttribute('aria-hidden', 'false');
                 document.body.style.overflow = 'hidden';
+            }
+
+            function openLightboxVideo(src) {
+                if (!lightbox || !lightboxVideo || !lightboxVideoSource || !lightboxImg) return;
+                lightboxImg.src = '';
+                lightboxImg.style.display = 'none';
+
+                lightboxVideoSource.src = src;
+                lightboxVideo.style.display = '';
+                lightboxVideo.load();
+
+                lightbox.classList.add('active');
+                lightbox.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+
+                // Autoplay may be blocked; that's fine.
+                var p = lightboxVideo.play();
+                if (p && typeof p.catch === 'function') p.catch(function () {});
             }
 
             function closeLightbox() {
@@ -718,12 +769,28 @@
                 lightbox.classList.remove('active');
                 lightbox.setAttribute('aria-hidden', 'true');
                 document.body.style.overflow = '';
+
+                if (lightboxImg) lightboxImg.src = '';
+                if (lightboxVideo) {
+                    lightboxVideo.pause();
+                    lightboxVideo.currentTime = 0;
+                    lightboxVideo.style.display = 'none';
+                }
+                if (lightboxVideoSource) lightboxVideoSource.src = '';
+                if (lightboxVideo) lightboxVideo.load();
             }
 
             galleryTriggers.forEach(function (el) {
                 el.addEventListener('click', function () {
                     var src = this.getAttribute('data-lightbox');
-                    if (src) openLightbox(src);
+                    if (src) openLightboxImage(src);
+                });
+            });
+
+            videoTriggers.forEach(function (el) {
+                el.addEventListener('click', function () {
+                    var src = this.getAttribute('data-lightbox-video');
+                    if (src) openLightboxVideo(src);
                 });
             });
 
