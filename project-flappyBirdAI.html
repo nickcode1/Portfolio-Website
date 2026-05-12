@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        (function(){ var k='portfolio-theme',t; try{t=localStorage.getItem(k);}catch(e){} if(!t&&typeof matchMedia!=='undefined'&&matchMedia('(prefers-color-scheme: light)').matches)t='light'; document.documentElement.setAttribute('data-theme',t||'dark'); })();
+    </script>
+    <title>Flappy Bird AI - Nick's Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;600;700&family=Playfair+Display:wght@700;900&family=Turret+Road:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root,
+        [data-theme="dark"] {
+            --primary-bg: #000000;
+            --secondary-bg: #0a0a0a;
+            --surface: #0a0a0a;
+            --text-primary: #f5f5f7;
+            --text-secondary: #86868b;
+            --text-tertiary: #6e6e73;
+            --accent: #0071e3;
+            --accent-hover: #0077ed;
+            --accent-pale: #a0cffd;
+            --border: rgba(255,255,255,0.08);
+            --nav-bg: rgba(0,0,0,0.72);
+            --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+            --ease-out: cubic-bezier(0.33, 1, 0.68, 1);
+            --radius-sm: 12px;
+            --radius-md: 18px;
+            --radius-lg: 24px;
+            --shadow-subtle: 0 4px 24px rgba(0,0,0,0.25);
+            --shadow-card: 0 8px 32px rgba(0,0,0,0.4);
+        }
+        [data-theme="light"] {
+            --primary-bg: #fbfbfd;
+            --secondary-bg: #ffffff;
+            --surface: #f5f5f7;
+            --text-primary: #1d1d1f;
+            --text-secondary: #6e6e73;
+            --text-tertiary: #86868b;
+            --accent: #0071e3;
+            --accent-hover: #0077ed;
+            --accent-pale: #408cd8;
+            --border: rgba(0,0,0,0.08);
+            --nav-bg: rgba(251,251,253,0.8);
+            --shadow-subtle: 0 4px 24px rgba(0,0,0,0.06);
+            --shadow-card: 0 8px 32px rgba(0,0,0,0.08);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            line-height: 1.47059;
+            font-weight: 400;
+            letter-spacing: -0.022em;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: var(--nav-bg);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            border-bottom: 1px solid var(--border);
+            transition: background 0.3s var(--ease);
+        }
+        .theme-toggle { display: flex; align-items: center; margin-left: 1rem; }
+        #theme-toggle-btn {
+            background: transparent; border: none; color: var(--text-primary);
+            width: 2.25rem; height: 2.25rem; border-radius: 50%; cursor: pointer; font-size: 1.1rem;
+            line-height: 1; display: flex; align-items: center; justify-content: center;
+            transition: opacity 0.2s var(--ease), transform 0.2s var(--ease);
+        }
+        #theme-toggle-btn:hover { opacity: 0.8; transform: scale(1.05); }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-decoration: none;
+            letter-spacing: -0.02em;
+            transition: opacity 0.2s var(--ease);
+        }
+        .logo:hover { opacity: 0.8; }
+
+        nav ul {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 400;
+            letter-spacing: -0.01em;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--text-primary);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .back-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9375rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            transition: opacity 0.2s var(--ease);
+        }
+        .back-link:hover { opacity: 0.8; }
+
+        .project-hero {
+            padding: 10rem 2rem 5rem;
+            text-align: center;
+            background: var(--primary-bg);
+        }
+
+        .project-hero h1 {
+            font-family: 'Turret Road', serif;
+            font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            line-height: 1.05;
+            margin-bottom: 1rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .project-hero .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+            font-weight: 400;
+        }
+
+        .project-meta {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            text-align: center;
+        }
+
+        .meta-label {
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 0.25rem;
+            font-weight: 500;
+        }
+
+        .meta-value {
+            font-size: 1rem;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .project-image-large {
+            padding: 2rem 2rem 4rem;
+            background: var(--primary-bg);
+        }
+        .project-image-large .image-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            height: 560px;
+            background: var(--surface);
+            position: relative;
+            overflow: hidden;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-card);
+            transition: transform 0.5s var(--ease-out), box-shadow 0.5s var(--ease);
+        }
+        .project-image-large .image-container:hover {
+            transform: scale(1.01);
+            box-shadow: var(--shadow-subtle);
+        }
+        .image-container::before {
+            display: none;
+        }
+
+        .project-content {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 2rem 6rem;
+        }
+
+        .content-section {
+            margin-bottom: 4rem;
+        }
+
+        .content-section h2 {
+            font-family: 'Turret Road', serif;
+            font-size: 2rem;
+            font-weight: 600;
+            letter-spacing: -0.025em;
+            margin-bottom: 1.25rem;
+            line-height: 1.2;
+        }
+
+        .content-section p {
+            font-size: 1.0625rem;
+            line-height: 1.588;
+            color: var(--text-secondary);
+            margin-bottom: 1.25rem;
+            letter-spacing: -0.015em;
+        }
+
+        .content-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .content-section li {
+            font-size: 1.0625rem;
+            color: var(--text-secondary);
+            padding-left: 1.5rem;
+            margin-bottom: 0.75rem;
+            position: relative;
+            line-height: 1.588;
+        }
+
+        .content-section li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.65em;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .tech-item {
+            background: var(--surface);
+            padding: 1.5rem 1.25rem;
+            border-radius: var(--radius-md);
+            text-align: center;
+            font-size: 0.9375rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+            transition: background 0.25s var(--ease), border-color 0.25s var(--ease);
+        }
+        .tech-item:hover {
+            background: var(--secondary-bg);
+            border-color: var(--border);
+        }
+
+        .project-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .gallery-item,
+        .gallery-item-long {
+            background: var(--surface);
+            border-radius: var(--radius-md);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-subtle);
+            transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease);
+        }
+        .gallery-item {
+            height: 320px;
+            aspect-ratio: 1;
+        }
+        .gallery-item-long {
+            height: 320px;
+            aspect-ratio: 2;
+        }
+        .gallery-item:hover,
+        .gallery-item-long:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-card);
+        }
+        .gallery-item::before,
+        .gallery-item-long::before { display: none; }
+
+        .cta-section {
+            background: var(--surface);
+            padding: 5rem 2rem;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-family: 'Turret Road', serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            letter-spacing: -0.025em;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.875rem 1.75rem;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            border-radius: 980px;
+            transition: color 0.3s ease, background-color 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+        }
+        .btn-primary {
+            color: #fff;
+            background: var(--accent);
+            border: 2px solid var(--accent);
+        }
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            border-color: var(--accent-hover);
+            transform:  scale(1.03);
+            box-shadow: 0 8px 25px -5px color-mix(in srgb, var(--accent) 35%, transparent), 0 4px 10px -6px color-mix(in srgb, var(--accent) 25%, transparent);
+        }
+        .btn-primary:active {
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--accent);
+            border: none;
+            transition: transform .5s ease, color .5s ease;
+        }
+            
+        .btn-secondary:hover {
+            color: var(--accent-pale);
+            transform: scale(1.05);
+          
+    
+        }
+
+        footer {
+            padding: 2rem 3rem;
+            background: var(--primary-bg);
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-tertiary);
+            font-size: 0.8125rem;
+        }
+
+        @media (max-width: 768px) {
+            nav { padding: 1rem 1.5rem; }
+            nav ul { gap: 1.5rem; }
+            .project-hero { padding: 7rem 1.5rem 4rem; }
+            .project-hero h1 { font-size: 2.25rem; }
+            .project-content { padding: 3rem 1.5rem 4rem; }
+            .project-image-large { padding: 1.5rem; }
+            .project-image-large .image-container { height: 320px; }
+            .project-meta { gap: 1.25rem; }
+        }
+
+        .project-tags,
+        .project-tags-end {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            padding: 0.35rem 0.75rem;
+            background: var(--surface);
+            color: var(--text-secondary);
+            font-size: 0.8125rem;
+            font-weight: 500;
+            border-radius: 980px;
+            border: 1px solid var(--border);
+        }
+
+        /* Scroll-reveal animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+        }
+        .reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal .tech-item {
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity 0.4s var(--ease-out), transform 0.4s var(--ease-out);
+        }
+        .reveal.revealed .tech-item {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal.revealed .tech-item:nth-child(1) { transition-delay: 0.05s; }
+        .reveal.revealed .tech-item:nth-child(2) { transition-delay: 0.1s; }
+        .reveal.revealed .tech-item:nth-child(3) { transition-delay: 0.15s; }
+        .reveal.revealed .tech-item:nth-child(4) { transition-delay: 0.2s; }
+
+        /* Hero image parallax */
+        .project-image-large .image-container {
+            will-change: transform;
+        }
+        .project-image-large .image-container.parallax-ready {
+            transition: transform 0.2s ease-out;
+        }
+
+        /* Gallery: clickable + cursor */
+        .gallery-item,
+        .gallery-item-long {
+            cursor: pointer;
+        }
+        .gallery-item:active,
+        .gallery-item-long:active {
+            transform: translateY(-2px) scale(0.99);
+        }
+
+        /* Lightbox */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 2000;
+            background: rgba(0,0,0,0.92);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s var(--ease), visibility 0.3s var(--ease);
+        }
+        .lightbox.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .lightbox-content {
+            max-width: 90vw;
+            max-height: 85vh;
+            object-fit: contain;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-card);
+            transform: scale(0.95);
+            transition: transform 0.3s var(--ease-out);
+        }
+        .lightbox.active .lightbox-content {
+            transform: scale(1);
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 2.5rem;
+            height: 2.5rem;
+            border: none;
+            background: var(--surface);
+            color: var(--text-primary);
+            font-size: 1.25rem;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s var(--ease), transform 0.2s var(--ease);
+        }
+        .lightbox-close:hover {
+            background: var(--secondary-bg);
+            transform: scale(1.05);
+        }
+        figcaption {
+            background-color: #4d4d4d;
+            color: white;
+            font-style: italic;
+            padding: 5px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">NICK HARRISON</a>
+        <ul>
+            <li><a href="index.html#about">About</a></li>
+            <li><a href="index.html#projects">Projects</a></li>
+            <li><a href="index.html#publications">Publications</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+        <div class="theme-toggle">
+            <button type="button" id="theme-toggle-btn" aria-label="Switch to light mode">☀</button>
+        </div>
+    </nav>
+
+    <section class="project-hero">
+        <!-- <a href="index.html#projects" class="back-link">← Back to Projects</a> -->
+        <h1>Flappy Bird AI Player</h1>
+        <p class="subtitle"></p>
+        
+        <div class="project-meta">
+            <!-- <div class="meta-item">
+                <div class="meta-label">Role</div>
+                <div class="meta-value">Lead Designer</div>
+            </div> -->
+            <div class="meta-item">
+                <div class="meta-label">Class</div>
+                <div class="meta-value">ME 2145</div>
+            </div>
+            <div class="meta-item">
+                <div class="meta-label">Year</div>
+                <div class="meta-value">May 2026</div>
+            </div>
+            <div class="meta-item">
+                <div class="meta-label">Duration</div>
+                <div class="meta-value">--</div>
+            </div>
+            <div class="meta-item">
+                <div class="meta-label">Status</div>
+                <div class="meta-value">In Progress</div>
+                </div>
+    </section>
+
+    <section class="project-content">
+       
+        <div class="content-section reveal" data-reveal>
+            <h2>Motive</h2>
+            <p>
+                Have you ever played flappy bird? If you have, you have probably also gotten terribly frustrated with hitting the pipes over and over. So I have outsourced my frustration to the computer terminal.
+            </p>
+            <p>
+                All jokes aside, I saw an interesting video on YOUTUBE where a guy created a reinforcement algoritm to learn to play flappy bird. This inspired me to try something similar. So I wanted to see if I could apply Model Predictive Control (MPC) to dictate the control of the bird.
+            </p>
+            
+            <p>
+               MPC is a control method that uses optimization mathematics to determine the best possible control sequence. It is a very inportant control method that can be applied to many domains, including autonomous driving.
+            </p>
+             <h3>
+                The Foundation
+             </h3>
+             <p>
+            Before I could design the controller, I had to first have the physics of the game in hand. I used Clade Code to generate the fountational code of flappy bird using the Pygame libraries.<br> 
+            
+            The game ran exactly like the original flappy bird, producing pipes at random with only 1 input for the user. <br>
+
+            After researching MPC, I then constructed a flow chart for the development of the control algorithm.
+             </p>
+        </div>
+
+        <div class="content-section reveal" data-reveal style="text-align: justify ;">
+            <h2>Game Comparison</h2>
+        </div>
+
+        <div class="project-gallery reveal" data-reveal>
+            <div class="gallery-item" data-lightbox="images\Projects\Flappy\screen-shot-2014-02-02-at-7-29-40-pm.webp" style="background-image: url('images/Projects/Flappy/screen-shot-2014-02-02-at-7-29-40-pm.webp');
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;">
+                <figcaption>Original Flappy Bird</figcaption>
+            </div>
+        
+            <div class="gallery-item" data-lightbox="images/Projects/Flappy/mygame.png" style="background-image: url('images/Projects/Flappy/mygame.png');
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;">
+                <figcaption>Clone</figcaption>
+            </div>
+
+        </div>
+
+        <div class="content-section reveal" data-reveal style="text-align: justify ;">
+            <h2>Algorithm</h2>
+        </div>
+
+        <div class="project-gallery reveal" data-reveal>
+            <div class="gallery-item" data-lightbox="images\Projects\Flappy\screen-shot-2014-02-02-at-7-29-40-pm.webp" style="background-image: url('images/Projects/Flappy/screen-shot-2014-02-02-at-7-29-40-pm.webp');
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;">
+                <figcaption>Original Flappy Bird</figcaption>
+            </div>
+        
+            <div class="gallery-item" data-lightbox="images/Projects/Flappy/mygame.png" style="background-image: url('images/Projects/Flappy/mygame.png');
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;">
+                <figcaption>Clone</figcaption>
+            </div>
+
+        </div>
+
+
+        <div class="content-section reveal" data-reveal style="text-align: center;">
+            <h2>Technology Stack</h2>
+            <div class="tech-stack">
+                       
+                        <div class="tech-item">Python</div>
+                        <div class="tech-item">pygame</div>
+                        <div class="tech-item">Model Predictive Control</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section reveal" data-reveal>
+        <h2>Interested in similar work?</h2>
+        <div class="cta-buttons">
+            <a href="index.html#contact" class="btn btn-primary">Get in Touch</a>
+            <a href="index.html#projects" class="btn btn-secondary">View More Projects</a>
+        </div>
+    </section>
+
+    <footer>
+        Nick Harrison — Portfolio
+    </footer>
+
+    <div class="lightbox" id="lightbox" aria-hidden="true">
+        <button type="button" class="lightbox-close" id="lightbox-close" aria-label="Close">×</button>
+        <img class="lightbox-content" id="lightbox-img" src="" alt="Enlarged view">
+        <video class="lightbox-content" id="lightbox-video" controls playsinline style="display:none;">
+            <source id="lightbox-video-source" src="" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <script src="theme.js"></script>
+    <script>
+        (function () {
+            var e = document.documentElement;
+
+            // ----- Scroll reveal -----
+            var reveals = document.querySelectorAll('[data-reveal]');
+            var observer = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                    }
+                });
+            }, { rootMargin: '0px 0px -60px 0px', threshold: 0.1 });
+
+            reveals.forEach(function (el) { observer.observe(el); });
+
+            // ----- Hero image parallax -----
+            var heroImage = document.getElementById('hero-image');
+            if (heroImage) {
+                window.addEventListener('scroll', function () {
+                    var rect = heroImage.getBoundingClientRect();
+                    var center = rect.top + rect.height / 2;
+                    var viewCenter = window.innerHeight / 2;
+                    var offset = (viewCenter - center) * 0.03;
+                    heroImage.style.transform = 'translateY(' + (offset * 0.5) + 'px)';
+                }, { passive: true });
+            }
+
+            // ----- Gallery lightbox -----
+            var lightbox = document.getElementById('lightbox');
+            var lightboxImg = document.getElementById('lightbox-img');
+            var lightboxVideo = document.getElementById('lightbox-video');
+            var lightboxVideoSource = document.getElementById('lightbox-video-source');
+            var lightboxClose = document.getElementById('lightbox-close');
+            var galleryTriggers = document.querySelectorAll('[data-lightbox]');
+            var videoTriggers = document.querySelectorAll('[data-lightbox-video]');
+
+            function openLightboxImage(src) {
+                if (!lightbox || !lightboxImg) return;
+                if (lightboxVideo) {
+                    lightboxVideo.pause();
+                    lightboxVideo.currentTime = 0;
+                    lightboxVideo.style.display = 'none';
+                }
+                if (lightboxVideoSource) lightboxVideoSource.src = '';
+                if (lightboxVideo) lightboxVideo.load();
+
+                lightboxImg.style.display = '';
+                lightboxImg.src = src;
+                lightbox.classList.add('active');
+                lightbox.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function openLightboxVideo(src) {
+                if (!lightbox || !lightboxVideo || !lightboxVideoSource || !lightboxImg) return;
+                lightboxImg.src = '';
+                lightboxImg.style.display = 'none';
+
+                lightboxVideoSource.src = src;
+                lightboxVideo.style.display = '';
+                lightboxVideo.load();
+
+                lightbox.classList.add('active');
+                lightbox.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+
+                // Autoplay may be blocked; that's fine.
+                var p = lightboxVideo.play();
+                if (p && typeof p.catch === 'function') p.catch(function () {});
+            }
+
+            function closeLightbox() {
+                if (!lightbox) return;
+                lightbox.classList.remove('active');
+                lightbox.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+
+                if (lightboxImg) lightboxImg.src = '';
+                if (lightboxVideo) {
+                    lightboxVideo.pause();
+                    lightboxVideo.currentTime = 0;
+                    lightboxVideo.style.display = 'none';
+                }
+                if (lightboxVideoSource) lightboxVideoSource.src = '';
+                if (lightboxVideo) lightboxVideo.load();
+            }
+
+            galleryTriggers.forEach(function (el) {
+                el.addEventListener('click', function () {
+                    var src = this.getAttribute('data-lightbox');
+                    if (src) openLightboxImage(src);
+                });
+            });
+
+            videoTriggers.forEach(function (el) {
+                el.addEventListener('click', function () {
+                    var src = this.getAttribute('data-lightbox-video');
+                    if (src) openLightboxVideo(src);
+                });
+            });
+
+            if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
+            if (lightbox) lightbox.addEventListener('click', function (ev) {
+                if (ev.target === lightbox) closeLightbox();
+            });
+            document.addEventListener('keydown', function (ev) {
+                if (ev.key === 'Escape') closeLightbox();
+            });
+        })();
+    </script>
+</body>
+</html>
