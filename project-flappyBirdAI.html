@@ -604,25 +604,21 @@
         <div class="content-section reveal" data-reveal>
             <h2>Motive</h2>
             <p>
-                Have you ever played flappy bird? If you have, you have probably also gotten terribly frustrated with hitting the pipes over and over. So I have outsourced my frustration to the computer terminal.
+                Have you ever played flappy bird? If you have, you have probably also gotten terribly frustrated with hitting the pipes over and over. So I have outsourced my frustration to the cpu.
             </p>
             <p>
-                All jokes aside, I saw an interesting video on YOUTUBE where a guy created a reinforcement algoritm to learn to play flappy bird. This inspired me to try something similar. So I wanted to see if I could apply Model Predictive Control (MPC) to dictate the control of the bird.
+                All jokes aside, I saw an interesting video on YouTube where someone created a reinforcement algoritm to learn to play flappy bird. This inspired me to try something similar, so I wanted to see if I could apply Model Predictive Control (MPC) to dictate the control of the bird.
             </p>
-            
-            <p>
-               MPC is a control method that uses optimization mathematics to determine the best possible control sequence. It is a very inportant control method that can be applied to many domains, including autonomous driving.
-            </p>
+        
              <h3>
                 The Foundation
              </h3>
              <p>
-            Before I could design the controller, I had to first have the physics of the game in hand. I used Clade Code to generate the fountational code of flappy bird using the Pygame libraries.<br> 
-            
-            The game ran exactly like the original flappy bird, producing pipes at random with only 1 input for the user. <br>
+            The premise of flappy bird is simple: pairs of pipes move across the screen, and it is the goal to pass through as many pipes as possible. The only control input for the player is to tap the screen, which makes the bird jump, and gain altitude.
 
-            After researching MPC, I then constructed a flow chart for the development of the control algorithm.
-             </p>
+            <br><br> Building a clone of flappy bird for manipulation was the first step. Once I had a version that I felt matched the original game close enough, I started to conceptualize the control algorithm.
+        
+            </p>
         </div>
 
         <div class="content-section reveal" data-reveal style="text-align: justify ;">
@@ -648,7 +644,17 @@
 
         <div class="content-section reveal" data-reveal style="text-align: justify ;">
             <h2>Algorithm</h2>
+
+            <p>MPC is a control method that works by optimizing the control horizon of a given system. Applied to flappy bird, this means choosing an optimal set of N different inputs. Since there is only one input for flappy bird, we can consider the two options 0 or 1, where 1 is a jump (tap) and 0 indicates doing nothing. 
+                <br><br> For an input sequence of length N, we have 2^N diffferent sequences to evaluate.<br> 
+                <br>To evaluate each sequence, I devised a cost function that is dependant on the distance of the bird from the center axis of the pipe gap, the velocity of the bird, the choice to jump and the crash scenario.
+                <br><br>The sequence with the lowest cost will be chosen as the optimal control path.
+            </p>
+
         </div>
+
+      
+        
 
         <div class="project-gallery reveal" data-reveal>
             <div class="gallery-item" data-lightbox="images\Projects\Flappy\Flappy MPC Algo.drawio.png" style="background-image: url('images/Projects/Flappy/Flappy\ MPC\ Algo.drawio.png');
