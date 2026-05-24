@@ -644,11 +644,16 @@
             <h2>Algorithm</h2>
 
             <p>MPC is a control method that works by optimizing the control horizon of a given system. Applied to flappy bird, this means choosing an optimal set of N different inputs. Since there is only one input for flappy bird, we can consider the two options 0 or 1, where 1 is a jump (tap) and 0 indicates doing nothing. 
-                <br><br> For an input sequence of length N, we have 2^N diffferent sequences to evaluate.<br> 
-                <br>To evaluate each sequence, I devised a cost function that is dependant on the distance of the bird from the center axis of the pipe gap, the velocity of the bird, the choice to jump and the crash scenario.
-                <br><br>The sequence with the lowest cost will be chosen as the optimal control path.
+            </p>
+            <h3>V1</h3>
+            <p>
+            For an input sequence of length N, we have 2^N diffferent sequences to evaluate.
+            
+            To evaluate each sequence, I devised a cost function that is dependant on the distance of the bird from the center axis of the pipe gap, the velocity of the bird, the choice to jump and the crash scenario.
+            The sequence with the lowest cost will be chosen as the optimal control path.
             </p>
 
+           
         </div>
 
       
@@ -670,6 +675,21 @@
             </div>
 
         </div>
+
+         <div class="content-section reveal" data-reveal style="text-align: justify ;">
+            
+            <h3>V2</h3>
+
+            <p>Evaluating 2^N sequences every frame is very computationally expensive...time complexity of O(N · 2^N) expensive. Scaling this algorithm to predict further in the future required improving the core algorithm.</p>
+            <p>To do this, I altered  algorithm V1 to incorporate a version of the <i>Beam Search</i> algorithm.</p>
+            <p>Beam search is a heuristic search algorithm. Instead of evaluating every possible sequence (2^N), it keeps only the best 'B' sequences.
+             Now, for a sequence len N, only 2B(N-log<sub>2</sub>(​B)+1)−2 sequences are evaluated. 
+            </p>
+            <p>For a sequence len of 100 and beam width of 4, we now only have to evaluate 790 sequences per timestep.</p>
+            <P>With the original algorithm, instead we would have to calculate 1 267 650 600 228 229 401 496 703 205 376 (1.267 nonillion) sequences per timestep.</P>
+          
+        </div>
+
 
         <div class="content-section reveal" data-reveal style="text-align: justify ;">
             <h2>Demo</h2>
