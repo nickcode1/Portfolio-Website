@@ -295,6 +295,85 @@
             color: var(--accent-2);
         }
 
+        .project-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .gallery-item {
+            position: relative;
+            min-height: 300px;
+            overflow: hidden;
+            border-radius: var(--radius);
+            border: 1px solid var(--surface-border);
+            background: var(--surface);
+            box-shadow: var(--shadow);
+        }
+
+        .gallery-item video {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+            background: var(--surface);
+        }
+
+        .gallery-item figcaption {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 0.9rem 1rem;
+            background: linear-gradient(180deg, rgba(8, 10, 18, 0), rgba(8, 10, 18, 0.82));
+            color: #fff;
+            font-size: 0.84rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .gallery-item[role="button"] {
+            cursor: pointer;
+        }
+
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(2, 6, 23, 0.88);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 2rem;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            max-width: 92vw;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 18px;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 3rem;
+            height: 3rem;
+            border: none;
+            background: rgba(15, 23, 42, 0.7);
+            color: #fff;
+            font-size: 1.8rem;
+            border-radius: 999px;
+            cursor: pointer;
+        }
+
         .tech-stack {
             display: flex;
             justify-content: center;
@@ -437,20 +516,13 @@
         </div>
 
         <div class="project-gallery reveal" data-reveal>
-            <div class="gallery-item" data-lightbox="images\Projects\Flappy\screen-shot-2014-02-02-at-7-29-40-pm.webp" style="background-image: url('images/Projects/Flappy/screen-shot-2014-02-02-at-7-29-40-pm.webp');
-                background-size: cover;
-                background-position: center;
-                background-repeat: no-repeat;">
+            <div class="gallery-item" data-lightbox="images/Projects/Flappy/screen-shot-2014-02-02-at-7-29-40-pm.webp" style="background-image: url('images/Projects/Flappy/screen-shot-2014-02-02-at-7-29-40-pm.webp'); background-size: cover; background-position: center; background-repeat: no-repeat;">
                 <figcaption>Original Flappy Bird</figcaption>
             </div>
-        
-            <div class="gallery-item" data-lightbox="images/Projects/Flappy/mygame.png" style="background-image: url('images/Projects/Flappy/mygame.png');
-                background-size: cover;
-                background-position: center;
-                background-repeat: no-repeat;">
+
+            <div class="gallery-item" data-lightbox="images/Projects/Flappy/mygame.png" style="background-image: url('images/Projects/Flappy/mygame.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
                 <figcaption>Clone</figcaption>
             </div>
-
         </div>
 
         <div class="content-section reveal" data-reveal style="text-align: justify ;">
@@ -473,22 +545,13 @@
         
 
         <div class="project-gallery reveal" data-reveal>
-            <div class="gallery-item" data-lightbox="images\Projects\Flappy\Flappy MPC Algo.drawio.png" style="background-image: url('images/Projects/Flappy/Flappy\ MPC\ Algo.drawio.png');
-                background-size: cover;
-                background-position: center;
-                background-repeat: no-repeat;">
+            <div class="gallery-item" data-lightbox="images/Projects/Flappy/Flappy%20MPC%20Algo.drawio.png" style="background-image: url('images/Projects/Flappy/Flappy%20MPC%20Algo.drawio.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
                 <figcaption>Custom Algorithm</figcaption>
-                
-            </div>
-        
-            <div class="gallery-item" data-lightbox="images/Projects/Flappy/mpcexample.png" style="background-image: url('images/Projects/Flappy/mpcexample.png');
-                background-size: cover;
-                background-position: center;
-                background-repeat: no-repeat;">
-                <figcaption>Control.com</figcaption>
-                
             </div>
 
+            <div class="gallery-item" data-lightbox="images/Projects/Flappy/mpcexample.png" style="background-image: url('images/Projects/Flappy/mpcexample.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+                <figcaption>Control.com</figcaption>
+            </div>
         </div>
 
          <div class="content-section reveal" data-reveal style="text-align: justify ;">
@@ -512,27 +575,26 @@
         </div>
         
         <div class="project-gallery reveal" data-reveal>
-           <div class="gallery-item">
-                <video autoplay muted loop playsinline>
-                    <source src="Videos/Flappy AI Demo.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
+            <div class="gallery-item" data-lightbox-video="Videos/Flappy%20AI%20Demo.mp4" role="button" tabindex="0" aria-label="Open Flappy AI demo video">
+                <video autoplay muted loop playsinline controls preload="metadata">
+                    <source src="Videos/Flappy%20AI%20Demo.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
                 </video>
-            </div> 
-            <div class="gallery-item">
-                <video autoplay muted loop playsinline>
-                    <source src="Videos/Demo with planning.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
+            </div>
+            <div class="gallery-item" data-lightbox-video="Videos/Demo%20with%20planning.mp4" role="button" tabindex="0" aria-label="Open planning demo video">
+                <video autoplay muted loop playsinline controls preload="metadata">
+                    <source src="Videos/Demo%20with%20planning.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
                 </video>
-            </div> 
-        </div> 
+            </div>
+        </div>
 
-        <div class="content-section reveal" data-reveal style="text-align: center";>
+        <div class="content-section reveal" data-reveal style="text-align: center;">
             <h2>Technology Stack</h2>
             <div class="tech-stack">
-                       
-                        <div class="tech-item">Python</div>
-                        <div class="tech-item">pygame</div>
-                        <div class="tech-item">Model Predictive Control</div>
+                <div class="tech-item">Python</div>
+                <div class="tech-item">pygame</div>
+                <div class="tech-item">Model Predictive Control</div>
             </div>
         </div>
     </section>
