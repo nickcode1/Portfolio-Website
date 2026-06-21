@@ -366,6 +366,60 @@
             letter-spacing: 0.04em;
         }
 
+        .project-gallery {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .gallery-item {
+            background: linear-gradient(180deg, var(--bg-elevated), var(--surface));
+            border: 1px solid var(--surface-border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            aspect-ratio: 4 / 3;
+        }
+
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            background: rgba(2, 8, 23, 0.88);
+            backdrop-filter: blur(12px);
+        }
+
+        .lightbox.active { display: flex; }
+
+        .lightbox-content {
+            max-width: min(1180px, 92vw);
+            max-height: 86vh;
+            object-fit: contain;
+            border-radius: 14px;
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+        }
+
+        .lightbox-close {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            width: 2.75rem;
+            height: 2.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 999px;
+            background: rgba(15, 23, 42, 0.75);
+            color: #fff;
+            cursor: pointer;
+            font-size: 1.8rem;
+            line-height: 1;
+        }
+
         @media (max-width: 768px) {
             nav { padding: 1rem 1rem; }
             nav ul { display: none; }
@@ -373,6 +427,7 @@
             .project-content { padding: 1rem 0.75rem 5rem; }
             .project-image-large { padding: 0 0.75rem 2rem; }
             .content-section { padding: 1.4rem; }
+            .project-gallery { grid-template-columns: 1fr; }
         }
 </style>
 </head>
@@ -409,16 +464,15 @@
         </div>
     </section>
 
-    <section class="project-image-large">
-        <div class="image-container" style="display:flex; align-items:center; justify-content:center; color:#fff; font-size:clamp(1.4rem, 3vw, 2.2rem); font-weight:700; letter-spacing:0.15em; text-transform:uppercase; text-align:center; padding:2rem;">
-            TELEMETRY / CONTROL / VISUALIZATION
-        </div>
-    </section>
-
     <section class="project-content">
         <div class="content-section">
             <h2>Overview</h2>
             <p>This concept focuses on creating a clean, high-signal cockpit layout that blends instrumentation, alerts, and mission context into one place. The goal was to make critical information easy to scan during fast-moving scenarios.</p>
+        </div>
+
+        <div class="project-gallery">
+            <div class="gallery-item" data-lightbox="images/Projects/Sim Cockpit/render.png" style="background-image: url('images/Projects/Sim Cockpit/render.png'); background-size: cover; background-position: center; background-repeat: no-repeat;"></div>
+            <div class="gallery-item" data-lightbox="images/Projects/Sim Cockpit/build.jpg" style="background-image: url('images/Projects/Sim Cockpit/build.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;"></div>
         </div>
 
         <div class="content-section">
@@ -456,6 +510,50 @@
 
     <footer>Nick Harrison — Portfolio</footer>
 
+    <div class="lightbox" id="lightbox" aria-hidden="true">
+        <button type="button" class="lightbox-close" id="lightbox-close" aria-label="Close">×</button>
+        <img class="lightbox-content" id="lightbox-img" src="" alt="Enlarged view">
+    </div>
+
     <script src="theme.js"></script>
+    <script>
+        (function () {
+            var lightbox = document.getElementById('lightbox');
+            var lightboxImg = document.getElementById('lightbox-img');
+            var lightboxClose = document.getElementById('lightbox-close');
+            var galleryTriggers = document.querySelectorAll('[data-lightbox]');
+
+            function openLightbox(src) {
+                if (!lightbox || !lightboxImg) return;
+                lightboxImg.src = src;
+                lightbox.classList.add('active');
+                lightbox.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeLightbox() {
+                if (!lightbox) return;
+                lightbox.classList.remove('active');
+                lightbox.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+                if (lightboxImg) lightboxImg.src = '';
+            }
+
+            galleryTriggers.forEach(function (el) {
+                el.addEventListener('click', function () {
+                    var src = this.getAttribute('data-lightbox');
+                    if (src) openLightbox(src);
+                });
+            });
+
+            if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
+            if (lightbox) lightbox.addEventListener('click', function (ev) {
+                if (ev.target === lightbox) closeLightbox();
+            });
+            document.addEventListener('keydown', function (ev) {
+                if (ev.key === 'Escape') closeLightbox();
+            });
+        })();
+    </script>
 </body>
 </html>
