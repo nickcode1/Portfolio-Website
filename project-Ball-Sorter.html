@@ -94,6 +94,7 @@
             letter-spacing: 0.18em;
             color: var(--text);
             text-decoration: none;
+            transition: color 0.3s;
         }
         .logo:hover { color: var(--accent); }
 
@@ -102,17 +103,18 @@
             left: 50%;
             transform: translateX(-50%);
             display: flex;
-            gap: 1.8rem;
+            gap: clamp(1rem, 2.8vw, 2rem);
             list-style: none;
         }
 
         nav a {
             color: var(--text-muted);
             text-decoration: none;
-            font-size: 0.88rem;
+            font-size: 0.9rem;
             font-weight: 500;
             letter-spacing: 0.08em;
             text-transform: uppercase;
+            transition: color 0.3s;
             position: relative;
         }
 
@@ -521,7 +523,7 @@
             </div>
             
             <div class="gallery-item" data-lightbox="images/Projects/Mechatronics Applications/Main Assembly v100 angle 2.png" style="background-image: url('images/Projects/Mechatronics Applications/Main Assembly v100 angle 2.png');
-                background-size: 150%;
+                background-size: 120%;
                 background-position: center;
                 background-repeat: no-repeat;">
             </div>
