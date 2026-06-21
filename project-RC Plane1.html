@@ -238,17 +238,6 @@
             box-shadow: var(--shadow);
         }
 
-        .image-container::before,
-        .image-container::after {
-            content: '';
-            position: absolute;
-            background: linear-gradient(90deg, var(--accent), var(--accent-2));
-            opacity: 0.12;
-            border-radius: 999px;
-        }
-        .image-container::before { width: 240px; height: 240px; left: 10%; top: 12%; }
-        .image-container::after { width: 180px; height: 180px; right: 8%; bottom: 10%; }
-
         .project-content {
             max-width: var(--max-width);
             margin: 0 auto;
@@ -293,6 +282,111 @@
             position: absolute;
             left: 0;
             color: var(--accent-2);
+        }
+
+        .project-gallery {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .gallery-item {
+            margin: 0;
+            background: linear-gradient(180deg, var(--bg-elevated), var(--surface));
+            border: 1px solid var(--surface-border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+        }
+
+        .gallery-item.wide {
+            grid-column: 1 / -1;
+        }
+
+        .gallery-image-wrap {
+            display: grid;
+            place-items: center;
+            min-height: 280px;
+            padding: 1rem;
+            background:
+                linear-gradient(rgba(148, 163, 184, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(148, 163, 184, 0.04) 1px, transparent 1px),
+                rgba(15, 23, 51, 0.45);
+            background-size: 24px 24px;
+        }
+
+        [data-theme="light"] .gallery-image-wrap {
+            background-color: rgba(238, 242, 255, 0.8);
+        }
+
+        .gallery-item img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-height: 520px;
+            object-fit: contain;
+            border-radius: calc(var(--radius) - 8px);
+        }
+
+        .servo-mount-image {
+            width: 100%;
+            height: 100%;
+            transform: translateY(20%) scale(2);
+            object-fit: cover;
+        }
+
+        .servo-mount-wrap {
+            height: 320px;
+            overflow: hidden;
+        }
+
+        .gallery-item figcaption {
+            padding: 0.85rem 1rem 1rem;
+            color: var(--text-muted);
+            font-size: 0.86rem;
+            font-weight: 600;
+            line-height: 1.35;
+        }
+
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            background: rgba(2, 8, 23, 0.88);
+            backdrop-filter: blur(12px);
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            max-width: min(1180px, 92vw);
+            max-height: 86vh;
+            object-fit: contain;
+            border-radius: 14px;
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+        }
+
+        .lightbox-close {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            width: 2.75rem;
+            height: 2.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 999px;
+            background: rgba(15, 23, 42, 0.75);
+            color: #fff;
+            cursor: pointer;
+            font-size: 1.8rem;
+            line-height: 1;
         }
 
         .tech-stack {
@@ -354,6 +448,10 @@
             .project-content { padding: 1rem 0.75rem 5rem; }
             .project-image-large { padding: 0 0.75rem 2rem; }
             .content-section { padding: 1.4rem; }
+            .project-gallery { grid-template-columns: 1fr; }
+            .gallery-item.wide { grid-column: auto; }
+            .gallery-image-wrap { min-height: 220px; padding: 0.75rem; }
+            .lightbox { padding: 1rem; }
         }
 </style>
 </head>
@@ -396,7 +494,8 @@
             <div class="meta-item">
                 <div class="meta-label">Status</div>
                 <div class="meta-value">Complete</div>
-                </div>
+            </div>
+        </div>
     </section>
 
     <section class="project-image-large">
@@ -439,35 +538,34 @@
         </div>
 
         <div class="project-gallery reveal" data-reveal>
-            <div class="gallery-item" data-lightbox="images/Projects/EFC/frame.png" style="background-image: url('images/Projects/EFC/frame.png');
-                background-size: contain;
-                background-position: relative;
-                background-repeat: no-repeat;">
-            </div>
-        
-            <div class="gallery-item" data-lightbox="images/Projects/EFC/Aileron Servo Mount ME5953 With 6.5 inch Chord v13.png" style="background-image: url('images/Projects/EFC/Aileron\ Servo\ Mount\ ME5953\ With\ 6.5\ inch\ Chord\ v13.png');
-                background-size: cover;
-                background-position: center;
-                background-repeat: no-repeat;">
-            </div>
+            
+            <figure class="gallery-item" data-lightbox="images/Projects/EFC/frame.png">
+                <div class="gallery-image-wrap">
+                    <img src="images/Projects/EFC/frame.png" alt="RC plane wing frame structure with ribs and spars" loading="lazy">
+                </div>
+               
+            </figure>
 
-            <div class="gallery-item" data-lightbox="images/Projects/EFC/Section view aileron.png" style="background-image: url('images/Projects/EFC/Section\ view\ aileron.png');
-                background-size: contain;
-                background-position: center;
-                background-repeat: no-repeat;">
-            </div>
+            <figure class="gallery-item" data-lightbox="images/Projects/EFC/Aileron Servo Mount ME5953 With 6.5 inch Chord v13.png">
+                <div class="gallery-image-wrap servo-mount-wrap">
+                    <img class="servo-mount-image" src="images/Projects/EFC/Aileron Servo Mount ME5953 With 6.5 inch Chord v13.png" alt="Aileron servo mount CAD design for the RC plane wing" loading="lazy">
+                </div>
             
-            <div class="gallery-item" data-lightbox="images/Projects/EFC/frame.png" style="background-image: url('images/Projects/EFC/frame.png');
-                background-size: contain;
-                background-position: relative;
-                background-repeat: no-repeat;">
-            </div>
-            <div class="gallery-item-long" data-lightbox="images/Projects/EFC/AutopilotFlowchart.drawio.png" style="background-image: url('images/Projects/EFC/AutopilotFlowchart.drawio.png');
-                background-size: contain;
-                background-position: center;
-                background-repeat: no-repeat;">
-            </div>
-            
+            </figure>
+
+            <figure class="gallery-item" data-lightbox="images/Projects/EFC/Section view aileron.png">
+                <div class="gallery-image-wrap">
+                    <img src="images/Projects/EFC/Section view aileron.png" alt="Section view of the aileron assembly" loading="lazy">
+                </div>
+               
+            </figure>
+
+            <figure class="gallery-item wide" data-lightbox="images/Projects/EFC/AutopilotFlowchart.drawio.png">
+                <div class="gallery-image-wrap">
+                    <img src="images/Projects/EFC/AutopilotFlowchart.drawio.png" alt="Autopilot control algorithm flowchart using PID control" loading="lazy">
+                </div>
+        
+            </figure>
         </div>
 
         <div class="content-section reveal" data-reveal style="text-align: center ;">
