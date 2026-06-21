@@ -314,9 +314,23 @@
         }
 
         .cta-section {
-            padding: 4rem 2rem;
+            padding: 5rem 2rem 3.5rem;
             text-align: center;
-            background: linear-gradient(180deg, rgba(139,92,246,0.04), rgba(34,211,238,0.04));
+            position: relative;
+            background: linear-gradient(180deg, transparent 0%, rgba(139,92,246,0.07) 40%, rgba(34,211,238,0.05) 100%);
+            border-top: 1px solid var(--surface-border);
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-2));
+            border-radius: 2px;
         }
 
         .cta-section h2 {
@@ -343,10 +357,13 @@
             background: var(--bg-elevated);
         }
 
-        footer {
-            padding: 2rem;
-            text-align: center;
+        .cta-footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--surface-border);
             color: var(--text-muted);
+            font-size: 0.82rem;
+            letter-spacing: 0.04em;
         }
 
         .project-gallery {
@@ -523,11 +540,8 @@
             <a href="index.html#contact" class="btn btn-primary">Get in Touch</a>
             <a href="index.html#projects" class="btn btn-secondary">View More Projects</a>
         </div>
+        <div class="cta-footer">Nick Harrison — Portfolio</div>
     </section>
-
-    <footer>
-        Nick Harrison — Portfolio
-    </footer>
 
     <div class="lightbox" id="lightbox" aria-hidden="true">
         <button type="button" class="lightbox-close" id="lightbox-close" aria-label="Close">×</button>
