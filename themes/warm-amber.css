@@ -1,0 +1,85 @@
+/* ── Warm Amber theme ────────────────────────────────────────────────────── */
+:root,
+[data-theme="dark"] {
+    --bg: #111009;
+    --bg-elevated: #1c1810;
+    --surface: #221e14;
+    --surface-2: #2c2618;
+    --surface-border: rgba(210, 160, 80, 0.14);
+    --text: #f5ede0;
+    --muted: #d4a862;
+    --text-muted: #9a8060;
+    --accent: #c87d28;
+    --accent-2: #e8a030;
+    --accent-3: #f0c870;
+    --success: #8a9a6a;
+    --shadow: 0 24px 60px rgba(5, 3, 0, 0.6);
+    --radius: 22px;
+    --max-width: 1180px;
+
+    /* Ambient / hardcoded thematic colors */
+    --glow-primary: rgba(200, 125, 40, 0.10);
+    --glow-secondary: rgba(232, 160, 48, 0.06);
+    --glow-hero-primary: rgba(200, 125, 40, 0.18);
+    --glow-hero-secondary: rgba(232, 160, 48, 0.12);
+    --nav-bg: rgba(10, 7, 2, 0.88);
+    --nav-bg-fade: rgba(10, 7, 2, 0.42);
+    --grid-line: rgba(200, 155, 80, 0.04);
+    --about-overlay-1: rgba(200, 125, 40, 0.08);
+    --about-overlay-2: rgba(232, 160, 48, 0.05);
+    --tag-bg: rgba(200, 125, 40, 0.10);
+    --tag-border: rgba(200, 125, 40, 0.22);
+    --card-hover-border: rgba(200, 125, 40, 0.6);
+    --card-hover-shadow: rgba(5, 3, 0, 0.6);
+    --image-overlay: rgba(10, 7, 2, 0.7);
+    --contact-glow-1: rgba(200, 125, 40, 0.05);
+    --contact-glow-2: rgba(232, 160, 48, 0.03);
+    --email-bg-1: rgba(200, 125, 40, 0.12);
+    --email-bg-2: rgba(232, 160, 48, 0.10);
+    --social-hover-1: rgba(200, 125, 40, 0.18);
+    --social-hover-2: rgba(232, 160, 48, 0.14);
+    --cta-shadow: rgba(200, 125, 40, 0.35);
+    --section-tint: rgba(200, 125, 40, 0.03);
+    --project-image-overlay-1: rgba(200, 125, 40, 0.22);
+    --project-image-overlay-2: rgba(232, 160, 48, 0.12);
+    --project-cta-bg-1: rgba(200, 125, 40, 0.07);
+    --project-cta-bg-2: rgba(232, 160, 48, 0.05);
+}
+
+[data-theme="light"] {
+    --bg: #f5efe4;
+    --bg-elevated: #fffdf8;
+    --surface: #ede5d8;
+    --surface-2: #e0d4c0;
+    --surface-border: rgba(140, 90, 20, 0.12);
+    --text: #1c1408;
+    --muted: #7a5c28;
+    --text-muted: #8a7050;
+    --accent: #a06020;
+    --accent-2: #c87d28;
+    --accent-3: #d4a040;
+    --success: #5a7a40;
+    --shadow: 0 18px 45px rgba(60, 40, 10, 0.12);
+
+    --nav-bg: rgba(245, 239, 228, 0.92);
+    --nav-bg-fade: rgba(245, 239, 228, 0.52);
+    --tag-bg: rgba(160, 96, 32, 0.08);
+    --tag-border: rgba(160, 96, 32, 0.18);
+    --card-hover-border: rgba(160, 96, 32, 0.5);
+    --card-hover-shadow: rgba(60, 40, 10, 0.22);
+    --image-overlay: rgba(28, 20, 8, 0.5);
+    --contact-glow-1: rgba(160, 96, 32, 0.06);
+    --contact-glow-2: rgba(200, 125, 40, 0.04);
+    --email-bg-1: rgba(160, 96, 32, 0.10);
+    --email-bg-2: rgba(200, 125, 40, 0.08);
+    --social-hover-1: rgba(160, 96, 32, 0.12);
+    --social-hover-2: rgba(200, 125, 40, 0.10);
+    --cta-shadow: rgba(160, 96, 32, 0.30);
+    --about-overlay-1: rgba(160, 96, 32, 0.06);
+    --about-overlay-2: rgba(200, 125, 40, 0.04);
+    --glow-primary: rgba(160, 96, 32, 0.08);
+    --glow-secondary: rgba(200, 125, 40, 0.05);
+    --glow-hero-primary: rgba(160, 96, 32, 0.12);
+    --glow-hero-secondary: rgba(200, 125, 40, 0.08);
+    --grid-line: rgba(160, 120, 60, 0.05);
+}

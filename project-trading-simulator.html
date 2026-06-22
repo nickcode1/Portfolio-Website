@@ -10,61 +10,16 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;600;700&family=Playfair+Display:wght@700;900&family=Turret+Road:wght@400;700;800&display=swap" rel="stylesheet">
+    <!-- To switch themes, change the href below to any file in /themes/ -->
+    <link id="color-theme" rel="stylesheet" href="themes/warm-amber.css">
     <style>
-        :root,
-        [data-theme="dark"] {
-            --bg: #0b1020;
-            --bg-elevated: #10182f;
-            --surface: #0f1733;
-            --surface-2: #13204a;
-            --surface-border: rgba(148, 163, 184, 0.12);
-            --text: #eef4ff;
-            --muted: #a5b4fc;
-            --text-muted: #94a3b8;
-            --accent: #8b5cf6;
-            --accent-2: #22d3ee;
-            --accent-3: #f59e0b;
-            --shadow: 0 24px 60px rgba(2, 8, 23, 0.5);
-            --radius: 22px;
-            --max-width: 980px;
-        }
-
-        [data-theme="light"] {
-            --bg: #f7f8ff;
-            --bg-elevated: #ffffff;
-            --surface: #eef2ff;
-            --surface-2: #e2e8ff;
-            --surface-border: rgba(15, 23, 42, 0.08);
-            --text: #0f172a;
-            --muted: #475569;
-            --text-muted: #64748b;
-            --accent: #6d28d9;
-            --accent-2: #0891b2;
-            --accent-3: #d97706;
-            --shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body {
             font-family: 'Archivo', sans-serif;
-            background:
-                radial-gradient(circle at top, rgba(139, 92, 246, 0.10), transparent 18%),
-                var(--bg);
+            background: var(--bg);
             color: var(--text);
             line-height: 1.7;
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background-image:
-                linear-gradient(rgba(148, 163, 184, 0.035) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(148, 163, 184, 0.035) 1px, transparent 1px);
-            background-size: 42px 42px;
-            pointer-events: none;
-            opacity: 0.25;
         }
 
         nav {
@@ -77,14 +32,14 @@
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
-            background: linear-gradient(to bottom, rgba(7, 10, 22, 0.82), rgba(7, 10, 22, 0.38));
+            background: linear-gradient(to bottom, var(--nav-bg), var(--nav-bg-fade));
             backdrop-filter: blur(18px);
             -webkit-backdrop-filter: blur(18px);
             border-bottom: 1px solid var(--surface-border);
         }
 
         [data-theme="light"] nav {
-            background: linear-gradient(to bottom, rgba(247, 248, 255, 0.88), rgba(247, 248, 255, 0.48));
+            background: linear-gradient(to bottom, var(--nav-bg), var(--nav-bg-fade));
         }
 
         .logo {
@@ -152,31 +107,6 @@
             position: relative;
         }
 
-        .project-hero::before,
-        .project-hero::after {
-            content: '';
-            position: absolute;
-            border-radius: 999px;
-            filter: blur(16px);
-            opacity: 0.18;
-        }
-
-        .project-hero::before {
-            width: 260px;
-            height: 260px;
-            left: 10%;
-            top: 8%;
-            background: radial-gradient(circle, var(--accent), transparent 70%);
-        }
-
-        .project-hero::after {
-            width: 220px;
-            height: 220px;
-            right: 10%;
-            bottom: 0;
-            background: radial-gradient(circle, var(--accent-2), transparent 70%);
-        }
-
         .project-hero h1 {
             font-family: 'Turret Road', serif;
             font-size: clamp(3rem, 5vw, 4.6rem);
@@ -232,7 +162,7 @@
             max-width: 1120px;
             margin: 0 auto;
             min-height: 420px;
-            background: linear-gradient(135deg, rgba(139,92,246,0.22), rgba(34,211,238,0.12));
+            background: linear-gradient(135deg, var(--project-image-overlay-1), var(--project-image-overlay-2));
             border: 1px solid var(--surface-border);
             border-radius: var(--radius);
             position: relative;
@@ -305,8 +235,8 @@
         }
 
         .tech-item {
-            background: rgba(139,92,246,0.08);
-            border: 1px solid rgba(139,92,246,0.18);
+            background: var(--tag-bg);
+            border: 1px solid var(--tag-border);
             color: var(--muted);
             border-radius: 999px;
             padding: 0.4rem 0.8rem;
@@ -317,7 +247,7 @@
             padding: 5rem 2rem 3.5rem;
             text-align: center;
             position: relative;
-            background: linear-gradient(180deg, transparent 0%, rgba(139,92,246,0.07) 40%, rgba(34,211,238,0.05) 100%);
+            background: linear-gradient(180deg, transparent 0%, var(--project-cta-bg-1) 40%, var(--project-cta-bg-2) 100%);
             border-top: 1px solid var(--surface-border);
         }
 
