@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        (function(){ var k='portfolio-theme',t; try{t=localStorage.getItem(k);}catch(e){} if(!t&&typeof matchMedia!=='undefined'&&matchMedia('(prefers-color-scheme: light)').matches)t='light'; document.documentElement.setAttribute('data-theme',t||'dark'); })();
+    </script>
+    <title>SkySweep - Nick's Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;600;700&family=Playfair+Display:wght@700;900&family=Turret+Road:wght@400;700;800&display=swap" rel="stylesheet">
+    <link id="color-theme" rel="stylesheet" href="themes/ellisdon-blue.css">
+    <style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Archivo', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: linear-gradient(to bottom, var(--nav-bg), var(--nav-bg-fade));
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-bottom: 1px solid var(--surface-border);
+        }
+
+        [data-theme="light"] nav {
+            background: linear-gradient(to bottom, var(--nav-bg), var(--nav-bg-fade));
+        }
+
+        .logo {
+            font-family: 'Turret Road', serif;
+            font-size: 1rem;
+            font-weight: 800;
+            letter-spacing: 0.18em;
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .logo:hover { color: var(--accent); }
+
+        nav ul {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: clamp(1rem, 2.8vw, 2rem);
+            list-style: none;
+        }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-2));
+            transition: width 0.3s;
+        }
+        nav a:hover { color: var(--text); }
+        nav a:hover::after { width: 100%; }
+
+        .theme-toggle { display: flex; align-items: center; margin-left: 1rem; }
+        #theme-toggle-btn {
+            background: var(--bg-elevated);
+            border: 1px solid var(--surface-border);
+            color: var(--text);
+            width: 2.75rem;
+            height: 2.75rem;
+            border-radius: 999px;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .project-hero {
+            padding: 9rem 2rem 4rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .project-hero h1 {
+            font-family: 'Turret Road', serif;
+            font-size: clamp(3rem, 5vw, 4.6rem);
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            line-height: 0.95;
+            margin-bottom: 1rem;
+            max-width: 860px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .project-hero .subtitle {
+            font-size: 1rem;
+            color: var(--text-muted);
+            max-width: 720px;
+            margin: 0 auto 2rem;
+        }
+
+        .project-meta {
+            display: flex;
+            gap: 0.8rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            background: linear-gradient(180deg, var(--bg-elevated), var(--surface));
+            border: 1px solid var(--surface-border);
+            border-radius: 999px;
+            padding: 0.5rem 0.9rem;
+            min-width: 140px;
+        }
+
+        .meta-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--text-muted);
+        }
+
+        .meta-value {
+            font-size: 0.95rem;
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .project-image-large {
+            padding: 0 2rem 3rem;
+        }
+
+        .project-image-large .image-container {
+            max-width: 1120px;
+            margin: 0 auto;
+        }
+
+        .project-content {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 2rem 2rem 6rem;
+        }
+
+        .content-section {
+            background: linear-gradient(180deg, var(--bg-elevated), var(--surface));
+            border: 1px solid var(--surface-border);
+            border-radius: var(--radius);
+            padding: 1.8rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .content-section h2 {
+            font-family: 'Turret Road', serif;
+            font-size: 1.9rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 0.9rem;
+        }
+
+        .content-section h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-top: 1.2rem;
+            margin-bottom: 0.4rem;
+            color: var(--accent);
+        }
+
+        .content-section p,
+        .content-section li {
+            color: var(--text-muted);
+            font-size: 0.98rem;
+            line-height: 1.75;
+        }
+
+        .content-section p + p { margin-top: 0.75rem; }
+
+        .content-section ul { list-style: none; padding-left: 0; }
+        .content-section li { padding-left: 1rem; position: relative; margin-bottom: 0.35rem; }
+        .content-section li::before {
+            content: '—';
+            position: absolute;
+            left: 0;
+            color: var(--accent-2);
+        }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .two-col .col h3 {
+            margin-top: 0;
+        }
+
+        .three-col {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.2rem;
+            margin-top: 1rem;
+        }
+
+        .feature-card {
+            background: var(--bg);
+            border: 1px solid var(--surface-border);
+            border-radius: calc(var(--radius) - 4px);
+            padding: 1.2rem;
+        }
+
+        .feature-card h4 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .feature-card p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.65;
+        }
+
+        .pipeline-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            margin-top: 0.8rem;
+        }
+
+        .pipeline-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .step-number {
+            flex-shrink: 0;
+            width: 1.8rem;
+            height: 1.8rem;
+            border-radius: 999px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            color: var(--bg);
+            font-size: 0.78rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 0.1rem;
+        }
+
+        .step-text strong {
+            color: var(--text);
+            font-weight: 700;
+        }
+
+        .step-text {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.65;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .comparison-table th {
+            text-align: left;
+            padding: 0.6rem 0.8rem;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--surface-border);
+        }
+
+        .comparison-table th:not(:first-child) { text-align: center; }
+
+        .comparison-table td {
+            padding: 0.65rem 0.8rem;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--surface-border);
+            font-size: 0.88rem;
+        }
+
+        .comparison-table td:not(:first-child) { text-align: center; }
+
+        .comparison-table tr:last-child td { border-bottom: none; }
+
+        .check { color: #4ade80; font-size: 1rem; }
+        .cross { color: #f87171; font-size: 1rem; }
+
+        .col-us { color: var(--accent); font-weight: 700; }
+
+        .tech-stack {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+        }
+
+        .tech-item {
+            background: var(--tag-bg);
+            border: 1px solid var(--tag-border);
+            color: var(--muted);
+            border-radius: 999px;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.82rem;
+        }
+
+        .cta-section {
+            padding: 5rem 2rem 3.5rem;
+            text-align: center;
+            position: relative;
+            background: linear-gradient(180deg, transparent 0%, var(--project-cta-bg-1) 40%, var(--project-cta-bg-2) 100%);
+            border-top: 1px solid var(--surface-border);
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-2));
+            border-radius: 2px;
+        }
+
+        .cta-section h2 {
+            font-family: 'Turret Road', serif;
+            font-size: 2rem;
+            margin-bottom: 1.4rem;
+        }
+
+        .cta-buttons { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+        .btn {
+            text-decoration: none;
+            padding: 0.9rem 1.4rem;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+        .btn-primary {
+            background: var(--text);
+            color: var(--bg);
+        }
+        .btn-secondary {
+            border: 1px solid var(--surface-border);
+            color: var(--text);
+            background: var(--bg-elevated);
+        }
+
+        .cta-footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--surface-border);
+            color: var(--text-muted);
+            font-size: 0.82rem;
+            letter-spacing: 0.04em;
+        }
+
+        .project-gallery {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .gallery-item {
+            background: linear-gradient(180deg, var(--bg-elevated), var(--surface));
+            border: 1px solid var(--surface-border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            aspect-ratio: 4 / 3;
+        }
+
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            background: rgba(2, 8, 23, 0.88);
+            backdrop-filter: blur(12px);
+        }
+
+        .lightbox.active { display: flex; }
+
+        .lightbox-content {
+            max-width: min(1180px, 92vw);
+            max-height: 86vh;
+            object-fit: contain;
+            border-radius: 14px;
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+        }
+
+        .lightbox-close {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            width: 2.75rem;
+            height: 2.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 999px;
+            background: rgba(15, 23, 42, 0.75);
+            color: #fff;
+            cursor: pointer;
+            font-size: 1.8rem;
+            line-height: 1;
+        }
+
+        @media (max-width: 768px) {
+            nav { padding: 1rem 1rem; }
+            nav ul { display: none; }
+            .project-hero { padding: 8rem 1rem 3rem; }
+            .project-content { padding: 1rem 0.75rem 5rem; }
+            .project-image-large { padding: 0 0.75rem 2rem; }
+            .content-section { padding: 1.4rem; }
+            .project-gallery { grid-template-columns: 1fr; }
+            .two-col { grid-template-columns: 1fr; }
+            .three-col { grid-template-columns: 1fr; }
+            .image-container img { max-width: 80%; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">NICK HARRISON</a>
+        <ul>
+            <li><a href="index.html#about">About</a></li>
+            <li><a href="index.html#projects">Projects</a></li>
+            <li><a href="index.html#publications">Publications</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+        <div class="theme-toggle">
+            <button type="button" id="theme-toggle-btn" aria-label="Switch to light mode">☀</button>
+        </div>
+    </nav>
+
+    <section class="project-hero">
+        <h1>SkySweep</h1>
+        <p class="subtitle">Securing the skies of tomorrow, today — a computer-vision anti-drone detection and interception system built at a university hackathon in less than 20 hours.</p>
+
+        <div class="project-meta">
+            <div class="meta-item">
+                <div class="meta-label">Year</div>
+                <div class="meta-value">2026</div>
+            </div>
+            <div class="meta-item">
+                <div class="meta-label">Event</div>
+                <div class="meta-value">Hackathon</div>
+            </div>
+            <div class="meta-item">
+                <div class="meta-label">Result</div>
+                <div class="meta-value">2nd Place</div>
+            </div>
+            <div class="meta-item">
+                <div class="meta-label">My Role</div>
+                <div class="meta-value">Hardware Systems Architect</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="project-image-large">
+        <div class="image-container" style="min-height: unset; background: none; padding: 0;">
+            <img src="images/Projects/SKYSWEEP/LOGO.png" alt="SkySweep Logo" style="width: 100%; height: auto; display: block; border-radius: var(--radius);">
+        </div>
+    </section>
+
+    <section class="project-content">
+
+        <div class="content-section reveal" data-reveal>
+            <h2>The Problem</h2>
+            <div class="two-col">
+                <div class="col">
+                    <h3>Civilian Vulnerability</h3>
+                    <ul>
+                        <li>Commercial airports lose millions from rogue drone shutdowns</li>
+                        <li>Secure areas like nuclear plants face serious espionage risks</li>
+                        <li>VIP privacy is constantly invaded by consumer drones</li>
+                    </ul>
+                </div>
+                <div class="col">
+                    <h3>Defense Vulnerability</h3>
+                    <ul>
+                        <li>Mobile scout units and forward operating bases (FOBs) are highly vulnerable to cheap, payload-carrying drone swarms</li>
+                        <li>Traditional countermeasures fail against small, fast, low-altitude targets</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section reveal" data-reveal>
+            <h2>Our Solution</h2>
+            <p>
+                SkySweep is a cost-effective, rapid-response optical AI system. We built a computer-vision-based automated tracking and portable interception turret that identifies and intercepts threats in real-time using purely optical detection — no radio emissions, no spectrum disruption.
+            </p>
+            <p>
+                The result: immediate, localized protection without disrupting the local radio spectrum or endangering civilian infrastructure.
+            </p>
+        </div>
+
+        <div class="content-section reveal" data-reveal>
+            <h2>System Architecture</h2>
+            <p>Optical AI beats radar for small, low-flying targets.</p>
+            <div class="pipeline-steps">
+                <div class="pipeline-step">
+                    <div class="step-number">1</div>
+                    <div class="step-text"><strong>Raw Video Input</strong> — High-framerate cameras continuously capture the airspace.</div>
+                </div>
+                <div class="pipeline-step">
+                    <div class="step-number">2</div>
+                    <div class="step-text"><strong>AI Detection</strong> — A custom computer-vision model identifies drone coordinates (X, Y) in real-time.</div>
+                </div>
+                <div class="pipeline-step">
+                    <div class="step-number">3</div>
+                    <div class="step-text"><strong>UI Mapping</strong> — Coordinates are mapped onto a 2D operator interface showing live threat positions.</div>
+                </div>
+                <div class="pipeline-step">
+                    <div class="step-number">4</div>
+                    <div class="step-text"><strong>Control System</strong> — Telemetry is sent directly to a hardware microcontroller.</div>
+                </div>
+                <div class="pipeline-step">
+                    <div class="step-number">5</div>
+                    <div class="step-text"><strong>Physical Tracking</strong> — The turret autonomously tracks and aims at the drone's flight path.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section reveal" data-reveal>
+            <h2>Competitive Advantage</h2>
+            <p>Current solutions either disrupt local communications, destroy friendly electronics, or cost millions. SkySweep fills the tactical gap.</p>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Capability</th>
+                        <th class="col-us">SkySweep</th>
+                        <th>RF Jamming</th>
+                        <th>Targeted EMPs</th>
+                        <th>Radar + Kinetic</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Localized Protection (No Radio Interference)</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Safe for Civilian Infrastructure (No Collateral)</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="cross">✗</span></td>
+                    </tr>
+                    <tr>
+                        <td>Cost-Effective Scalability &amp; Deployment</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="cross">✗</span></td>
+                    </tr>
+                    <tr>
+                        <td>Passive Detection (Zero Electronic Signature)</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="cross">✗</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="content-section reveal" data-reveal>
+            <h2>Deployment Versatility</h2>
+            <div class="two-col">
+                <div class="col">
+                    <h3>Civilian Infrastructure</h3>
+                    <p>Permanently mounted around critical infrastructure perimeters or airport control towers to ensure commercial flight paths remain clear and safe.</p>
+                </div>
+                <div class="col">
+                    <h3>Defense &amp; Tactical</h3>
+                    <p>Lightweight enough to be mounted onto mobile infantry vehicles or temporarily deployed on tripods to protect forward operating bases (FOBs).</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="project-gallery reveal" data-reveal style="grid-template-columns: 1fr;">
+            <div class="gallery-item" data-lightbox-video="Videos/Airport Control Demo.mp4" style="aspect-ratio: 16/9;">
+                <video src="Videos/Airport Control Demo.mp4" muted loop playsinline autoplay style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;"></video>
+            </div>
+        </div>
+
+        <div class="content-section reveal" data-reveal>
+            <h2>Security &amp; Misuse Mitigations</h2>
+            <p>Proactively engineering safeguards against accidental targeting and both physical and remote exploitation.</p>
+            <div class="three-col">
+                <div class="feature-card">
+                    <h4>Identify Friend or Foe</h4>
+                    <p>Integrates IFF protocols so that authorized commercial, medical, or military logistics drones are entirely bypassed.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Air-Gapped Core</h4>
+                    <p>No remote access to the processing core prevents remote cyber-attacks and unauthorized system takeover.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Physical Override</h4>
+                    <p>Hardware and firmware enforce strict access limits, physically preventing the system from being repurposed for rogue operations.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section reveal" data-reveal>
+            <h2>Roadmap</h2>
+            <h3>MVP Delivered</h3>
+            <p>
+                A working UI capable of identifying and tracking drones in real-time, paired with a physical launch apparatus that swivels and aims dynamically based on the detection feed. The current prototype requires a manual control trigger to fire.
+            </p>
+            <h3>Future Development</h3>
+            <ul>
+                <li>Integrate LiDAR for significantly improved 3D tracking depth and accuracy</li>
+                <li>Improve reliability of the drone detection algorithm across varied lighting and backgrounds</li>
+                <li>Detect the unique acoustic signature of a drone swarm against ambient environmental noise</li>
+                <li>Connect raw telemetry data directly to the turret system for fully autonomous operation</li>
+            </ul>
+        </div>
+
+        <div class="content-section reveal" data-reveal style="text-align: center;">
+            <h2>Technology Stack</h2>
+            <div class="tech-stack">
+                <div class="tech-item">Python</div>
+                <div class="tech-item">Computer Vision</div>
+                <div class="tech-item">Custom AI Detection Model</div>
+                <div class="tech-item">Embedded Systems</div>
+                <div class="tech-item">Hardware Systems</div>
+                <div class="tech-item">Microcontroller</div>
+                <div class="tech-item">Servo Control</div>
+                <div class="tech-item">Collaboration</div>
+            </div>
+        </div>
+
+    </section>
+
+    <section class="cta-section reveal" data-reveal>
+        <h2>Interested in similar work?</h2>
+        <div class="cta-buttons">
+            <a href="index.html#contact" class="btn btn-primary">Get in Touch</a>
+            <a href="index.html#projects" class="btn btn-secondary">View More Projects</a>
+        </div>
+        <div class="cta-footer">Nick Harrison — Portfolio</div>
+    </section>
+
+    <div class="lightbox" id="lightbox" aria-hidden="true">
+        <button type="button" class="lightbox-close" id="lightbox-close" aria-label="Close">×</button>
+        <img class="lightbox-content" id="lightbox-img" src="" alt="Enlarged view">
+        <video class="lightbox-content" id="lightbox-video" controls playsinline style="display:none;">
+            <source id="lightbox-video-source" src="" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <script src="theme.js"></script>
+    <script>
+        (function () {
+            var reveals = document.querySelectorAll('[data-reveal]');
+            var observer = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                    }
+                });
+            }, { rootMargin: '0px 0px -60px 0px', threshold: 0.1 });
+
+            reveals.forEach(function (el) { observer.observe(el); });
+
+            var lightbox = document.getElementById('lightbox');
+            var lightboxImg = document.getElementById('lightbox-img');
+            var lightboxVideo = document.getElementById('lightbox-video');
+            var lightboxVideoSource = document.getElementById('lightbox-video-source');
+            var lightboxClose = document.getElementById('lightbox-close');
+
+            function closeLightbox() {
+                if (!lightbox) return;
+                lightbox.classList.remove('active');
+                lightbox.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+                if (lightboxImg) lightboxImg.src = '';
+                if (lightboxVideo) {
+                    lightboxVideo.pause();
+                    lightboxVideo.currentTime = 0;
+                    lightboxVideo.style.display = 'none';
+                }
+                if (lightboxVideoSource) lightboxVideoSource.src = '';
+                if (lightboxVideo) lightboxVideo.load();
+            }
+
+            if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
+            if (lightbox) lightbox.addEventListener('click', function (ev) {
+                if (ev.target === lightbox) closeLightbox();
+            });
+            document.addEventListener('keydown', function (ev) {
+                if (ev.key === 'Escape') closeLightbox();
+            });
+        })();
+    </script>
+</body>
+</html>
