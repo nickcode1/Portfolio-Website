@@ -1,0 +1,91 @@
+/* ── EllisDon Blue theme ──────────────────────────────────────────────────── */
+/* Brand colors: #0C5EAB (Tory Blue), #0032A0 (International Klein Blue), #E7ECF6 (White Lilac) */
+:root,
+[data-theme="dark"] {
+    --bg: #020b1e;
+    --bg-elevated: #051530;
+    --surface: #081d45;
+    --surface-2: #0c255a;
+    --surface-border: rgba(12, 94, 171, 0.28);
+    --text: #f0f5ff;
+    --muted: #7aacd8;
+    --text-muted: #4e7aaa;
+    --accent: #f0f5ff;
+    --accent-2: #0C5EAB;
+    --accent-3: #5c9cd8;
+    --success: #5a9a7a;
+    --shadow: 0 24px 60px rgba(1, 4, 14, 0.70);
+    --radius: 22px;
+    --max-width: 1180px;
+
+    /* Ambient / hardcoded thematic colors */
+    --glow-primary: rgba(12, 94, 171, 0.14);
+    --glow-secondary: rgba(0, 50, 160, 0.08);
+    --glow-hero-primary: rgba(12, 94, 171, 0.22);
+    --glow-hero-secondary: rgba(0, 50, 160, 0.14);
+    --nav-bg: rgba(2, 6, 18, 0.90);
+    --nav-bg-fade: rgba(2, 6, 18, 0.44);
+    --grid-line: rgba(12, 94, 171, 0.05);
+    --about-overlay-1: rgba(12, 94, 171, 0.10);
+    --about-overlay-2: rgba(0, 50, 160, 0.06);
+    --tag-bg: rgba(12, 94, 171, 0.12);
+    --tag-border: rgba(12, 94, 171, 0.28);
+    --card-hover-border: rgba(12, 94, 171, 0.65);
+    --card-hover-shadow: rgba(1, 4, 14, 0.70);
+    --image-overlay: rgba(2, 6, 18, 0.72);
+    --contact-glow-1: rgba(12, 94, 171, 0.06);
+    --contact-glow-2: rgba(0, 50, 160, 0.04);
+    --email-bg-1: rgba(12, 94, 171, 0.14);
+    --email-bg-2: rgba(0, 50, 160, 0.10);
+    --social-hover-1: rgba(12, 94, 171, 0.20);
+    --social-hover-2: rgba(0, 50, 160, 0.14);
+    --cta-shadow: rgba(12, 94, 171, 0.40);
+    --section-tint: rgba(12, 94, 171, 0.04);
+    --project-image-overlay-1: rgba(12, 94, 171, 0.24);
+    --project-image-overlay-2: rgba(0, 50, 160, 0.14);
+    --project-cta-bg-1: rgba(12, 94, 171, 0.09);
+    --project-cta-bg-2: rgba(0, 50, 160, 0.06);
+}
+
+[data-theme="light"] {
+    --bg: #ffffff;
+    --bg-elevated: #f5f8ff;
+    --surface: #E7ECF6;
+    --surface-2: #d4dcee;
+    --surface-border: rgba(0, 50, 160, 0.14);
+    --text: #06102a;
+    --muted: #0032A0;
+    --text-muted: #4a6aaa;
+    --accent: #0032A0;
+    --accent-2: #0C5EAB;
+    --accent-3: #3a80c8;
+    --success: #2a6a4a;
+    --shadow: 0 18px 45px rgba(0, 20, 80, 0.13);
+
+    --nav-bg: rgba(255, 255, 255, 0.94);
+    --nav-bg-fade: rgba(255, 255, 255, 0.54);
+    --tag-bg: rgba(0, 50, 160, 0.08);
+    --tag-border: rgba(0, 50, 160, 0.20);
+    --card-hover-border: rgba(0, 50, 160, 0.52);
+    --card-hover-shadow: rgba(0, 20, 80, 0.22);
+    --image-overlay: rgba(2, 8, 40, 0.52);
+    --contact-glow-1: rgba(0, 50, 160, 0.06);
+    --contact-glow-2: rgba(12, 94, 171, 0.04);
+    --email-bg-1: rgba(0, 50, 160, 0.10);
+    --email-bg-2: rgba(12, 94, 171, 0.08);
+    --social-hover-1: rgba(0, 50, 160, 0.12);
+    --social-hover-2: rgba(12, 94, 171, 0.10);
+    --cta-shadow: rgba(0, 50, 160, 0.32);
+    --about-overlay-1: rgba(0, 50, 160, 0.06);
+    --about-overlay-2: rgba(12, 94, 171, 0.04);
+    --glow-primary: rgba(0, 50, 160, 0.08);
+    --glow-secondary: rgba(12, 94, 171, 0.05);
+    --glow-hero-primary: rgba(0, 50, 160, 0.13);
+    --glow-hero-secondary: rgba(12, 94, 171, 0.08);
+    --grid-line: rgba(0, 50, 160, 0.05);
+    --section-tint: rgba(0, 50, 160, 0.03);
+    --project-image-overlay-1: rgba(0, 50, 160, 0.22);
+    --project-image-overlay-2: rgba(12, 94, 171, 0.12);
+    --project-cta-bg-1: rgba(0, 50, 160, 0.07);
+    --project-cta-bg-2: rgba(12, 94, 171, 0.05);
+}

@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
      <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;600;700&family=Playfair+Display:wght@700;900&family=Turret+Road:wght@400;700;800&display=swap" rel="stylesheet">
     <!-- To switch themes, change the href below to any file in /themes/ -->
-    <link id="color-theme" rel="stylesheet" href="themes/warm-amber.css">
+    <link id="color-theme" rel="stylesheet" href="themes/ellisdon-blue.css">
     <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
@@ -249,6 +249,11 @@
             background-color: rgba(238, 242, 255, 0.8);
         }
 
+        [data-theme="light"] .servo-mount-wrap,
+        [data-theme="dark"] .servo-mount-wrap {
+            background: #fff;
+        }
+
         .gallery-item img {
             display: block;
             width: 100%;
@@ -258,16 +263,21 @@
             border-radius: calc(var(--radius) - 8px);
         }
 
-        .servo-mount-image {
-            width: 100%;
-            height: 100%;
-            transform: translateY(20%) scale(2);
-            object-fit: cover;
-        }
-
         .servo-mount-wrap {
             height: 320px;
             overflow: hidden;
+            padding: 0;
+            background: #fff;
+            position: relative;
+        }
+
+        .servo-mount-image {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scale(2);
         }
 
         .gallery-item figcaption {
@@ -491,13 +501,14 @@
                
             </figure>
 
-            <figure class="gallery-item" data-lightbox="images/Projects/EFC/Aileron Servo Mount ME5953 With 6.5 inch Chord v13.png">
-                <div class="gallery-image-wrap servo-mount-wrap">
-                    <img class="servo-mount-image" src="images/Projects/EFC/Aileron Servo Mount ME5953 With 6.5 inch Chord v13.png" alt="Aileron servo mount CAD design for the RC plane wing" loading="lazy">
+              <figure class="gallery-item" data-lightbox="images/Projects/EFC/Aileron Servo Mount ME5953 With 6.5 inch Chord v13.png">
+                <div class="gallery-image-wrap" background-size= 200%>
+                    <img src="images\Projects\EFC\Aileron Servo Mount ME5953 With 6.5 inch Chord v13.png" alt="Aileron servo mount CAD design for the RC plane wing" loading="lazy" background-size= 200%>
                 </div>
-            
+               
             </figure>
 
+            
             <figure class="gallery-item" data-lightbox="images/Projects/EFC/Section view aileron.png">
                 <div class="gallery-image-wrap">
                     <img src="images/Projects/EFC/Section view aileron.png" alt="Section view of the aileron assembly" loading="lazy">
