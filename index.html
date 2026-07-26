@@ -255,15 +255,16 @@
 
         .about-image {
             width: min(520px, 100%);
-            aspect-ratio: 0.9;
+            aspect-ratio: 1;
             margin-left: auto;
             border-radius: var(--radius);
             position: relative;
             overflow: hidden;
-            box-shadow: var(--shadow);
+            /* box-shadow: var(--shadow); */
             background:
                 linear-gradient(180deg, var(--about-overlay-1), var(--about-overlay-2)),
                 url('images/profile.jpg') center/cover no-repeat;
+            background-size: cover;
         }
 
     
@@ -557,7 +558,7 @@
                     I have created this website to showcase these products, some coming from personal endeavors, and some from my schoolwork and design teams.
                 </p>
             </div>
-            <div class="about-image" style="background-image: url(images/profile.jpg);"></div>
+            <div class="about-image" style="background-image: url(images/profile_trans.png);"></div>
                 
         </div>
     </section>
