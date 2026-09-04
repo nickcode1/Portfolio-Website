@@ -408,6 +408,14 @@
             aspect-ratio: 4 / 3;
         }
 
+        .gallery-item img,
+        .gallery-item video {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+        }
+
         .lightbox {
             position: fixed;
             inset: 0;
@@ -623,10 +631,15 @@
             </div>
         </div>
 
-        <div class="project-gallery reveal" data-reveal style="grid-template-columns: 1fr;">
-            <div class="gallery-item" data-lightbox-video="Videos/Airport Control Demo.mp4" style="aspect-ratio: 16/9;">
+        <div class="project-gallery reveal" data-reveal>
+            
+            <div class="gallery-item" data-lightbox-video="Videos/Airport Control Demo.mp4" style="aspect-ratio: 3 / 2;">
                 <video src="Videos/Airport Control Demo.mp4" muted loop playsinline autoplay style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;"></video>
             </div>
+            <div class="gallery-item" data-lightbox-img="images/Projects/SKYSWEEP/Vehicle-mounted-Centauri-TriAD-counter-drone-system.jpg" style="aspect-ratio: 3 / 2;" role="button" tabindex="0" aria-label="Enlarge vehicle-mounted counter-drone system render">
+                <img src="images/Projects/SKYSWEEP/Vehicle-mounted-Centauri-TriAD-counter-drone-system.jpg" alt="Vehicle-mounted counter-drone system illustrating SkySweep's defense and tactical deployment use case">
+            </div>
+        
         </div>
 
         <div class="content-section reveal" data-reveal>
@@ -717,12 +730,27 @@
             var lightboxVideoSource = document.getElementById('lightbox-video-source');
             var lightboxClose = document.getElementById('lightbox-close');
 
+            function openImageLightbox(src, alt) {
+                if (!lightbox || !lightboxImg) return;
+                if (lightboxVideo) {
+                    lightboxVideo.pause();
+                    lightboxVideo.style.display = 'none';
+                }
+                lightboxImg.src = src;
+                lightboxImg.alt = alt || 'Enlarged gallery image';
+                lightboxImg.style.display = 'block';
+                lightbox.classList.add('active');
+                lightbox.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+            }
+
             function closeLightbox() {
                 if (!lightbox) return;
                 lightbox.classList.remove('active');
                 lightbox.setAttribute('aria-hidden', 'true');
                 document.body.style.overflow = '';
                 if (lightboxImg) lightboxImg.src = '';
+                if (lightboxImg) lightboxImg.style.display = 'block';
                 if (lightboxVideo) {
                     lightboxVideo.pause();
                     lightboxVideo.currentTime = 0;
@@ -731,6 +759,20 @@
                 if (lightboxVideoSource) lightboxVideoSource.src = '';
                 if (lightboxVideo) lightboxVideo.load();
             }
+
+            document.querySelectorAll('[data-lightbox-img]').forEach(function (item) {
+                function open() {
+                    var image = item.querySelector('img');
+                    openImageLightbox(item.getAttribute('data-lightbox-img'), image ? image.alt : 'Enlarged gallery image');
+                }
+                item.addEventListener('click', open);
+                item.addEventListener('keydown', function (ev) {
+                    if (ev.key === 'Enter' || ev.key === ' ') {
+                        ev.preventDefault();
+                        open();
+                    }
+                });
+            });
 
             if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
             if (lightbox) lightbox.addEventListener('click', function (ev) {
