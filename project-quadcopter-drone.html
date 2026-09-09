@@ -13,7 +13,7 @@
     <!-- To switch themes, change the href below to any file in /themes/ -->
     <link id="color-theme" rel="stylesheet" href="themes/blue.css">
     <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body {
             font-family: 'Archivo', sans-serif;
@@ -159,7 +159,7 @@
             height: 100vh;
             height: 100svh;
             padding: 0;
-            background: #000;
+            background: var(--bg); /* Blends naturally with page */
             position: relative;
         }
 
@@ -168,7 +168,7 @@
             height: 100%;
             max-width: none;
             margin: 0;
-            background: #000;
+            background: transparent;
             border: 0;
             border-radius: 0;
             position: relative;
@@ -177,14 +177,17 @@
             background-size: contain;
         }
 
+        /* Top and Bottom Fades for Seamless Section Blending */
         .project-image-large .image-container::after {
             content: '';
             position: absolute;
             inset: 0;
             z-index: 1;
             pointer-events: none;
-            background: linear-gradient(90deg, rgba(5, 8, 13, 0.78) 0%, rgba(5, 8, 13, 0.35) 42%, transparent 72%),
-                        linear-gradient(0deg, var(--bg) 0%, rgba(5, 8, 13, 0.9) 13%, transparent 43%);
+            background: 
+                linear-gradient(90deg, rgba(5, 8, 13, 0.78) 0%, rgba(5, 8, 13, 0.35) 42%, transparent 72%),
+                linear-gradient(0deg, var(--bg) 0%, transparent 15%),
+                linear-gradient(180deg, var(--bg) 0%, transparent 15%);
         }
 
         .video-intro {
@@ -254,18 +257,20 @@
         }
 
         .project-information .image-container::after {
-            background: linear-gradient(90deg, rgba(5, 8, 13, 0.9) 0%, rgba(5, 8, 13, 0.64) 51%, rgba(5, 8, 13, 0.3) 100%),
-                        linear-gradient(0deg, rgba(5, 8, 13, 0.8), transparent 42%);
+            background: 
+                linear-gradient(90deg, rgba(5, 8, 13, 0.95) 0%, rgba(5, 8, 13, 0.6) 45%, transparent 100%),
+                linear-gradient(0deg, var(--bg) 0%, transparent 15%),
+                linear-gradient(180deg, var(--bg) 0%, transparent 15%);
         }
 
+        /* Fixed Overlay Layout */
         .information-overlay {
             position: absolute;
             inset: clamp(1.5rem, 6vw, 5.5rem);
             z-index: 2;
-            display: grid;
-            grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
-            gap: clamp(2rem, 8vw, 8rem);
-            align-items: end;
+            display: flex;
+            align-items: center; /* Vertically centers the text box */
+            justify-content: flex-start;
             color: #fff;
         }
 
@@ -280,8 +285,6 @@
             letter-spacing: 0.2em;
             text-align: right;
             text-transform: uppercase;
-          
-
         }
 
         .information-overlay h2 {
@@ -301,32 +304,23 @@
             font-size: 1.02rem;
         }
 
+        /* Fixed Text Box Formatting */
         .information-note {
-            align-self: center;
-            justify-self: left;
-            width: min(100%, 35rem);
-            padding: clamp(1.5rem, 3vw, 2.5rem);
-            border: 1px solid rgba(255, 255, 255, 0.28);
-            background: rgba(9, 11, 16, 0.45);
-            backdrop-filter: blur(12px);
+            width: min(100%, 36rem);
+            padding: clamp(2rem, 4vw, 3rem);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(9, 11, 16, 0.65); /* Sleek translucent dark */
+            backdrop-filter: blur(16px);
+            border-radius: 16px; /* Smooth rounded corners */
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
         }
 
         .information-note p {
-            color: rgba(255, 255, 255, 0.86);
-            font-size: clamp(1rem, 1.3vw, 1.14rem);
+            color: rgba(255, 255, 255, 0.95);
+            font-size: clamp(1.05rem, 1.4vw, 1.2rem);
             line-height: 1.8;
+            margin: 0;
         }
-/* 
-        .image-container::before,
-        .image-container::after {
-            content: '';
-            position: absolute;
-            background: linear-gradient(90deg, var(--accent), var(--accent-2));
-            opacity: 0.12;
-            border-radius: 999px;
-        }
-        .image-container::before { width: 240px; height: 240px; left: 10%; top: 12%; }
-        .image-container::after { width: 180px; height: 180px; right: 8%; bottom: 10%; } */
 
         .project-content {
             max-width: var(--max-width);
@@ -334,22 +328,24 @@
             padding: 0 2rem 6rem;
         }
 
+        /* Extracted Bridge for Smooth Transitions */
         .section-bridge {
-            padding: 2.8rem 0 2.3rem;
+            padding: 4rem 2rem;
             color: var(--accent-2);
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             font-weight: 700;
             letter-spacing: 0.2em;
             text-align: center;
             text-transform: uppercase;
+            background: var(--bg);
         }
 
         .section-bridge::after {
             content: '';
             display: block;
             width: 1px;
-            height: 2.4rem;
-            margin: 1rem auto 0;
+            height: 3rem;
+            margin: 1.5rem auto 0;
             background: linear-gradient(var(--accent-2), transparent);
         }
 
@@ -528,18 +524,26 @@
             nav ul { display: none; }
             .project-hero { padding: 8rem 1rem 3rem; }
             .project-content { padding: 0 0.75rem 5rem; }
-            .section-bridge { padding: 2.2rem 0 1.8rem; }
+            .section-bridge { padding: 3rem 1rem; }
             .project-image-large { height: 100svh; }
             .project-information { height: auto; min-height: 680px; }
             .video-intro { bottom: 2.5rem; }
             .video-intro-summary { max-width: 22rem; }
-            .information-overlay { grid-template-columns: 1fr; gap: 2rem; }
-            .information-overlay h2 { max-width: 13ch; }
-            .information-note { justify-self: start; }
+            
+            /* Responsive Text Box Update */
+            .information-overlay { 
+                align-items: flex-end; /* Push to bottom on mobile so it doesn't cover main video subject */
+                padding: 1.5rem; 
+            }
+            .information-note { 
+                width: 100%; 
+                backdrop-filter: blur(10px);
+            }
+            
             .content-section { padding: 1.4rem; }
             .project-gallery { grid-template-columns: 1fr; }
         }
-</style>
+    </style>
 </head>
 <body>
     <nav>
@@ -555,6 +559,7 @@
         </div>
     </nav>
 
+    <!-- Hero Media Section -->
     <section class="project-image-large" aria-label="Quadcopter flight video">
         <div class="image-container">
             <video autoplay muted loop playsinline preload="auto" aria-label="Timeline 1 quadcopter flight footage"
@@ -571,8 +576,11 @@
         </div>
     </section>
 
-        <section class="project-image-large project-information" aria-label="Quadcopter system information">
-            
+    <!-- Extracted Bridge for smoother blending -->
+    <div class="section-bridge" aria-hidden="true">System Overview</div>
+
+    <!-- Secondary Media Section with fixed Information Note -->
+    <section class="project-image-large project-information" aria-label="Quadcopter system information">
         <div class="image-container">
             <video autoplay muted loop playsinline preload="auto" aria-label="Timeline 1 quadcopter flight footage"
                 style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;">
@@ -580,48 +588,36 @@
                 Your browser does not support the video tag.
             </video>
             <div class="information-overlay">
-                
                 <div class="information-note">
                     <p>Designed as an integrated platform, the quadcopter combines a compact airframe, balanced propulsion, onboard electronics, and flight control into one testable system. Each iteration focuses on how those elements work together to deliver stable, repeatable flight.</p>
                 </div>
-
-                <!-- <div>
-                    <p class="information-kicker">System overview</p>
-                    <h2>One aircraft. Connected systems.</h2>
-                    <p class="information-summary">The platform brings structure, propulsion, electronics, and flight control together in a compact multirotor designed for hands-on testing and iteration.</p>
-                </div> -->
             </div>
         </div>
     </section>
 
-    <section class="project-image-large" aria-label="Quadcopter Top View">
+    <!-- Extracted Bridge for smoother blending -->
+    <div class="section-bridge" aria-hidden="true">Top View</div>
 
+    <!-- Third Media Section (now inherits bottom-and-top fades smoothly) -->
+    <section class="project-image-large" aria-label="Quadcopter Top View" style="height: 70vh; min-height: 500px;">
         <div class="image-container">
-
-            <img src="images/Projects/Quadcopter/Top view.png" alt="Quadcopter in flight"
+            <img src="images/Projects/Quadcopter/Top view.png" alt="Quadcopter Top view"
                 style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; display: block;">
-            
         </div>
     </section>
     
-
-
+    <!-- Extracted Bridge -->
+    <div class="section-bridge" aria-hidden="true">Project Details</div>
 
     <section class="project-content" id="project-overview">
-        <div class="section-bridge" aria-hidden="true">Project details</div>
-                  
-            
-        </div>
-
-
         <div class="content-section reveal" data-reveal style="text-align: center;">
             <h2>Technology Stack</h2>
             <div class="tech-stack">
-                        <div class="tech-item">Autodesk CAD</div>
-                        <div class="tech-item">C Programming</div>
-                        <div class="tech-item">Embedded</div>
-                        <div class="tech-item">Inverse Kinematics</div>
-                         <div class="tech-item">RC</div>
+                <div class="tech-item">Autodesk CAD</div>
+                <div class="tech-item">C Programming</div>
+                <div class="tech-item">Embedded</div>
+                <div class="tech-item">Inverse Kinematics</div>
+                <div class="tech-item">RC</div>
             </div>
         </div>
     </section>
