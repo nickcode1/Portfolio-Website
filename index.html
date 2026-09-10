@@ -86,12 +86,18 @@
             width: 2.7rem;
             height: 2.7rem;
             border-radius: 50%;
-            background-image: url('images/profile_trans.png');
-            background-size: cover;
+            background-image: url('images/profile_trans_headshot.png');
+            background-size: 100%;
             background-position: center;
+            background-repeat: no-repeat;
             border: 1px solid rgba(255, 255, 255, 0.3);
             flex-shrink: 0;
             display: block;
+            transition: transform 0.25s ease;
+        }
+
+        .logo:hover .logo-avatar {
+            transform: scale(1.08);
         }
 
         .logo-text {
@@ -712,7 +718,7 @@
     <nav>
         <a href="index.html" class="logo" aria-label="Home">
             <span class="logo-avatar" aria-hidden="true"></span>
-            <span class="logo-text">Nick Harrison</span>
+            <span class="logo-text">Nicholas Harrison</span>
         </a>
         <ul>
             <li><a href="#about">About</a></li>
@@ -732,7 +738,7 @@
                 <span class="word">Project Portfolio</span>
             </h1>
             <p class="subtitle">
-                Designing, prototyping, and optimizing intelligent engineering systems across aerospace, robotics, controls, and product development.
+                Designing, prototyping, and engineering systems across automotive, robotics, and aerospace domains.
             </p>
             <div class="hero-actions">
                 <a href="#featured" class="cta-button">View Projects</a>
@@ -788,7 +794,7 @@
                 </div>
             </a>
 
-            <a href="project-suspension-model.html" class="feature-card">
+            <!-- <a href="project-suspension-model.html" class="feature-card">
                 <div class="project-image" style="background: linear-gradient(135deg, #0f172a, #4c1d95, #e11d48); background-size: cover; background-position: center;"></div>
                 <div class="project-content">
                     <span class="feature-badge">Dynamics</span>
@@ -802,7 +808,20 @@
                         <span class="tag">Analysis</span>
                     </div>
                 </div>
-            </a>
+            </a> -->
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="about-content" style="text-align: left">
+            <div class="about-text">
+                <h1>About</h1>
+                
+                <p>
+                    I'm an engineering student with a passion for technology and innovation. I recently completed my Bachelor's degree in Mechanical Engineering at the University of New Brunswick and am currently pursuing a Master of Engineering in Mechanical and Industrial Engineering at the University of Toronto.
+                </p>
+            </div>
+            <div class="about-image" style="background-image: url(images/profile_trans.png);"></div>
         </div>
     </section>
 
@@ -846,21 +865,6 @@
         </div>
     </section>
 
-    <section id="about" class="about">
-        <div class="about-content" style="text-align: left">
-            <div class="about-text">
-                <p class="eyebrow">About</p>
-                <h2 class="section-title">Designing real-world systems.</h2>
-                <p>
-                    I'm an engineering student with a passion for technology and innovation. I recently completed my Bachelor's degree in Mechanical Engineering at the University of New Brunswick and am currently pursuing a Master of Engineering in Mechanical and Industrial Engineering at the University of Toronto.
-                </p>
-                <p class="highlight">
-                    I enjoy solving problems at the intersection of mechanics, controls, design, and intelligent hardware.
-                </p>
-            </div>
-            <div class="about-image" style="background-image: url(images/profile_trans.png);"></div>
-        </div>
-    </section>
 
    <section id="publications" class="publications">
         <h2 class="section-title">Research</h2>
@@ -899,7 +903,7 @@
                 <div class="projects-grid">
                     
 
-                    <a href="project-suspension-model.html" class="project-card">
+                    <!-- <a href="project-suspension-model.html" class="project-card">
                         <div class="project-image" style="background: linear-gradient(135deg, #0f172a, #4c1d95, #e11d48); background-size: cover; background-position: center;">
                         </div>
                         <div class="project-content">
@@ -914,7 +918,7 @@
                             </div>
                         </div>
 
-                    </a>
+                    </a> -->
 
                             <a href="project-quadcopter-drone.html" class="project-card">
                         <div class="project-image" style="background-image: url('images/Projects/Quadcopter/top\ side\ ortographic.png');
