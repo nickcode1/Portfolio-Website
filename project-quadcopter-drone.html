@@ -411,14 +411,25 @@
             font-size: 0.9rem;
             font-weight: 700;
         }
-        .btn-primary {
-            background: var(--text);
-            color: var(--bg);
-        }
-
         .project-home-link {
             margin-top: 4.5rem;
             text-align: center;
+        }
+
+        .project-home-link .scroll-cue::before {
+            content: '←';
+            color: var(--accent-2);
+            font-size: 1.3rem;
+            transition: transform 0.2s ease;
+        }
+
+        .project-home-link .scroll-cue::after {
+            display: none;
+        }
+
+        .project-home-link .scroll-cue:hover::before,
+        .project-home-link .scroll-cue:focus-visible::before {
+            transform: translateX(-4px);
         }
 
         .project-gallery {
@@ -571,15 +582,14 @@
         <div class="content-section reveal" data-reveal style="text-align: center;">
             <h2>Technology Stack</h2>
             <div class="tech-stack">
-                <div class="tech-item">Autodesk CAD</div>
-                <div class="tech-item">C Programming</div>
-                <div class="tech-item">Embedded</div>
-                <div class="tech-item">Inverse Kinematics</div>
-                <div class="tech-item">RC</div>
+                <div class="tech-item">Solidworks</div>
+                <div class="tech-item">C++</div>
+                <div class="tech-item">PID Control</div>
+                <div class="tech-item">ESP 32</div>
             </div>
         </div>
         <div class="project-home-link">
-            <a href="index.html" class="btn btn-primary">Return Home</a>
+            <a href="index.html" class="scroll-cue">Return Home</a>
         </div>
     </section>
 
