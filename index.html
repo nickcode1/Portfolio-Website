@@ -201,6 +201,56 @@
             animation: fadeUp 0.9s ease-out 0.7s forwards;
         }
 
+        .secondary-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.95rem 1.5rem;
+            border: 1px solid var(--surface-border);
+            background: rgba(255, 255, 255, 0.02);
+            color: var(--text);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            border-radius: 999px;
+            transition: border-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .secondary-button:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-highlights {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7rem;
+            opacity: 0;
+            animation: fadeUp 0.9s ease-out 0.85s forwards;
+        }
+
+        .hero-highlights span {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.45rem 0.8rem;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--surface-border);
+            color: var(--text-muted);
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
         .scroll-indicator {
             position: absolute;
             bottom: 1rem;
@@ -211,6 +261,119 @@
             text-transform: uppercase;
             font-size: 0.75rem;
             animation: bounce 2.2s infinite;
+        }
+
+        .eyebrow {
+            display: inline-block;
+            margin-bottom: 0.75rem;
+            color: var(--accent-2);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+        }
+
+        .section-header {
+            max-width: 1200px;
+            margin: 0 auto 2.5rem;
+        }
+
+        .featured-work {
+            padding-top: 5rem;
+            background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.00));
+        }
+
+        .featured-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1.5rem;
+        }
+
+        .feature-card {
+            display: block;
+            background: linear-gradient(180deg, var(--bg-elevated), var(--surface));
+            border: 1px solid var(--surface-border);
+            border-radius: 22px;
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            box-shadow: var(--shadow);
+            transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--card-hover-border);
+            box-shadow: 0 25px 45px var(--card-hover-shadow);
+        }
+
+        .feature-card .project-image {
+            height: 300px;
+        }
+
+        .feature-card .project-content {
+            padding: 1.5rem;
+        }
+
+        .feature-badge {
+            display: inline-block;
+            margin-bottom: 0.9rem;
+            padding: 0.35rem 0.65rem;
+            border-radius: 999px;
+            background: rgba(127, 255, 212, 0.08);
+            border: 1px solid rgba(127, 255, 212, 0.15);
+            color: var(--accent-2);
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .capabilities {
+            background: rgba(255, 255, 255, 0.015);
+        }
+
+        .capability-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1.25rem;
+        }
+
+        .capability-card {
+            background: linear-gradient(180deg, var(--bg-elevated), var(--surface));
+            border: 1px solid var(--surface-border);
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .capability-icon {
+            width: 44px;
+            height: 44px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--surface-border);
+            color: var(--accent-2);
+            font-size: 1.15rem;
+            margin-bottom: 1rem;
+        }
+
+        .capability-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .capability-card p {
+            color: var(--text-muted);
+            line-height: 1.7;
         }
 
         section {
@@ -531,39 +694,158 @@
         <div class="hero-content">
             <div class="rotating-text">Mechanical / Mechatronics Engineer</div>
             <h1 class="kinetic-text">
-                <span class="word">Project</span>
-                <span class="word">Portfolio</span><br>
-                
+                <span class="word">Project Portfolio</span>
             </h1>
             <p class="subtitle">
-                <!-- Passion for design -->
+                Designing, prototyping, and optimizing intelligent engineering systems across aerospace, robotics, controls, and product development.
             </p>
-            <a href="#projects" class="cta-button">Projects</a>
+            <div class="hero-actions">
+                <a href="#featured" class="cta-button">View Projects</a>
+                <a href="#contact" class="secondary-button">Contact Me</a>
+            </div>
+            <div class="hero-highlights">
+                <span>UAVs</span>
+                <span>Controls</span>
+                <span>CAD</span>
+                <span>Simulation</span>
+                <span>Embedded</span>
+            </div>
+        </div>
+        <div class="scroll-indicator">Scroll</div>
+    </section>
+
+    <section id="featured" class="featured-work">
+        <div class="section-header">
+            
+            <h2 class="section-title">Featured Projects</h2>
+        </div>
+
+        <div class="featured-grid">
+            <a href="project-SkySweep.html" class="feature-card">
+                <div class="project-image" style="background-image: url('images/Projects/SKYSWEEP/LOGO.png'); background-size: cover; background-position: center; background-repeat: no-repeat;"></div>
+                <div class="project-content">
+                    <span class="feature-badge">AI & Vision</span>
+                    <h3 class="project-title">SkySweep</h3>
+                    <p class="project-description">
+                        Anti-drone detection and interception system using computer vision and embedded hardware for real-time threat response.
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">CV</span>
+                        <span class="tag">AI</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="project-quadcopter-drone.html" class="feature-card">
+                <div class="project-image" style="background-image: url('images/Projects/Quadcopter/top\ side\ ortographic.png'); background-size: cover; background-position: center; background-repeat: no-repeat;"></div>
+                <div class="project-content">
+                    <span class="feature-badge">UAV Systems</span>
+                    <h3 class="project-title">Quadcopter Drone</h3>
+                    <p class="project-description">
+                        Multirotor airframe development exploring propulsion, structural design, electronics, and flight control integration.
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">UAV</span>
+                        <span class="tag">Flight Control</span>
+                        <span class="tag">Design</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="project-suspension-model.html" class="feature-card">
+                <div class="project-image" style="background: linear-gradient(135deg, #0f172a, #4c1d95, #e11d48); background-size: cover; background-position: center;"></div>
+                <div class="project-content">
+                    <span class="feature-badge">Dynamics</span>
+                    <h3 class="project-title">Suspension Model</h3>
+                    <p class="project-description">
+                        A vehicle-dynamics model for evaluating damping response and handling trade-offs under different conditions.
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">MATLAB</span>
+                        <span class="tag">Simulation</span>
+                        <span class="tag">Analysis</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <section id="capabilities" class="capabilities">
+        <div class="section-header">
+            <p class="eyebrow">Core Skills</p>
+           
+        </div>
+
+        <div class="capability-grid">
+            <div class="capability-card">
+                <div class="capability-icon">✦</div>
+                <h3>Mechanical Design</h3>
+                <p>Concept development, detailed design, and iteration across aerospace, product, and prototype systems.</p>
+            </div>
+            <div class="capability-card">
+                <div class="capability-icon">◌</div>
+                <h3>Controls & Dynamics</h3>
+                <p>Modeling dynamic systems and developing control strategies for performance and stability-oriented applications.</p>
+            </div>
+            <div class="capability-card">
+                <div class="capability-icon">▣</div>
+                <h3>CAD & Simulation</h3>
+                <p>Using parametric CAD and simulation tools to test physical behavior and refine engineering decisions.</p>
+            </div>
+            <div class="capability-card">
+                <div class="capability-icon">◍</div>
+                <h3>Embedded Systems</h3>
+                <p>Translating ideas into hardware-aware systems with sensing, processing, and feedback loops.</p>
+            </div>
+            <div class="capability-card">
+                <div class="capability-icon">△</div>
+                <h3>UAV & Aerodynamics</h3>
+                <p>Exploring flight performance, structural requirements, and control trade-offs in airborne systems.</p>
+            </div>
+            <div class="capability-card">
+                <div class="capability-icon">⌁</div>
+                <h3>Prototyping</h3>
+                <p>Turning designs into physical prototypes, validating performance, and iterating rapidly.</p>
+            </div>
         </div>
     </section>
 
     <section id="about" class="about">
         <div class="about-content" style="text-align: left">
             <div class="about-text">
-                <h2 class="section-title">About Me</h2>
-                
-               
+                <p class="eyebrow">About</p>
+                <h2 class="section-title">Designing real-world systems.</h2>
                 <p>
                     I'm an engineering student with a passion for technology and innovation. I recently completed my Bachelor's degree in Mechanical Engineering at the University of New Brunswick and am currently pursuing a Master of Engineering in Mechanical and Industrial Engineering at the University of Toronto.
-
-               
-                    <br><br>View some of the projects I've worked on below.
                 </p>
-                
+                <p class="highlight">
+                    I enjoy solving problems at the intersection of mechanics, controls, design, and intelligent hardware.
+                </p>
             </div>
             <div class="about-image" style="background-image: url(images/profile_trans.png);"></div>
-                
+        </div>
+    </section>
+
+   <section id="publications" class="publications">
+        <h2 class="section-title">Research</h2>
+        <p class="section-subtitle"></p>
+
+        <div class="publications-list">
+            <article class="publication">
+                <!-- <h3 class="publication-title">Example Publication Title</h3>
+                <p class="publication-meta">Author Name — Conference / Journal, Year</p>
+                <p class="publication-description">
+                    Brief description of the publication. Replace this text with a short summary of the work or key contributions.
+                </p> -->
+                <p class="publication-description\">Zhang, Q., Jiang, X., Harrison, N., Ali, S., Khirallah, Y., Lu, Y.* (2026, September). <i>CurveGuard: A Physics-Informed Predictive Speed and Braking Advisory System for Heavy Trucks</i>. 2026 International Conference on Vehicle Engineering and Intelligent Control (VEIC). SAE. </p>
+            </article>
         </div>
     </section>
 
     <section id="projects" class="projects">
-        <h2 class="section-title">Projects</h2>
-        <p class="section-subtitle"></p>
+        <h2 class="section-title">Project Archive</h2>
+        <p class="section-subtitle">A collection of the personal, school, and club projects I have worked on.</p>
         
         <div class="projects-container">
 
@@ -807,21 +1089,6 @@
         </div>
     </section>
 
-    <section id="publications" class="publications">
-        <h2 class="section-title">Research</h2>
-        <p class="section-subtitle"></p>
-
-        <div class="publications-list">
-            <article class="publication">
-                <!-- <h3 class="publication-title">Example Publication Title</h3>
-                <p class="publication-meta">Author Name — Conference / Journal, Year</p>
-                <p class="publication-description">
-                    Brief description of the publication. Replace this text with a short summary of the work or key contributions.
-                </p> -->
-                <p class="publication-description\">Zhang, Q., Jiang, X., Harrison, N., Ali, S., Khirallah, Y., Lu, Y.* (2026, September). <i>CurveGuard: A Physics-Informed Predictive Speed and Braking Advisory System for Heavy Trucks</i>. 2026 International Conference on Vehicle Engineering and Intelligent Control (VEIC). SAE. </p>
-            </article>
-        </div>
-    </section>
 
     <section id="contact" class="contact">
         <div class="contact-content">
