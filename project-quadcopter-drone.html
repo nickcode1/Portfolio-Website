@@ -10,7 +10,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
      <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;600;700&family=Playfair+Display:wght@700;900&family=Turret+Road:wght@400;700;800&display=swap" rel="stylesheet">
-    <!-- To switch themes, change the href below to any file in /themes/ -->
     <link id="color-theme" rel="stylesheet" href="themes/blue.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -154,12 +153,13 @@
             font-weight: 600;
         }
 
+        /* --- MEDIA SECTIONS & BLENDING --- */
         .project-image-large {
             width: 100%;
             height: 100vh;
             height: 100svh;
             padding: 0;
-            background: var(--bg); /* Blends naturally with page */
+            background: transparent;
             position: relative;
         }
 
@@ -170,24 +170,23 @@
             margin: 0;
             background: transparent;
             border: 0;
-            border-radius: 0;
             position: relative;
             overflow: hidden;
-            box-shadow: none;
             background-size: contain;
+            
+            /* THIS CREATES THE SEAMLESS VERTICAL BLEND */
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%);
+            mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%);
         }
 
-        /* Top and Bottom Fades for Seamless Section Blending */
+        /* Horizontal fade strictly for text readability */
         .project-image-large .image-container::after {
             content: '';
             position: absolute;
             inset: 0;
             z-index: 1;
             pointer-events: none;
-            background: 
-                linear-gradient(90deg, rgba(5, 8, 13, 0.78) 0%, rgba(5, 8, 13, 0.35) 42%, transparent 72%),
-                linear-gradient(0deg, var(--bg) 0%, transparent 15%),
-                linear-gradient(180deg, var(--bg) 0%, transparent 15%);
+            background: linear-gradient(90deg, rgba(5, 8, 13, 0.85) 0%, rgba(5, 8, 13, 0.35) 45%, transparent 80%);
         }
 
         .video-intro {
@@ -246,8 +245,7 @@
             transition: transform 0.2s ease;
         }
 
-        .scroll-cue:hover::after,
-        .scroll-cue:focus-visible::after {
+        .scroll-cue:hover::after, .scroll-cue:focus-visible::after {
             transform: translateY(4px);
         }
 
@@ -257,19 +255,15 @@
         }
 
         .project-information .image-container::after {
-            background: 
-                linear-gradient(90deg, rgba(5, 8, 13, 0.95) 0%, rgba(5, 8, 13, 0.6) 45%, transparent 100%),
-                linear-gradient(0deg, var(--bg) 0%, transparent 15%),
-                linear-gradient(180deg, var(--bg) 0%, transparent 15%);
+            background: linear-gradient(90deg, rgba(5, 8, 13, 0.95) 0%, rgba(5, 8, 13, 0.6) 45%, transparent 100%);
         }
 
-        /* Fixed Overlay Layout */
         .information-overlay {
             position: absolute;
             inset: clamp(1.5rem, 6vw, 5.5rem);
             z-index: 2;
             display: flex;
-            align-items: center; /* Vertically centers the text box */
+            align-items: center;
             justify-content: flex-start;
             color: #fff;
         }
@@ -304,14 +298,13 @@
             font-size: 1.02rem;
         }
 
-        /* Fixed Text Box Formatting */
         .information-note {
             width: min(100%, 36rem);
             padding: clamp(2rem, 4vw, 3rem);
             border: 1px solid rgba(255, 255, 255, 0.15);
-            background: rgba(9, 11, 16, 0.65); /* Sleek translucent dark */
+            background: rgba(9, 11, 16, 0.65); 
             backdrop-filter: blur(16px);
-            border-radius: 16px; /* Smooth rounded corners */
+            border-radius: 16px; 
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
         }
 
@@ -328,16 +321,18 @@
             padding: 0 2rem 6rem;
         }
 
-        /* Extracted Bridge for Smooth Transitions */
+        /* --- THE SECTION BRIDGE --- */
         .section-bridge {
-            padding: 4rem 2rem;
+            padding: 1.5rem 2rem;
             color: var(--accent-2);
             font-size: 0.75rem;
             font-weight: 700;
             letter-spacing: 0.2em;
             text-align: center;
             text-transform: uppercase;
-            background: var(--bg);
+            background: transparent; /* Absolutely no background color to break the blend */
+            position: relative;
+            z-index: 10;
         }
 
         .section-bridge::after {
@@ -524,15 +519,16 @@
             nav ul { display: none; }
             .project-hero { padding: 8rem 1rem 3rem; }
             .project-content { padding: 0 0.75rem 5rem; }
-            .section-bridge { padding: 3rem 1rem; }
+            
+            .section-bridge { padding: 1.5rem 1rem; }
+            
             .project-image-large { height: 100svh; }
             .project-information { height: auto; min-height: 680px; }
             .video-intro { bottom: 2.5rem; }
             .video-intro-summary { max-width: 22rem; }
             
-            /* Responsive Text Box Update */
             .information-overlay { 
-                align-items: flex-end; /* Push to bottom on mobile so it doesn't cover main video subject */
+                align-items: flex-end; 
                 padding: 1.5rem; 
             }
             .information-note { 
@@ -559,7 +555,6 @@
         </div>
     </nav>
 
-    <!-- Hero Media Section -->
     <section class="project-image-large" aria-label="Quadcopter flight video">
         <div class="image-container">
             <video autoplay muted loop playsinline preload="auto" aria-label="Timeline 1 quadcopter flight footage"
@@ -576,10 +571,8 @@
         </div>
     </section>
 
-    <!-- Extracted Bridge for smoother blending -->
     <div class="section-bridge" aria-hidden="true">System Overview</div>
 
-    <!-- Secondary Media Section with fixed Information Note -->
     <section class="project-image-large project-information" aria-label="Quadcopter system information">
         <div class="image-container">
             <video autoplay muted loop playsinline preload="auto" aria-label="Timeline 1 quadcopter flight footage"
@@ -595,18 +588,16 @@
         </div>
     </section>
 
-    <!-- Extracted Bridge for smoother blending -->
-    <div class="section-bridge" aria-hidden="true">Top View</div>
+   <div class="section-bridge" aria-hidden="true">Top View</div>
 
-    <!-- Third Media Section (now inherits bottom-and-top fades smoothly) -->
     <section class="project-image-large" aria-label="Quadcopter Top View" style="height: 70vh; min-height: 500px;">
-        <div class="image-container">
+        <!-- Added background: #000; right here -->
+        <div class="image-container" style="background: #000;">
             <img src="images/Projects/Quadcopter/Top view.png" alt="Quadcopter Top view"
                 style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; display: block;">
         </div>
     </section>
     
-    <!-- Extracted Bridge -->
     <div class="section-bridge" aria-hidden="true">Project Details</div>
 
     <section class="project-content" id="project-overview">
@@ -645,7 +636,6 @@
         (function () {
             var e = document.documentElement;
 
-            // ----- Scroll reveal -----
             var reveals = document.querySelectorAll('[data-reveal]');
             var observer = new IntersectionObserver(function (entries) {
                 entries.forEach(function (entry) {
@@ -657,7 +647,6 @@
 
             reveals.forEach(function (el) { observer.observe(el); });
 
-            // ----- Hero image parallax -----
             var heroImage = document.getElementById('hero-image');
             if (heroImage) {
                 window.addEventListener('scroll', function () {
@@ -669,7 +658,6 @@
                 }, { passive: true });
             }
 
-            // ----- Gallery lightbox -----
             var lightbox = document.getElementById('lightbox');
             var lightboxImg = document.getElementById('lightbox-img');
             var lightboxVideo = document.getElementById('lightbox-video');
