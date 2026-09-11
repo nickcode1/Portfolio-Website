@@ -42,15 +42,54 @@
         }
 
         .logo {
-            font-family: 'Turret Road', serif;
-            font-size: 1rem;
-            font-weight: 800;
-            letter-spacing: 0.18em;
-            color: var(--text);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.3rem 0.75rem 0.3rem 0.3rem;
+            border-radius: 999px;
+            border: 1px solid var(--surface-border);
+            background: rgba(255, 255, 255, 0.02);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
             text-decoration: none;
-            transition: color 0.3s;
+            position: relative;
+            overflow: hidden;
         }
-        .logo:hover { color: var(--accent); }
+
+        .logo-avatar {
+            width: 2.7rem;
+            height: 2.7rem;
+            border-radius: 50%;
+            background-image: url('images/profile_trans_headshot.png');
+            background-size: 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            flex-shrink: 0;
+            display: block;
+            transition: transform 0.25s ease;
+        }
+
+        .logo:hover .logo-avatar {
+            transform: scale(1.08);
+        }
+
+        .logo-text {
+            font-family: 'Turret Road', serif;
+            font-size: 0.8rem;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text);
+            line-height: 1;
+            white-space: nowrap;
+        }
+
+        .logo:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+        }
 
         nav ul {
             position: absolute;
@@ -382,6 +421,44 @@
             background: var(--bg-elevated);
         }
 
+        .project-home-link {
+            margin-top: 4.5rem;
+            text-align: center;
+        }
+
+        .project-home-link .scroll-cue {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.7rem;
+            color: var(--text);
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.17em;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        .project-home-link .scroll-cue::before {
+            content: '←';
+            color: var(--accent-2);
+            font-size: 1.3rem;
+            transition: transform 0.2s ease;
+        }
+
+        .project-home-link .scroll-cue::after {
+            display: none;
+        }
+
+        .project-home-link .scroll-cue:hover,
+        .project-home-link .scroll-cue:focus-visible {
+            color: var(--accent-2);
+        }
+
+        .project-home-link .scroll-cue:hover::before,
+        .project-home-link .scroll-cue:focus-visible::before {
+            transform: translateX(-4px);
+        }
+
         .cta-footer {
             margin-top: 3rem;
             padding-top: 1.5rem;
@@ -469,7 +546,10 @@
 </head>
 <body>
     <nav>
-        <a href="index.html" class="logo">NICK HARRISON</a>
+        <a href="index.html" class="logo" aria-label="Home">
+            <span class="logo-avatar" aria-hidden="true"></span>
+            <span class="logo-text">Nicholas Harrison</span>
+        </a>
         <ul>
             <li><a href="index.html#about">About</a></li>
             <li><a href="index.html#projects">Projects</a></li>
@@ -689,16 +769,9 @@
                 <div class="tech-item">Collaboration</div>
             </div>
         </div>
-
-    </section>
-
-    <section class="cta-section reveal" data-reveal>
-        <h2>Interested in similar work?</h2>
-        <div class="cta-buttons">
-            <a href="index.html#contact" class="btn btn-primary">Get in Touch</a>
-            <a href="index.html#projects" class="btn btn-secondary">View More Projects</a>
+        <div class="project-home-link">
+            <a href="index.html" class="scroll-cue">Return Home</a>
         </div>
-        <div class="cta-footer">Nick Harrison — Portfolio</div>
     </section>
 
     <div class="lightbox" id="lightbox" aria-hidden="true">
