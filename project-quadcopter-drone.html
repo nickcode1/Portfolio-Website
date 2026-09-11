@@ -338,8 +338,9 @@
         }
 
         .information-note {
-            width: min(100%, 36rem);
-            padding: clamp(2rem, 4vw, 3rem);
+            width: clamp(18rem, 42vw, 36rem);
+            max-width: calc(100% - 2rem);
+            padding: clamp(1.5rem, 2.8vw, 3rem);
             border: 1px solid rgba(255, 255, 255, 0.15);
             background: rgba(9, 11, 16, 0.65); 
             backdrop-filter: blur(16px);
@@ -349,8 +350,8 @@
 
         .information-note p {
             color: rgba(255, 255, 255, 0.95);
-            font-size: clamp(1.05rem, 1.4vw, 1.2rem);
-            line-height: 1.8;
+            font-size: clamp(1rem, 1.35vw, 1.2rem);
+            line-height: 1.7;
             margin: 0;
         }
 
@@ -547,11 +548,17 @@
             
             .information-overlay { 
                 align-items: flex-end; 
-                padding: 1.5rem; 
+                padding: 1.25rem; 
             }
             .information-note { 
-                width: 100%; 
+                width: clamp(16rem, 56vw, 24rem);
+                max-width: calc(100% - 0.5rem);
+                padding: 1.1rem 1rem;
                 backdrop-filter: blur(10px);
+            }
+            .information-note p {
+                font-size: clamp(0.88rem, 2.5vw, 1.02rem);
+                line-height: 1.55;
             }
             
             .content-section { padding: 1.4rem; }
