@@ -290,7 +290,7 @@
 
         .project-information {
             height: min(760px, 88svh);
-            min-height: 620px;
+            min-height: 480px; /* lowered from 620px so short laptop screens aren't forced taller */
         }
 
         .project-information .image-container::after {
@@ -338,9 +338,11 @@
         }
 
         .information-note {
-            width: clamp(18rem, 42vw, 36rem);
+            width: clamp(11rem, 16vw, 18rem);
             max-width: calc(100% - 2rem);
-            padding: clamp(1.5rem, 2.8vw, 3rem);
+            max-height: 100%;          /* never taller than the overlay */
+            overflow-y: auto;          /* scroll instead of overflowing on short screens */
+            padding: clamp(0.6rem, 1vw, 1.25rem);
             border: 1px solid rgba(255, 255, 255, 0.15);
             background: rgba(9, 11, 16, 0.65); 
             backdrop-filter: blur(16px);
@@ -350,9 +352,10 @@
 
         .information-note p {
             color: rgba(255, 255, 255, 0.95);
-            font-size: clamp(1rem, 1.35vw, 1.2rem);
-            line-height: 1.7;
+            font-size: clamp(0.62rem, 0.6vw, 0.78rem);
+            line-height: 1.5;
             margin: 0;
+            text-align: justify;       /* moved here from the inline style so the media query can override it */
         }
 
         .project-content {
@@ -533,6 +536,35 @@
             line-height: 1;
         }
 
+        /* Small desktops, tablets, and short windows: compact note pinned to the bottom
+           so the drone in the video stays visible above it */
+        @media (max-width: 1200px), (max-height: 760px) {
+            .project-information {
+                height: min(720px, 85svh);
+                min-height: 460px;
+            }
+
+            .information-overlay {
+                inset: 0;
+                padding: clamp(0.75rem, 2vw, 1.5rem);
+                align-items: flex-end;
+            }
+
+            .information-note {
+                width: min(100%, 24rem);
+                max-height: 25%;
+                padding: 0.55rem 0.7rem;
+                border-radius: 10px;
+                background: rgba(9, 11, 16, 0.55);
+            }
+
+            .information-note p {
+                font-size: clamp(0.64rem, 1vw, 0.76rem);
+                line-height: 1.45;
+                text-align: left;
+            }
+        }
+
         @media (max-width: 768px) {
             nav { padding: 1rem 1rem; }
             nav ul { display: none; }
@@ -542,24 +574,42 @@
             .section-bridge { padding: 1.5rem 1rem; }
             
             .project-image-large { height: 100svh; }
-            .project-information { height: auto; min-height: 680px; }
             .video-intro { bottom: 2.5rem; }
             .video-intro-summary { max-width: 22rem; }
-            
-            .information-overlay { 
-                align-items: flex-end; 
-                padding: 1.25rem; 
+
+            /* Explicit height so the container's height: 100% resolves
+               (an auto-height parent would collapse the absolutely-positioned content) */
+            .project-information {
+                height: 80svh;
+                min-height: 520px;
             }
-            .information-note { 
-                width: clamp(16rem, 56vw, 24rem);
-                max-width: calc(100% - 0.5rem);
-                padding: 1.1rem 1rem;
+
+            /* Overlay fills the section; note is pinned to the bottom so the video shows above it */
+            .information-overlay {
+                inset: 0;
+                padding: 0.75rem;
+                align-items: flex-end;
+            }
+
+            .information-note {
+                width: 100%;
+                max-width: none;
+                max-height: 45%;
+                padding: 0.8rem 0.9rem;
+                border-radius: 12px;
+                background: rgba(9, 11, 16, 0.55);
                 backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
             }
+
             .information-note p {
-                font-size: clamp(0.88rem, 2.5vw, 1.02rem);
-                line-height: 1.55;
+                font-size: clamp(0.72rem, 3vw, 0.85rem);
+                line-height: 1.45;
+                text-align: left; /* justify creates ugly gaps in narrow columns */
             }
+
+            /* Drops the long debugging sentence on small screens to shrink the footprint */
+            .desktop-only { display: none; }
             
             .content-section { padding: 1.4rem; }
             .project-gallery { grid-template-columns: 1fr; }
@@ -602,14 +652,14 @@
 
     <section id="project-information" class="project-image-large project-information" aria-label="Quadcopter system information">
         <div class="image-container">
-            <video autoplay muted loop playsinline preload="auto" aria-label="Timeline 1 quadcopter flight footage"
+            <video autoplay muted loop playsinline preload="auto" aria-label="Side view quadcopter spin footage"
                 style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;">
                 <source src="Videos/Side View Spins.mp4" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
             <div class="information-overlay">
                 <div class="information-note">
-                    <p style="text-align: justify;">This project is a fully custom-built quadcopter, from the flight controller firmware up. It runs on an ESP32 handling gamepad input via Bluepad32 and motor output through ESP32Servo, with a custom driveMotors() function blending per-motor speeds for roll, pitch, and yaw. Orientation sensing comes from an MPU6500 IMU, and the build uses 40A brushless ESCs driving A2212/10T 1400KV motors off a 3S LiPo. Along the way I've debugged everything from IMU axis misalignment causing takeoff tipping, to a faulty ESC unit, to voltage-related low-battery cutoffs, and various other embedded systems issues.</p>
+                    <p>This project is a fully custom-built quadcopter, from the flight controller firmware up. It runs on an ESP32 handling gamepad input via Bluepad32 and motor output through ESP32Servo, with a custom driveMotors() function blending per-motor speeds for roll, pitch, and yaw. Orientation sensing comes from an MPU6500 IMU, and the build uses 40A brushless ESCs driving A2212/10T 1400KV motors off a 3S LiPo. <span class="desktop-only">Along the way I've debugged everything from IMU axis misalignment causing takeoff tipping, to a faulty ESC unit, to voltage-related low-battery cutoffs, and various other embedded systems issues.</span></p>
                 </div>
             </div>
         </div>
@@ -618,7 +668,6 @@
    <div class="section-bridge" aria-hidden="true">Top View</div>
 
     <section class="project-image-large" aria-label="Quadcopter Top View" style="height: 70vh; min-height: 500px;">
-        <!-- Added background: #000; right here -->
         <div class="image-container" style="background: #000;">
             <img src="images/Projects/Quadcopter/Top view.png" alt="Quadcopter Top view"
                 style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; display: block;">
