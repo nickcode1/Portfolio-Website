@@ -6,7 +6,7 @@
     <script>
         (function(){ var k='portfolio-theme',t; try{t=localStorage.getItem(k);}catch(e){} if(!t&&typeof matchMedia!=='undefined'&&matchMedia('(prefers-color-scheme: light)').matches)t='light'; document.documentElement.setAttribute('data-theme',t||'dark'); })();
     </script>
-    <title>Ball Sorting Robot - Nick's Portfolio</title>
+    <title>Quadcopter Drone - Nick's Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
      <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;600;700&family=Playfair+Display:wght@700;900&family=Turret+Road:wght@400;700;800&display=swap" rel="stylesheet">
@@ -338,11 +338,16 @@
         }
 
         .information-note {
-            width: clamp(11rem, 16vw, 18rem);
-            max-width: calc(100% - 2rem);
+            width: 30%;
+            max-width: 30%;
             max-height: 100%;          /* never taller than the overlay */
             overflow-y: auto;          /* scroll instead of overflowing on short screens */
-            padding: clamp(0.6rem, 1vw, 1.25rem);
+            overscroll-behavior: contain;
+            padding: clamp(1rem, 1.6vw, 2.2rem);
+
+            /* discreet scrollbar */
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.22) transparent;
             border: 1px solid rgba(255, 255, 255, 0.15);
             background: rgba(9, 11, 16, 0.65); 
             backdrop-filter: blur(16px);
@@ -352,11 +357,19 @@
 
         .information-note p {
             color: rgba(255, 255, 255, 0.95);
-            font-size: clamp(0.62rem, 0.6vw, 0.78rem);
-            line-height: 1.5;
+            font-size: clamp(0.8rem, 0.95vw, 1.1rem);
+            line-height: 1.6;
             margin: 0;
             text-align: justify;       /* moved here from the inline style so the media query can override it */
         }
+
+        .information-note::-webkit-scrollbar { width: 4px; }
+        .information-note::-webkit-scrollbar-track { background: transparent; }
+        .information-note::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.22);
+            border-radius: 999px;
+        }
+        .information-note::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.4); }
 
         .project-content {
             max-width: none;
@@ -536,35 +549,6 @@
             line-height: 1;
         }
 
-        /* Small desktops, tablets, and short windows: compact note pinned to the bottom
-           so the drone in the video stays visible above it */
-        @media (max-width: 1200px), (max-height: 760px) {
-            .project-information {
-                height: min(720px, 85svh);
-                min-height: 460px;
-            }
-
-            .information-overlay {
-                inset: 0;
-                padding: clamp(0.75rem, 2vw, 1.5rem);
-                align-items: flex-end;
-            }
-
-            .information-note {
-                width: min(100%, 24rem);
-                max-height: 25%;
-                padding: 0.55rem 0.7rem;
-                border-radius: 10px;
-                background: rgba(9, 11, 16, 0.55);
-            }
-
-            .information-note p {
-                font-size: clamp(0.64rem, 1vw, 0.76rem);
-                line-height: 1.45;
-                text-align: left;
-            }
-        }
-
         @media (max-width: 768px) {
             nav { padding: 1rem 1rem; }
             nav ul { display: none; }
@@ -592,8 +576,8 @@
             }
 
             .information-note {
-                width: 100%;
-                max-width: none;
+                width: 30%;
+                max-width: 30%;
                 max-height: 45%;
                 padding: 0.8rem 0.9rem;
                 border-radius: 12px;
