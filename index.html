@@ -2,1214 +2,861 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <script>
-        (function(){ var k='portfolio-theme',t; try{t=localStorage.getItem(k);}catch(e){} if(!t&&typeof matchMedia!=='undefined'&&matchMedia('(prefers-color-scheme: light)').matches)t='light'; document.documentElement.setAttribute('data-theme',t||'dark'); })();
-    </script>
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Home - Nick's Porfolio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nicholas Harrison - Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;600;700&family=Playfair+Display:wght@700;900&family=Turret+Road:wght@400;700;800&display=swap" rel="stylesheet">
-    <!-- To switch themes, change the href below to any file in /themes/ -->
-    <link id="color-theme" rel="stylesheet" href="themes/blue.css">
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    
     <style>
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        html {
-            scroll-behavior: smooth;
-            -webkit-text-size-adjust: 100%;
+        :root {
+            --bo2-orange: #ff8c00;
+            --bo2-orange-glow: rgba(255, 140, 0, 0.6);
+            --bo2-bg: #0b0d10;
+            --bo2-panel-bg: rgba(15, 18, 22, 0.95);
         }
 
         body {
-            font-family: 'Archivo', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            overflow-x: hidden;
-            line-height: 1.6;
-            -webkit-overflow-scrolling: touch;
+            font-family: 'Teko', sans-serif;
+            background-color: var(--bo2-bg);
+            color: #d4d4d8;
+            overflow: hidden; /* Prevent body scroll, handle scroll in panel */
+            user-select: none;
         }
 
-
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-            background: linear-gradient(to bottom, var(--nav-bg), var(--nav-bg-fade));
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-            border-bottom: 1px solid var(--surface-border);
+        .font-mono {
+            font-family: 'Share Tech Mono', monospace;
         }
 
-        [data-theme="light"] nav {
-            background: linear-gradient(to bottom, var(--nav-bg), var(--nav-bg-fade));
-        }
-
-        nav ul {
+        .scanlines {
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.2));
+            background-size: 100% 4px;
             position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .noise {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 11;
+        }
+
+        .vignette {
+            background: radial-gradient(circle at center, transparent 20%, rgba(0,0,0,0.9) 100%);
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none;
+            z-index: 12;
+        }
+
+        .ambient-glow {
+            position: absolute;
+            top: 50%;
             left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: clamp(1rem, 2.8vw, 2rem);
-            list-style: none;
+            width: 100vw;
+            height: 100vw;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, rgba(255, 140, 0, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+            animation: pulseGlow 5s infinite alternate ease-in-out;
         }
 
-        .logo {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.3rem 0.75rem 0.3rem 0.3rem;
-            border-radius: 999px;
-            border: 1px solid var(--surface-border);
-            background: rgba(255, 255, 255, 0.02);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
-            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-            text-decoration: none;
+        @keyframes pulseGlow {
+            0% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
+            100% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+        .menu-item {
             position: relative;
-            overflow: hidden;
-        }
-
-        .logo-avatar {
-            width: 2.7rem;
-            height: 2.7rem;
-            border-radius: 50%;
-            background-image: url('images/profile_trans_headshot.png');
-            background-size: 100%;
-            background-position: center;
-            background-repeat: no-repeat;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            flex-shrink: 0;
             display: block;
-            transition: transform 0.25s ease;
-        }
-
-        .logo:hover .logo-avatar {
-            transform: scale(1.08);
-        }
-
-        .logo-text {
-            font-family: 'Turret Road', serif;
-            font-size: 0.8rem;
-            font-weight: 800;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--text);
-            line-height: 1;
-            white-space: nowrap;
-        }
-
-        .logo:hover {
-            transform: translateY(-2px);
-            border-color: var(--accent);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
-        }
-
-        nav a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            transition: color 0.3s;
-            position: relative;
-        }
-
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: -6px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--accent), var(--accent-2));
-            transition: width 0.3s;
-        }
-
-        nav a:hover { color: var(--text); }
-        nav a:hover::after { width: 100%; }
-
-        .theme-toggle { display: flex; align-items: center; margin-left: 1rem; }
-        #theme-toggle-btn {
-            background: var(--bg-elevated);
-            border: 1px solid var(--surface-border);
-            color: var(--text);
-            width: 2.75rem;
-            height: 2.75rem;
-            border-radius: 999px;
-            cursor: pointer;
-            font-size: 1rem;
-            line-height: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.3s, border-color 0.3s;
-        }
-        #theme-toggle-btn:hover { transform: translateY(-1px); border-color: var(--accent); }
-
-        .hero {
-            min-height: 100vh;
-            min-height: 100dvh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-            padding: 8rem 2rem 6rem;
-        }
-
-
-        .hero-content {
-            width: min(1100px, 100%);
-            position: relative;
-            z-index: 2;
-            text-align: left;
-        }
-
-        .rotating-text {
-            font-size: 0.8rem;
-            letter-spacing: 0.42em;
-            text-transform: uppercase;
-            color: var(--muted);
-            margin-bottom: 1rem;
-            opacity: 0;
-            animation: fadeUp 0.8s ease-out 0.2s forwards;
-        }
-
-        .kinetic-text {
-            font-family: 'Turret Road', serif;
-            font-size: clamp(4rem, 7vw, 6rem);
-            line-height: 0.9;
-            letter-spacing: -0.04em;
-            margin-bottom: 1rem;
-            position: relative;
-            animation: fadeUp 0.9s ease-out 0.35s forwards;
-        }
-
-        .kinetic-text .word {
-            display: inline-block;
-            background: linear-gradient(90deg, var(--text), var(--muted));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            animation: float 5s ease-in-out infinite;
-        }
-
-        .kinetic-text .word:nth-child(1) { animation-delay: 0s; }
-        .kinetic-text .word:nth-child(2) { animation-delay: 0.2s; }
-
-        .subtitle {
-            max-width: 700px;
-            color: var(--text-muted);
-            font-size: clamp(1rem, 1.8vw, 1.2rem);
-            margin-bottom: 2rem;
-            opacity: 0;
-            animation: fadeUp 0.9s ease-out 0.5s forwards;
-        }
-
-        .cta-button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.6rem;
-            padding: 0.95rem 1.5rem;
-            background: var(--accent);
-            color: var(--bg);
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            border-radius: 999px;
-            box-shadow: 0 10px 25px var(--cta-shadow);
-            opacity: 0;
-            animation: fadeUp 0.9s ease-out 0.7s forwards;
-        }
-
-        .secondary-button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.95rem 1.5rem;
-            border: 1px solid var(--surface-border);
-            background: rgba(255, 255, 255, 0.02);
-            color: var(--text);
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            border-radius: 999px;
-            transition: border-color 0.3s ease, transform 0.3s ease;
-        }
-
-        .secondary-button:hover {
-            border-color: var(--accent);
-            transform: translateY(-2px);
-        }
-
-        .hero-actions {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            margin-bottom: 1.5rem;
-        }
-
-        .hero-highlights {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.7rem;
-            opacity: 0;
-            animation: fadeUp 0.9s ease-out 0.85s forwards;
-        }
-
-        .hero-highlights span {
-            display: inline-flex;
-            align-items: center;
-            padding: 0.45rem 0.8rem;
-            border-radius: 999px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--surface-border);
-            color: var(--text-muted);
-            font-size: 0.72rem;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-        }
-
-        .scroll-indicator {
-            position: absolute;
-            bottom: 1rem;
-            left: 50%;
-            transform: translateX(-50%);
-            color: var(--text-muted);
-            letter-spacing: 0.3em;
-            text-transform: uppercase;
-            font-size: 0.75rem;
-            animation: bounce 2.2s infinite;
-        }
-
-        .eyebrow {
-            display: inline-block;
-            margin-bottom: 0.75rem;
-            color: var(--accent-2);
-            font-size: 0.78rem;
-            font-weight: 700;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-        }
-
-        .section-header {
-            max-width: 1200px;
-            margin: 0 auto 2.5rem;
-        }
-
-        .featured-work {
-            padding-top: 5rem;
-            background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.00));
-        }
-
-        .featured-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 1.5rem;
-        }
-
-        .feature-card {
-            display: block;
-            background: linear-gradient(180deg, var(--bg-elevated), var(--surface));
-            border: 1px solid var(--surface-border);
-            border-radius: 22px;
-            overflow: hidden;
-            text-decoration: none;
-            color: inherit;
-            box-shadow: var(--shadow);
-            transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--card-hover-border);
-            box-shadow: 0 25px 45px var(--card-hover-shadow);
-        }
-
-        .feature-card .project-image {
-            height: 300px;
-        }
-
-        .feature-card .project-content {
-            padding: 1.5rem;
-        }
-
-        .feature-badge {
-            display: inline-block;
-            margin-bottom: 0.9rem;
-            padding: 0.35rem 0.65rem;
-            border-radius: 999px;
-            background: rgba(127, 255, 212, 0.08);
-            border: 1px solid rgba(127, 255, 212, 0.15);
-            color: var(--accent-2);
-            font-size: 0.7rem;
-            font-weight: 700;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-        }
-
-        .capabilities {
-            background: rgba(255, 255, 255, 0.015);
-        }
-
-        .capability-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 1.25rem;
-        }
-
-        .capability-card {
-            background: linear-gradient(180deg, var(--bg-elevated), var(--surface));
-            border: 1px solid var(--surface-border);
-            border-radius: 20px;
-            padding: 1.5rem;
-            box-shadow: var(--shadow);
-        }
-
-        .capability-icon {
-            width: 44px;
-            height: 44px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid var(--surface-border);
-            color: var(--accent-2);
-            font-size: 1.15rem;
-            margin-bottom: 1rem;
-        }
-
-        .capability-card h3 {
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
-            color: var(--text);
-        }
-
-        .capability-card p {
-            color: var(--text-muted);
-            line-height: 1.7;
-        }
-
-        section {
-            padding: 6rem clamp(1.5rem, 4vw, 3rem);
-            position: relative;
-        }
-
-        .section-title {
-            font-family: 'Turret Road', serif;
-            font-size: clamp(2.5rem, 4.8vw, 4rem);
-            font-weight: 800;
-            margin-bottom: 0.8rem;
-            letter-spacing: -0.04em;
-        }
-
-        .section-subtitle {
-            font-size: 1rem;
-            color: var(--text-muted);
-            margin-bottom: 3rem;
-            max-width: 760px;
-        }
-
-        .about { background: linear-gradient(to bottom, rgba(255,255,255,0.02), rgba(255,255,255,0.02)); }
-
-        .about-content {
-            max-width: var(--max-width);
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1.1fr 0.9fr;
-            gap: clamp(2rem, 4vw, 5rem);
-            align-items: center;
-        }
-
-        .about-text p {
-            font-size: 1rem;
-            line-height: 1.8;
-            color: var(--text-muted);
-            margin-bottom: 1.1rem;
-        }
-
-        .about-text .highlight { color: var(--accent-2); font-weight: 600; }
-
-        .about-image {
-            width: min(520px, 100%);
-            aspect-ratio: 1;
-            margin-left: auto;
-            border-radius: var(--radius);
-            position: relative;
-            overflow: hidden;
-            /* box-shadow: var(--shadow); */
-            background:
-                linear-gradient(180deg, var(--about-overlay-1), var(--about-overlay-2)),
-                url('images/profile.jpg') center/cover no-repeat;
-            background-size: cover;
-        }
-
-    
-
-        .about-image::before { width: 180px; height: 180px; top: -40px; right: -30px; }
-        .about-image::after { width: 140px; height: 140px; bottom: -28px; left: -24px; }
-
-        .projects {
-            background: linear-gradient(to bottom, rgba(255,255,255,0.01), var(--section-tint));
-        }
-
-        .projects-container {
-            max-width: 1600px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 3.5rem;
-        }
-
-        .project-category-title {
-            font-family: 'Turret Road', serif;
-            font-size: 1rem;
-            font-weight: 700;
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-            color: var(--muted);
-            margin-bottom: 1.25rem;
-            padding-bottom: 0.6rem;
-            border-bottom: 1px solid var(--surface-border);
-        }
-
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1.5rem;
-        }
-
-        .project-card {
-            background: linear-gradient(180deg, var(--bg-elevated), var(--surface));
-            border: 1px solid var(--surface-border);
-            border-radius: var(--radius);
-            overflow: hidden;
-            text-decoration: none;
-            color: inherit;
-            display: block;
-            transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
-            box-shadow: var(--shadow);
-        }
-
-        .project-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--card-hover-border);
-            box-shadow: 0 25px 50px var(--card-hover-shadow);
-        }
-
-        .project-image {
             width: 100%;
-            height: 260px;
-            position: relative;
-            overflow: hidden;
-            background-size: cover;
-            background-position: center;
+            padding: 0.25rem 0;
+            padding-left: 0;
+            font-size: clamp(1.875rem, 5vw, 3.5rem);
+            line-height: 1;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #a1a1aa;
+            border-left: 8px solid transparent;
+            transition: color 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                padding-left 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                border-color 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                text-shadow 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                background 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: pointer;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            appearance: none;
+            background: transparent;
+            border-top: 0;
+            border-right: 0;
+            border-bottom: 0;
+            text-align: left;
+            font-family: inherit;
         }
 
-        .project-image::after {
+        .menu-item--secondary {
+            font-size: clamp(1.5rem, 3.25vw, 2rem);
+        }
+
+        .menu-item:hover, .menu-item.active, .menu-item:focus-visible {
+            color: var(--bo2-orange);
+            border-left-color: var(--bo2-orange);
+            padding-left: 1.5rem;
+            text-shadow: 0 0 15px var(--bo2-orange-glow), 2px 2px 4px rgba(0,0,0,0.8);
+            background: linear-gradient(90deg, rgba(255, 140, 0, 0.15) 0%, transparent 100%);
+        }
+
+        .portfolio-navigation {
+            position: relative;
+            display: flex;
+            flex: 1;
+            align-items: center;
+            width: 100%;
+            max-width: 64rem;
+            min-height: 0;
+            margin-top: 3rem;
+            overflow-y: auto;
+        }
+
+        .menu-primary {
+            flex: 0 1 min(34rem, 54%);
+            min-width: 0;
+        }
+
+        .menu-secondary {
+            position: absolute;
+            top: var(--submenu-top, 0px);
+            left: min(34rem, 54%);
+            right: 0;
+            min-width: 0;
+            padding-left: 1.5rem;
+            border-left: 1px solid rgba(255, 140, 0, 0.35);
+            animation: menuReveal 0.2s ease-out;
+        }
+
+        .menu-secondary[hidden] {
+            display: none;
+        }
+
+        @keyframes menuReveal {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .game-title-sub {
+            font-size: 1.5rem;
+            letter-spacing: 0.2em;
+            color: #d4d4d8;
+            line-height: 1;
+        }
+        
+        .game-title-main {
+            font-size: 4.5rem;
+            font-weight: 700;
+            line-height: 0.8;
+            color: var(--bo2-orange);
+            text-shadow: 0 0 20px var(--bo2-orange-glow), 2px 2px 0px #000;
+            letter-spacing: 0.02em;
+        }
+
+        @media (max-width: 640px) {
+            #mainUi {
+                padding: 1.5rem;
+            }
+
+            #mainUi nav {
+                margin-top: 2rem;
+            }
+
+            .portfolio-navigation {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.75rem;
+            }
+
+            .menu-primary {
+                flex: none;
+                width: 100%;
+            }
+
+            .menu-secondary {
+                position: static;
+                width: 100%;
+                margin-top: 0.75rem;
+                padding: 0.75rem 0 0;
+                border-top: 1px solid rgba(255, 140, 0, 0.35);
+                border-left: 0;
+            }
+
+            #mainMenu {
+                gap: 0.25rem;
+            }
+
+            .game-title-sub {
+                font-size: 1rem;
+                letter-spacing: 0.15em;
+            }
+
+            .game-title-main {
+                font-size: clamp(3rem, 12vw, 4.5rem);
+            }
+
+            .menu-item:hover, .menu-item.active, .menu-item:focus-visible {
+                padding-left: 0.75rem;
+            }
+        }
+
+        @media (max-width: 640px) and (max-height: 640px) {
+            #mainUi {
+                padding: 1rem;
+            }
+
+            #mainUi nav {
+                margin-top: 1rem;
+            }
+
+            .portfolio-navigation {
+                gap: 0.5rem;
+            }
+
+            #mainMenu {
+                gap: 0.125rem;
+            }
+
+            #mainMenu > li.my-4 {
+                margin-block: 0.5rem;
+            }
+
+            .menu-item {
+                font-size: clamp(1.5rem, 6vh, 2rem);
+                padding-top: 0.125rem;
+                padding-bottom: 0.125rem;
+            }
+
+            .menu-item--secondary {
+                font-size: clamp(1.25rem, 4vh, 1.5rem);
+            }
+        }
+
+        @media (max-height: 640px) and (min-width: 641px) {
+            #mainUi {
+                padding-top: 2rem;
+                padding-bottom: 2rem;
+            }
+
+            .portfolio-navigation {
+                margin-top: 1.5rem;
+            }
+
+            #mainMenu {
+                gap: 0.25rem;
+            }
+
+            #mainMenu > li.my-4 {
+                margin-block: 0.5rem;
+            }
+
+            .game-title-sub {
+                font-size: 1.125rem;
+            }
+
+            .game-title-main {
+                font-size: clamp(2.75rem, 8vh, 4.5rem);
+            }
+
+            .menu-item {
+                font-size: clamp(2rem, 8vh, 3.5rem);
+                padding-top: 0.125rem;
+                padding-bottom: 0.125rem;
+            }
+
+            .menu-item--secondary {
+                font-size: clamp(1.5rem, 5vh, 2rem);
+            }
+        }
+
+        .data-panel {
+            background-color: var(--bo2-panel-bg);
+            border-left: 2px solid rgba(255, 140, 0, 0.3);
+            box-shadow: -10px 0 30px rgba(0,0,0,0.8);
+            backdrop-filter: blur(8px);
+            transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            z-index: 40; /* Above UI, below scanlines if possible, but practical z-index here */
+        }
+
+        .data-panel::before {
             content: '';
             position: absolute;
-            inset: auto 0 0 0;
-            height: 45%;
-            background: linear-gradient(to top, var(--image-overlay), transparent);
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
+            pointer-events: none;
+            z-index: -1;
         }
 
-        .project-content { padding: 1.5rem; }
-
-        .project-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 0.6rem;
-            color: var(--text);
+        .panel-close-btn {
+            transition: all 0.2s ease;
+        }
+        .panel-close-btn:hover {
+            color: var(--bo2-orange);
+            text-shadow: 0 0 10px var(--bo2-orange-glow);
+            transform: scale(1.05);
         }
 
-        .project-description {
-            color: var(--text-muted);
-            line-height: 1.6;
-            margin-bottom: 1rem;
-            min-height: 3.3em;
+        /* Custom Scrollbar for Panel */
+        .custom-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.3);
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: rgba(255, 140, 0, 0.5);
+            border-radius: 3px;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb:hover {
+            background: var(--bo2-orange);
         }
 
-        .project-tags {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
+        /* Tactical Data Box */
+        .tactical-box {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-top: 2px solid var(--bo2-orange);
+            position: relative;
         }
-
-        .tag {
-            padding: 0.35rem 0.65rem;
-            background: var(--tag-bg);
-            color: var(--muted);
-            font-size: 0.78rem;
-            border-radius: 999px;
-            border: 1px solid var(--tag-border);
+        .tactical-box::after {
+            content: '';
+            position: absolute;
+            bottom: 0; right: 0;
+            width: 10px; height: 10px;
+            border-bottom: 2px solid var(--bo2-orange);
+            border-right: 2px solid var(--bo2-orange);
         }
-
-        .publications {
-            background: var(--bg);
-        }
-
-        .publications-list {
-            max-width: 980px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .publication {
-            background: linear-gradient(180deg, var(--bg-elevated), var(--surface));
-            border: 1px solid var(--surface-border);
-            border-radius: 18px;
-            padding: 1.5rem;
-            box-shadow: var(--shadow);
-        }
-
-        .publication-description {
-            font-size: 0.98rem;
-            color: var(--text-muted);
-            line-height: 1.8;
-        }
-
-        .contact {
-            background: linear-gradient(180deg, var(--contact-glow-1), var(--contact-glow-2));
-            text-align: center;
-        }
-
-        .contact-content { max-width: 920px; margin: 0 auto; }
-
-        .contact-text {
-            font-size: 1rem;
-            color: var(--text-muted);
-            margin-bottom: 2rem;
-        }
-
-        .contact-email-wrapper {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.9rem 1.3rem;
-            border-radius: 999px;
-            background: linear-gradient(90deg, var(--email-bg-1), var(--email-bg-2));
-            border: 1px solid var(--surface-border);
-            margin-bottom: 2rem;
-            transition: transform 0.3s ease;
-        }
-
-        .contact-email-wrapper:hover { transform: translateY(-2px); }
-        
-    
-
-        .contact-email-wrapper .contact-email {
-            text-decoration: none;
-            color: var(--text);
-            font-weight: 700;
-            letter-spacing: 0.04em;
-        }
-
-        .typewriter-text { display: inline-block; white-space: nowrap; min-height: 1.25em; }
-        .typewriter-cursor {
-            display: inline-block;
-            font-weight: 400;
-            opacity: 1;
-            animation: cursor-blink 0.9s step-end infinite;
-        }
-        .typewriter-cursor.typing { animation: none; }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-bottom: 2rem;
-        }
-
-        .social-link {
-            width: 52px;
-            height: 52px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text);
-            background: var(--bg-elevated);
-            border: 1px solid var(--surface-border);
-            border-radius: 999px;
-            transition: background 0.3s ease, transform 0.3s ease;
-        }
-
-        .social-link:hover {
-            transform: translateY(-2px);
-            background: linear-gradient(90deg, var(--social-hover-1), var(--social-hover-2));
-        }
-
-        footer {
-            padding: 2rem 1rem 3rem;
-            background: var(--bg);
-            text-align: center;
-            color: var(--text-muted);
-        }
-
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(18px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-6px); }
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(-8px); }
-        }
-
-        @keyframes cursor-blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-
-        @media (max-width: 900px) {
-            nav ul { display: none; }
-            .about-content { grid-template-columns: 1fr; }
-            .about-image { margin: 0 auto; }
-            .projects-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-
-        @media (max-width: 600px) {
-            .projects-grid { grid-template-columns: 1fr; }
-        }
-
-        @media (max-width: 768px) {
-            section { padding: 5rem 1rem; }
-            .hero { padding: 7rem 1rem 5rem; }
-            .hero-content { text-align: center; }
-            .kinetic-text { font-size: 3.6rem; }
-            .subtitle { margin-left: auto; margin-right: auto; }
-            .contact-email-wrapper { font-size: 0.95rem; }
-            .social-links { gap: 0.75rem; }
-        }
-</style>
+    </style>
 </head>
-<body>
-    <nav>
-        <a href="index.html" class="logo" aria-label="Home">
-            <span class="logo-avatar" aria-hidden="true"></span>
-            <span class="logo-text">Nicholas Harrison</span>
-        </a>
-        <ul>
-            <li><a href="#about">About</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#publications">Research</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-        <div class="theme-toggle">
-            <button type="button" id="theme-toggle-btn" aria-label="Switch to light mode">☀</button>
-        </div>
-    </nav>
+<body class="relative w-full h-screen flex">
 
-    <section class="hero">
-        <div class="hero-content">
-            <div class="rotating-text">Mechanical / Mechatronics Engineer</div>
-            <h1 class="kinetic-text">
-                <span class="word">Project Portfolio</span>
-            </h1>
-            <p class="subtitle">
-                Designing, prototyping, and engineering systems across automotive, robotics, and aerospace domains.
-            </p>
-            <div class="hero-actions">
-                <a href="#projects" class="cta-button">View Projects</a>
-                <a href="#contact" class="secondary-button">Contact Me</a>
-            </div>
-            <div class="hero-highlights">
-                <span>UAVs</span>
-                <span>Controls</span>
-                <span>CAD</span>
-                <span>Simulation</span>
-                <span>Embedded</span>
-            </div>
-        </div>
-        <div class="scroll-indicator">Scroll</div>
-    </section>
-
+    <canvas id="embersCanvas" class="absolute top-0 left-0 w-full h-full z-0"></canvas>
+    <div class="ambient-glow"></div>
     
-
-    <section id="about" class="about">
-        <div class="about-content" style="text-align: left">
-            <div class="about-text">
-                <h1>About</h1>
-                
-                <p>
-                    I'm an engineering student with a passion for technology and innovation. I recently completed my Bachelor's degree in Mechanical Engineering at the University of New Brunswick and am currently pursuing a Master of Engineering at the University of Toronto focussed on Robotics.
-                </p>
-            </div>
-
-        </div>
-    </section>
-
-    <section id="capabilities" class="capabilities">
-        <div class="section-header">
-            <p class="eyebrow">Core Skills</p>
-           
-        </div>
-
-        <div class="capability-grid">
-            <div class="capability-card">
-                <div class="capability-icon">✦</div>
-                <h3>Mechanical Design</h3>
-                <p>Concept development, detailed design, and iteration across aerospace, product, and prototype systems.</p>
-            </div>
-            <div class="capability-card">
-                <div class="capability-icon">◌</div>
-                <h3>Controls & Dynamics</h3>
-                <p>Modeling dynamic systems and developing control strategies for performance and stability-oriented applications.</p>
-            </div>
-            <div class="capability-card">
-                <div class="capability-icon">▣</div>
-                <h3>CAD & Simulation</h3>
-                <p>Using parametric CAD and simulation tools to test physical behavior and refine engineering decisions.</p>
-            </div>
-            <div class="capability-card">
-                <div class="capability-icon">◍</div>
-                <h3>Embedded Systems</h3>
-                <p>Translating ideas into hardware-aware systems with sensing, processing, and feedback loops.</p>
-            </div>
-            <div class="capability-card">
-                <div class="capability-icon">△</div>
-                <h3>UAV & Aerodynamics</h3>
-                <p>Exploring flight performance, structural requirements, and control trade-offs in airborne systems.</p>
-            </div>
-            <div class="capability-card">
-                <div class="capability-icon">⌁</div>
-                <h3>Prototyping</h3>
-                <p>Turning designs into physical prototypes, validating performance, and iterating rapidly.</p>
-            </div>
-        </div>
-    </section>
-
-
-   <section id="publications" class="publications">
-        <h2 class="section-title">Research</h2>
-        <p class="section-subtitle"></p>
-
-        <div class="publications-list">
-            <article class="publication">
-                <!-- <h3 class="publication-title">Example Publication Title</h3>
-                <p class="publication-meta">Author Name — Conference / Journal, Year</p>
-                <p class="publication-description">
-                    Brief description of the publication. Replace this text with a short summary of the work or key contributions.
-                </p> -->
-                <p class="publication-description\">Zhang, Q., Jiang, X., Harrison, N., Ali, S., Khirallah, Y., Lu, Y.* (2026, September). <i>CurveGuard: A Physics-Informed Predictive Speed and Braking Advisory System for Heavy Trucks</i>. 2026 International Conference on Vehicle Engineering and Intelligent Control (VEIC). SAE. </p>
-            </article>
-        </div>
-    </section>
-
-    <section id="projects" class="projects">
-        <h2 class="section-title">Project Archive</h2>
+    <!-- UI Container -->
+    <div class="relative z-20 w-full h-full flex flex-col p-8 md:p-16 pointer-events-none transition-all duration-500" id="mainUi">
         
+        <!-- Top Header Area -->
+        <header class="flex justify-between items-start w-full pointer-events-auto">
+            <div class="flex flex-col transform transition-transform hover:scale-105 cursor-default origin-top-left">
+                <div class="game-title-sub uppercase text-gray-400 font-mono text-sm mb-1 tracking-[0.3em]">Mechatronics & Autonomous Systems</div>
+                <div class="game-title-main uppercase mt-1">NICHOLAS HARRISON</div>
+            </div>
+
+            <!-- Status Indicator -->
+            <div class="hidden md:flex items-center gap-3 bg-black/40 border border-white/10 p-2 px-4 rounded-sm backdrop-blur-sm">
+                <div class="w-3 h-3 rounded-full bg-green-500 animate-pulse shadow-[0_0_8px_#22c55e]"></div>
+                <div class="font-mono text-sm tracking-widest text-gray-300">SYSTEM ONLINE</div>
+            </div>
+        </header>
+
+        <nav class="portfolio-navigation pointer-events-auto" aria-label="Portfolio sections">
+            <div class="menu-primary">
+                <ul id="mainMenu" class="flex flex-col gap-2">
+                    <li><button type="button" class="menu-item" data-menu-group="robotics" aria-controls="secondaryMenu" aria-expanded="false">Robotics & Software</button></li>
+                    <li><button type="button" class="menu-item" data-menu-group="teams" aria-controls="secondaryMenu" aria-expanded="false">Teams & Research</button></li>
+                    <li><button type="button" class="menu-item" data-menu-group="hardware" aria-controls="secondaryMenu" aria-expanded="false">Hardware & CAD</button></li>
+                    <li class="my-4"><div class="w-full h-px bg-white/10"></div></li>
+                    <li><button type="button" class="menu-item menu-item--secondary" data-target="about">About Me</button></li>
+                    <li><button type="button" class="menu-item menu-item--secondary" data-target="contact">Resume & Contact</button></li>
+                </ul>
+            </div>
+            <ul id="secondaryMenu" class="menu-secondary flex flex-col gap-2" aria-label="Projects" hidden></ul>
+        </nav>
+
+        <!-- Bottom HUD Elements -->
+        <footer class="w-full flex justify-between items-end mt-auto pointer-events-auto font-mono text-xs text-white/40">
+            <div>
+                <div>SYS.VER: 2.0.26</div>
+                <div>LOC: TORONTO, ON</div>
+            </div>
+            <div class="text-right">
+                <div>[DATA_LINK_SECURE]</div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Slide-in Panel -->
+    <div id="dataPanel" class="data-panel fixed top-0 right-0 w-full md:w-[600px] h-full transform translate-x-full flex flex-col pointer-events-auto shadow-2xl">
+        <!-- Panel Header -->
+        <div class="flex justify-between items-center p-6 border-b border-white/10 bg-black/40">
+            <h2 id="panelTitle" class="text-3xl text-white tracking-widest uppercase text-shadow-sm">Section Title</h2>
+            <button id="closePanelBtn" class="panel-close-btn flex items-center gap-2 text-xl text-gray-400 hover:text-white font-mono uppercase">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+                </svg>
+                Close
+            </button>
+        </div>
         
-        <div class="projects-container">
-            
-            <div class="project-category">
-            
-                <div class="projects-grid">
-                    
+        <!-- Panel Content Area -->
+        <div id="panelContentArea" class="flex-1 p-8 overflow-y-auto custom-scroll relative z-10 text-lg">
+            <!-- Content gets injected here -->
+        </div>
+    </div>
 
-                    <!-- <a href="project-suspension-model.html" class="project-card">
-                        <div class="project-image" style="background: linear-gradient(135deg, #0f172a, #4c1d95, #e11d48); background-size: cover; background-position: center;">
-                        </div>
-                        <div class="project-content">
-                            <h3 class="project-title">Suspension Model</h3>
-                            <p class="project-description">
-                                A vehicle-dynamics model for studying damping response and handling trade-offs.
-                            </p>
-                            <div class="project-tags">
-                                <span class="tag">MATLAB</span>
-                                <span class="tag">Dynamics</span>
-                                <span class="tag">Simulation</span>
-                            </div>
-                        </div>
+    <!-- Background effects applied over everything except panel -->
+    <div class="noise pointer-events-none z-50 mix-blend-overlay opacity-20"></div>
+    <div class="scanlines pointer-events-none z-50"></div>
+    <div class="vignette pointer-events-none z-50"></div>
 
-                    </a> -->
+    <!-- TEMPLATES FOR PANEL CONTENT -->
+    <template id="tpl-robotics">
+        <div class="space-y-8 animate-fade-in">
+            <div class="tactical-box p-5">
+                <h3 class="text-2xl text-[var(--bo2-orange)] mb-2 uppercase tracking-wide">Quadcopter Drone Firmware</h3>
+                <p class="font-sans text-gray-300 text-sm mb-4 leading-relaxed">Developed custom flight controller firmware. Implemented PID control loops for stabilization and responsive maneuvering based on real-time telemetry.</p>
+                <div class="flex gap-2">
+                    <span class="text-xs font-mono bg-white/10 px-2 py-1 rounded text-gray-400">C++</span>
+                    <span class="text-xs font-mono bg-white/10 px-2 py-1 rounded text-gray-400">Control Systems</span>
+                </div>
+            </div>
 
-                            <a href="project-quadcopter-drone.html" class="project-card">
-                        <div class="project-image" style="background-image: url('images/Projects/Quadcopter/Bottom\ flying\ view.jpeg');
-                            background-size: cover;
-                            background-position: relative;
-                            background-repeat: no-repeat;">
-                        </div>
-                        
-                        <div class="project-content">
-                            <h3 class="project-title">Quadcopter Drone</h3>
-                            <p class="project-description">
-                                A multirotor aircraft project exploring airframe design, propulsion, onboard electronics, and flight control.
-                            </p>
-                            <div class="project-tags">
-                                <span class="tag">UAV Systems</span>
-                                <span class="tag">Flight Control</span>
-                                <span class="tag">Electronics</span>
-                            </div>
-                        </div>
-                    </a>
+            <div class="tactical-box p-5">
+                <h3 class="text-2xl text-[var(--bo2-orange)] mb-2 uppercase tracking-wide">IMU Sensor Fusion</h3>
+                <p class="font-sans text-gray-300 text-sm mb-4 leading-relaxed">Engineered robust state estimation algorithms combining accelerometer and gyroscope data. Utilized complementary and Kalman filtering to eliminate drift and noise for accurate 3D spatial orientation.</p>
+                <div class="flex gap-2">
+                    <span class="text-xs font-mono bg-white/10 px-2 py-1 rounded text-gray-400">Signal Processing</span>
+                    <span class="text-xs font-mono bg-white/10 px-2 py-1 rounded text-gray-400">Python</span>
+                </div>
+            </div>
 
-    
-
-                    <a href="project-flappyBirdAI.html" class="project-card">
-                        <div class="project-image" style="background-image: url('images/Projects/Flappy/mygame.png')">
-                        </div>
-                        <div class="project-content">
-                            <h3 class="project-title">Autonomous Flappy Bird Player</h3>
-                            <p class="project-description">
-                                Applied advanced control methods to autonomously play flappy bird
-                            </p>
-                            <div class="project-tags">
-                                <span class="tag">Python</span>
-                                <span class="tag">Model Predictive Control</span>
-                                <span class="tag">pygame</span>
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="project-SkySweep.html" class="project-card">
-                        <div class="project-image" style="background-image: url('images/Projects/SKYSWEEP/LOGO.png');
-                            background-size: cover;
-                            background-position: center;
-                            background-repeat: no-repeat;">
-                        </div>
-                        <div class="project-content">
-                            <h3 class="project-title">SkySweep (Hackathon 2nd Place)</h3>
-                            <p class="project-description">
-                                A computer-vision anti-drone detection and interception system — optical AI tracking with zero radio interference.
-                            </p>
-                            <div class="project-tags">
-                                <span class="tag">Python</span>
-                                <span class="tag">Computer Vision</span>
-                                <span class="tag">Embedded Systems</span>
-                                <span class="tag">Hardware Systems</span>
-                                <span class="tag">AI Detection</span>
-                                <span class="tag">Collaboration</span>
-                            </div>
-                        </div>
-                    </a>
-
-             <a href="project-RC Plane1.html" class="project-card">
-                        <div class="project-image" style="background-image: url('images/Projects/EFC/top\ view.png');
-                            background-size: contain;
-                            background-position: center;
-                            background-repeat: no-repeat;">
-                        </div>
-                        <div class="project-content">
-                            <h3 class="project-title">Fixed Wing Drone</h3>
-                            <p class="project-description">
-                                A class project with the goal of learning and applying aircarft aerodynamics and control throry
-                            </p>
-                            <div class="project-tags">
-                                <span class="tag">Autodesk CAD</span>
-                                <span class="tag">Control Theory</span>
-                                <span class="tag">C Programming</span>
-                                <span class="tag">Embedded</span>
-                                <span class="tag">Electronics</span>
-                                <span class="tag">3D Printing</span>
-                                <span class="tag">Collaboration</span>
-                            </div>
-                        </div>
-                    </a>
-
-                   
-                    <a href="project-Ball-Sorter.html" class="project-card">
-                        <div class="project-image" style="background-image: url('images/Projects/Mechatronics\ Applications/Main Assembly v100 side.png');
-                            background-size: 130%;
-                            background-position: center;
-                            background-repeat: no-repeat;">
-                        </div>
-                        <div class="project-content">
-                            <h3 class="project-title">Ball Sorting Robot</h3>
-                            <p class="project-description">
-                                Robot made to sort, store and transport balls for a class competition.
-                            </p>
-                            <div class="project-tags">
-                                <span class="tag">Autodesk CAD</span>
-                                <span class="tag">Inverse Kinematics</span>
-                                <span class="tag">C Programming</span>
-                                <span class="tag">Embedded</span>
-                                <span class="tag">Electronics</span>
-                                <span class="tag">3D Printing</span>
-                                <span class="tag">Collaboration</span>
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="project-landing-gear.html" class="project-card">
-                        <div class="project-image" style="background-image: url('images/Ortho1.png')">
-                        </div>
-                        <div class="project-content">
-                            <h3 class="project-title">Landing Gear Mechanism</h3>
-                            <p class="project-description">
-                                Class project landing gear mechanism for a small aircraft
-                            </p>
-                            <div class="project-tags">
-                                <span class="tag">Collaboration</span>
-                                <span class="tag">Kinematics</span>
-                                <span class="tag">Dynamics</span>
-                                <span class="tag">Siemens NX</span>
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="project-meeting-minutes.html" class="project-card">
-                        <div class="project-image" style="background-image: url('images/Projects/AI Meet/logo.png'); background-size: contain; background-position: center;">
-                        </div>
-                        <div class="project-content">
-                            <h3 class="project-title">AI Meeting Minutes</h3>
-                            <p class="project-description">
-                                A structured approach to organizing decisions, responsibilities, and follow-up actions.
-                            </p>
-                            <div class="project-tags">
-                                <span class="tag">Documentation</span>
-                                <span class="tag">Workflow</span>
-                                <span class="tag">Productivity</span>
-                            </div>
-                        </div>
-                    </a>
-
-            
-                    <a href="project-Speaker Stands.html" class="project-card">
-                        <div class="project-image" style="background-image: url('images/Projects/Speaker\ Stands/Render.png');
-                        background-size: contain;
-                        background-position: center;
-                        background-repeat: no-repeat;">
-                        </div>
-                        <div class="project-content">
-                            <h3 class="project-title">Audio Monitor Stands</h3>
-                            <p class="project-description">
-                                Customized stands for my audio monitors
-                            </p>
-                            <div class="project-tags">
-                                <span class="tag">Autodesk CAD</span>
-                                <span class="tag">3D Printing</span>
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="project-sim-cockpit.html" class="project-card">
-                        <div class="project-image" style="background-image: url('images/Projects/Sim Cockpit/render.png'); background-size: cover; background-position: center;">
-                        </div>
-                        <div class="project-content">
-                            <h3 class="project-title">Sim Cockpit</h3>
-                            <p class="project-description">
-                                A telemetry-focused cockpit concept for visualizing system state and operator feedback.
-                            </p>
-                            <div class="project-tags">
-                                <span class="tag">UI Design</span>
-                                <span class="tag">Simulation</span>
-                                <span class="tag">Data Visualization</span>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- <a href="project-trading-simulator.html" class="project-card">
-                        <div class="project-image" style="background: linear-gradient(135deg, #111827, #0f766e, #14b8a6); background-size: cover; background-position: center;">
-                        </div>
-                        <div class="project-content">
-                            <h3 class="project-title">Trading Simulator</h3>
-                            <p class="project-description">
-                                A strategy-testing environment for evaluating risk, positions, and market scenarios.
-                            </p>
-                            <div class="project-tags">
-                                <span class="tag">Python</span>
-                                <span class="tag">Backtesting</span>
-                                <span class="tag">Analytics</span>
-                            </div>
-                        </div>
-                    </a> -->
-
+            <div class="tactical-box p-5">
+                <h3 class="text-2xl text-[var(--bo2-orange)] mb-2 uppercase tracking-wide">MPC & Dynamics Simulations</h3>
+                <p class="font-sans text-gray-300 text-sm mb-4 leading-relaxed">Built interactive Pygame environments to simulate and visualize Model Predictive Control (MPC). Modeled complex systems including quarter-car suspension dynamics to optimize ride comfort and road handling.</p>
+                <div class="flex gap-2">
+                    <span class="text-xs font-mono bg-white/10 px-2 py-1 rounded text-gray-400">Pygame</span>
+                    <span class="text-xs font-mono bg-white/10 px-2 py-1 rounded text-gray-400">Optimization</span>
                 </div>
             </div>
         </div>
-    </section>
+    </template>
 
-
-    <section id="contact" class="contact">
-        <div class="contact-content">
-            <h2 class="section-title">Contact</h2>
-            <div class="contact-email-wrapper">
-                <a href="mailto:thenickharrison@icloud.com" class="contact-email" aria-label="thenickharrison@icloud.com">
-                    <span class="typewriter-text"><span class="typewriter-inner"></span><span class="typewriter-cursor typing">|</span></span>
-                </a>
+    <template id="tpl-teams">
+        <div class="space-y-8 animate-fade-in">
+            <div class="tactical-box p-5">
+                <div class="flex justify-between items-start mb-2">
+                    <h3 class="text-2xl text-[var(--bo2-orange)] uppercase tracking-wide">UNB Electric Formula</h3>
+                    <span class="font-mono text-xs text-gray-500 mt-2">Drivetrain Lead</span>
+                </div>
+                <p class="font-sans text-gray-300 text-sm mb-4 leading-relaxed">Spearheaded the design and integration of the mechanical drivetrain for a high-performance electric racecar. Managed a sub-team, conducted FEA analysis on load-bearing components, and optimized power delivery from the motor to the wheels.</p>
+                <ul class="font-mono text-xs text-gray-400 space-y-1 list-disc list-inside">
+                    <li>Led design reviews and manufacturing processes.</li>
+                    <li>Reduced overall unsprung mass by 12%.</li>
+                    <li>Collaborated closely with electrical/controls teams.</li>
+                </ul>
             </div>
-            
-            <div class="social-links">
-                <a href="https://github.com/nickcode1" class="social-link" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
-                    <svg class="social-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                </a>
-                <a href="https://www.linkedin.com/in/nickharrison-" class="social-link" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
-                    <svg class="social-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                </a>
+
+            <div class="tactical-box p-5">
+                <div class="flex justify-between items-start mb-2">
+                    <h3 class="text-2xl text-[var(--bo2-orange)] uppercase tracking-wide">SAE Technical Paper</h3>
+                    <span class="font-mono text-xs text-gray-500 mt-2">Co-Author</span>
+                </div>
+                <p class="font-sans text-gray-300 text-sm mb-4 leading-relaxed">Contributed to research and publication regarding "CurveGuard," an advanced predictive speed advisory system. The system leverages geospatial data and vehicle dynamics to improve safety on complex road geometries.</p>
+                <div class="flex gap-2">
+                    <span class="text-xs font-mono bg-white/10 px-2 py-1 rounded text-gray-400">Research</span>
+                    <span class="text-xs font-mono bg-white/10 px-2 py-1 rounded text-gray-400">Data Analysis</span>
+                </div>
             </div>
         </div>
-    </section>
+    </template>
 
-    <script src="theme.js"></script>
+    <template id="tpl-hardware">
+        <div class="space-y-8 animate-fade-in">
+            <div class="tactical-box p-5">
+                <h3 class="text-2xl text-[var(--bo2-orange)] mb-2 uppercase tracking-wide">SolidWorks & Multi-body Modeling</h3>
+                <p class="font-sans text-gray-300 text-sm mb-4 leading-relaxed">Extensive experience in 3D CAD modeling. Created complex multi-body assemblies, performed interference detection, and generated production-ready engineering drawings.</p>
+                <div class="flex gap-2">
+                    <span class="text-xs font-mono bg-white/10 px-2 py-1 rounded text-gray-400">SolidWorks</span>
+                    <span class="text-xs font-mono bg-white/10 px-2 py-1 rounded text-gray-400">DFMA</span>
+                </div>
+            </div>
+
+            <div class="tactical-box p-5">
+                <h3 class="text-2xl text-[var(--bo2-orange)] mb-2 uppercase tracking-wide">Embedded Systems Integration</h3>
+                <p class="font-sans text-gray-300 text-sm mb-4 leading-relaxed">Designed and assembled physical hardware architectures utilizing ESP32 and Arduino microcontrollers. Handled custom PCB routing, sensor wiring, and peripheral communication (I2C, SPI, UART).</p>
+                <div class="flex gap-2">
+                    <span class="text-xs font-mono bg-white/10 px-2 py-1 rounded text-gray-400">ESP32</span>
+                    <span class="text-xs font-mono bg-white/10 px-2 py-1 rounded text-gray-400">Arduino</span>
+                    <span class="text-xs font-mono bg-white/10 px-2 py-1 rounded text-gray-400">Mechatronics</span>
+                </div>
+            </div>
+            
+            <div class="tactical-box p-5 border-dashed border-gray-600 bg-transparent">
+                <div class="flex items-center justify-center py-4">
+                    <span class="font-mono text-gray-500 uppercase tracking-widest text-sm">[ SCHEMATIC DATA REDACTED ]</span>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="tpl-about">
+        <div class="space-y-6 animate-fade-in">
+            <div class="flex items-center gap-4 mb-6">
+                <div class="w-20 h-20 bg-gray-800 border-2 border-[var(--bo2-orange)] flex items-center justify-center relative overflow-hidden">
+                    <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPgo8cmVjdCB3aWR0aD0iOCIgaGVpZ2h0PSI4IiBmaWxsPSIjMDAwIiBmaWxsLW9wYWNpdHk9IjAuMSIvPgo8cGF0aCBkPSJNMCAwTDggOFpNOCAwTDAgOFoiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLW9wYWNpdHk9IjAuMSIvPgo8L3N2Zz4=')] opacity-50"></div>
+                    <span class="text-4xl text-white z-10">NH</span>
+                </div>
+                <div>
+                    <h3 class="text-3xl text-white tracking-widest uppercase m-0 leading-none">Nicholas Harrison</h3>
+                    <span class="font-mono text-sm text-[var(--bo2-orange)]">PROFILE_ID: 104-B</span>
+                </div>
+            </div>
+            
+            <p class="font-sans text-gray-300 text-lg leading-relaxed">
+                Currently pursuing a Master of Engineering (MEng) in Robotics at the University of Toronto. Relocated from New Brunswick to tackle complex challenges at the intersection of hardware and software.
+            </p>
+            <p class="font-sans text-gray-400 text-md leading-relaxed">
+                I specialize in mechatronics, control systems, and embedded firmware. Driven by a passion for autonomous systems and high-performance engineering, bridging the gap between mechanical design and intelligent algorithms.
+            </p>
+            
+            <div class="grid grid-cols-2 gap-4 mt-8">
+                <div class="bg-white/5 p-3 border border-white/10">
+                    <div class="font-mono text-xs text-gray-500 uppercase mb-1">Current Status</div>
+                    <div class="text-white">MEng Student, UofT</div>
+                </div>
+                <div class="bg-white/5 p-3 border border-white/10">
+                    <div class="font-mono text-xs text-gray-500 uppercase mb-1">Focus Area</div>
+                    <div class="text-[var(--bo2-orange)]">Robotics & Controls</div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="tpl-contact">
+        <div class="space-y-8 animate-fade-in flex flex-col h-full justify-center">
+            
+            <a href="#" class="tactical-box p-6 flex items-center justify-between group cursor-pointer hover:bg-white/5 transition-colors">
+                <div>
+                    <h3 class="text-3xl text-white uppercase tracking-wide group-hover:text-[var(--bo2-orange)] transition-colors">View Resume</h3>
+                    <p class="font-mono text-sm text-gray-400 mt-1">Download PDF Document</p>
+                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-500 group-hover:text-[var(--bo2-orange)] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+            </a>
+
+            <a href="#" class="tactical-box p-6 flex items-center justify-between group cursor-pointer hover:bg-white/5 transition-colors">
+                <div>
+                    <h3 class="text-3xl text-white uppercase tracking-wide group-hover:text-[var(--bo2-orange)] transition-colors">GitHub</h3>
+                    <p class="font-mono text-sm text-gray-400 mt-1">Access Source Repositories</p>
+                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-500 group-hover:text-[var(--bo2-orange)] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                </svg>
+            </a>
+
+            <a href="#" class="tactical-box p-6 flex items-center justify-between group cursor-pointer hover:bg-white/5 transition-colors">
+                <div>
+                    <h3 class="text-3xl text-white uppercase tracking-wide group-hover:text-[var(--bo2-orange)] transition-colors">LinkedIn</h3>
+                    <p class="font-mono text-sm text-gray-400 mt-1">Professional Network</p>
+                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-500 group-hover:text-[var(--bo2-orange)] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+            </a>
+
+        </div>
+    </template>
+
     <script>
-        (function(){
-            const text = 'thenickharrison@icloud.com';
-            const wrapper = document.querySelector('.typewriter-text');
-            const inner = document.querySelector('.typewriter-inner');
-            const cursor = document.querySelector('.typewriter-cursor');
-            if (!inner || !cursor || !wrapper) return;
+        // --- Web Audio API Setup ---
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        const audioCtx = new AudioContext();
 
-            const baseDelay = 85;
-            const jitter = () => baseDelay + Math.random() * 60 - 20;
-            const wordPause = 180;
-            const backspaceDelay = 55;
-            const backspaceJitter = () => backspaceDelay + Math.random() * 40 - 15;
-            const displayPause = 2000; // 2 seconds after message is printed
-            const resetPause = 800;
+        function createOscillatorNode(freq, type, duration, vol) {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            gainNode.gain.setValueAtTime(vol, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+            osc.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + duration);
+        }
 
-            let timeoutId = null;
-            let isVisible = true;
-            let phase = 'initial'; // 'initial' | 'typing' | 'displaying' | 'backspacing' | 'resetting'
-            let typingIndex = 0;
-            let displayStartTime = 0;
+        function playHoverSound() {
+            createOscillatorNode(180, 'square', 0.05, 0.02);
+            setTimeout(() => createOscillatorNode(240, 'square', 0.05, 0.01), 20);
+        }
 
-            function schedule(delay, fn) {
-                if (!isVisible) return;
-                timeoutId = setTimeout(() => {
-                    timeoutId = null;
-                    fn();
-                }, delay);
+        function playClickSound() {
+            createOscillatorNode(100, 'sawtooth', 0.15, 0.05);
+            setTimeout(() => createOscillatorNode(300, 'square', 0.1, 0.03), 50);
+        }
+
+        function playCloseSound() {
+            createOscillatorNode(200, 'sine', 0.1, 0.03);
+            setTimeout(() => createOscillatorNode(100, 'square', 0.1, 0.02), 50);
+        }
+
+        // --- UI Interactions ---
+        const mainMenu = document.getElementById('mainMenu');
+        const secondaryMenu = document.getElementById('secondaryMenu');
+        const dataPanel = document.getElementById('dataPanel');
+        const closeBtn = document.getElementById('closePanelBtn');
+        const panelTitle = document.getElementById('panelTitle');
+        const panelContentArea = document.getElementById('panelContentArea');
+        const mainUi = document.getElementById('mainUi');
+        
+        let isPanelOpen = false;
+        let activeMenuGroup = null;
+
+        function setPanelOpen(isOpen) {
+            dataPanel.classList.toggle('translate-x-full', !isOpen);
+            mainUi.classList.toggle('md:pr-[600px]', isOpen);
+            mainUi.classList.toggle('opacity-30', isOpen);
+            isPanelOpen = isOpen;
+        }
+
+        function showPanel(title, templateId, cardIndex = null) {
+            const template = document.getElementById(`tpl-${templateId}`);
+
+            if (!template) {
+                console.error(`Portfolio content template not found: tpl-${templateId}`);
+                return;
             }
 
-            function run() {
-                if (!isVisible) return;
+            let content;
+            if (cardIndex === null) {
+                content = template.content.cloneNode(true);
+            } else {
+                const card = template.content.querySelectorAll('.tactical-box')[cardIndex];
+                if (!card) {
+                    console.error(`Portfolio content card not found: ${templateId}[${cardIndex}]`);
+                    return;
+                }
+                content = document.createElement('div');
+                content.className = 'animate-fade-in';
+                content.appendChild(card.cloneNode(true));
+            }
 
-                switch (phase) {
-                    case 'initial':
-                        phase = 'typing';
-                        cursor.classList.add('typing');
-                        typingIndex = 0;
-                        schedule(400, run);
-                        break;
-                    case 'typing':
-                        if (typingIndex < text.length) {
-                            inner.textContent += text[typingIndex];
-                            typingIndex++;
-                            const delay = text[typingIndex - 1] === ' ' ? wordPause : jitter();
-                            schedule(delay, run);
-                        } else {
-                            cursor.classList.remove('typing');
-                            phase = 'displaying';
-                            displayStartTime = Date.now();
-                            schedule(displayPause, run);
-                        }
-                        break;
-                    case 'displaying': {
-                        const elapsed = Date.now() - displayStartTime;
-                        if (elapsed >= displayPause) {
-                            phase = 'backspacing';
-                            cursor.classList.add('typing');
-                            run();
-                        } else {
-                            schedule(displayPause - elapsed, run);
-                        }
-                        break;
-                    }
-                    case 'backspacing':
-                        if (inner.textContent.length > 0) {
-                            inner.textContent = inner.textContent.slice(0, -1);
-                            schedule(backspaceJitter(), run);
-                        } else {
-                            cursor.classList.remove('typing');
-                            phase = 'resetting';
-                            schedule(resetPause, run);
-                        }
-                        break;
-                    case 'resetting':
-                        phase = 'initial';
-                        run();
-                        break;
+            panelTitle.textContent = title;
+            panelContentArea.replaceChildren(content);
+            setPanelOpen(true);
+        }
+
+        function setActiveMenuItem(item) {
+            document.querySelectorAll('.menu-item.active').forEach(activeItem => {
+                activeItem.classList.remove('active');
+            });
+            item.classList.add('active');
+        }
+
+        function openMenuGroup(item) {
+            const groupId = item.dataset.menuGroup;
+            const isAlreadyOpen = activeMenuGroup === groupId;
+
+            if (isPanelOpen) {
+                setPanelOpen(false);
+            }
+
+            mainMenu.querySelectorAll('[data-menu-group]').forEach(groupButton => {
+                groupButton.setAttribute('aria-expanded', 'false');
+            });
+            secondaryMenu.replaceChildren();
+
+            if (isAlreadyOpen) {
+                activeMenuGroup = null;
+                secondaryMenu.hidden = true;
+                item.classList.remove('active');
+                return;
+            }
+
+            const template = document.getElementById(`tpl-${groupId}`);
+            if (!template) {
+                console.error(`Portfolio content template not found: tpl-${groupId}`);
+                return;
+            }
+
+            const cards = template.content.querySelectorAll('.tactical-box');
+            cards.forEach((card, index) => {
+                const heading = card.querySelector('h3');
+                const label = heading ? heading.textContent.trim() : 'Schematic Data';
+                const submenuItem = document.createElement('li');
+                const button = document.createElement('button');
+
+                button.type = 'button';
+                button.className = 'menu-item menu-item--secondary';
+                button.textContent = label;
+                button.dataset.template = groupId;
+                button.dataset.cardIndex = index;
+                submenuItem.appendChild(button);
+                secondaryMenu.appendChild(submenuItem);
+            });
+
+            activeMenuGroup = groupId;
+            setActiveMenuItem(item);
+            item.setAttribute('aria-expanded', 'true');
+            secondaryMenu.hidden = false;
+
+            if (window.matchMedia('(min-width: 641px)').matches) {
+                const navigationRect = secondaryMenu.parentElement.getBoundingClientRect();
+                const itemRect = item.getBoundingClientRect();
+                const availableHeight = secondaryMenu.parentElement.clientHeight;
+                const top = Math.min(
+                    itemRect.top - navigationRect.top,
+                    availableHeight - secondaryMenu.offsetHeight
+                );
+                secondaryMenu.style.setProperty('--submenu-top', `${Math.max(0, top)}px`);
+            }
+        }
+
+        mainMenu.addEventListener('click', event => {
+            const item = event.target.closest('.menu-item');
+            if (!item) {
+                return;
+            }
+
+            playClickSound();
+            if (item.dataset.menuGroup) {
+                openMenuGroup(item);
+                return;
+            }
+
+            activeMenuGroup = null;
+            secondaryMenu.hidden = true;
+            secondaryMenu.replaceChildren();
+            mainMenu.querySelectorAll('[data-menu-group]').forEach(groupButton => {
+                groupButton.setAttribute('aria-expanded', 'false');
+            });
+            setActiveMenuItem(item);
+            showPanel(item.textContent.trim(), item.dataset.target);
+        });
+
+        secondaryMenu.addEventListener('click', event => {
+            const item = event.target.closest('.menu-item');
+            if (!item) {
+                return;
+            }
+
+            playClickSound();
+            secondaryMenu.querySelectorAll('.menu-item.active').forEach(activeItem => {
+                activeItem.classList.remove('active');
+            });
+            item.classList.add('active');
+            showPanel(item.textContent.trim(), item.dataset.template, Number(item.dataset.cardIndex));
+        });
+
+        document.addEventListener('mouseenter', event => {
+            if (event.target instanceof Element
+                && event.target.matches('.menu-item')
+                && !event.target.classList.contains('active')) {
+                playHoverSound();
+            }
+        }, true);
+
+        closeBtn.addEventListener('click', () => {
+            playCloseSound();
+            setPanelOpen(false);
+        });
+
+        // Initialize Audio context on first click anywhere
+        document.body.addEventListener('click', () => {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+        }, { once: true });
+
+
+        // --- STREAMING_CHUNK:Setting up canvas particle system... ---
+        const canvas = document.getElementById('embersCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        let width, height;
+        let particles = [];
+
+        function initCanvas() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', initCanvas);
+        initCanvas();
+
+        class Particle {
+            constructor() {
+                this.reset();
+                this.y = Math.random() * height; 
+            }
+
+            reset() {
+                this.x = Math.random() * width;
+                this.y = height + 10;
+                this.size = Math.random() * 2.5 + 0.5;
+                this.speedY = (Math.random() * 1.5 + 0.5) * -1; // Drift up
+                this.speedX = (Math.random() - 0.5) * 1; // Drift side
+                this.life = Math.random() * 0.5 + 0.5; // Opacity
+                this.decay = Math.random() * 0.005 + 0.002;
+                
+                // Color variation (orange to red/yellow)
+                const hue = Math.floor(Math.random() * 30 + 15); 
+                this.color = `hsla(${hue}, 100%, 60%, `; 
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.life -= this.decay;
+                this.speedX += (Math.random() - 0.5) * 0.1;
+
+                if (this.life <= 0 || this.y < -10) {
+                    this.reset();
                 }
             }
 
-            function pause() {
-                if (timeoutId) {
-                    clearTimeout(timeoutId);
-                    timeoutId = null;
-                }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color + Math.max(0, this.life) + ')';
+                ctx.fill();
             }
+        }
 
-            const io = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    isVisible = entry.isIntersecting;
-                    if (isVisible) {
-                        run();
-                    } else {
-                        pause();
-                    }
-                });
-            }, { threshold: 0.1 });
+        const particleCount = 120;
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
 
-            io.observe(wrapper);
-            run();
-        })();
+        function animate() {
+            // Motion blur effect
+            ctx.fillStyle = 'rgba(11, 13, 16, 0.4)';
+            ctx.fillRect(0, 0, width, height);
+
+            // Optional: Draw a subtle grid or lines to enhance tech feel on canvas
+            ctx.strokeStyle = 'rgba(255, 140, 0, 0.02)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            for(let i=0; i<height; i+=50) {
+                ctx.moveTo(0, i);
+                ctx.lineTo(width, i);
+            }
+            ctx.stroke();
+
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        window.onload = animate;
     </script>
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    const offsetTop = target.offsetTop - 80;
-                    window.scrollTo({
-                        top: offsetTop,
-                        behavior:"instant"
-                    });
-                }
-            });
-        });
-
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.project-card').forEach((card, index) => {
-            card.style.opacity = '0';
-        });
-
-
-
-
-
+</body>
+</html>
