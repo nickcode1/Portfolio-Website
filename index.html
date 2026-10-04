@@ -658,6 +658,20 @@
             item.classList.add('active');
         }
 
+        const projectPages = [
+            { title: 'Ball Sorting Robot', href: 'project-Ball-Sorter.html' },
+            { title: 'Quadcopter Drone', href: 'project-quadcopter-drone.html' },
+            { title: 'Landing Gear Mechanism', href: 'project-landing-gear.html' },
+            { title: 'RC Plane with Flight Controller', href: 'project-RC Plane1.html' },
+            { title: 'Autonomous Flappy Bird', href: 'project-flappyBirdAI.html' },
+            { title: 'Suspension Model', href: 'project-suspension-model.html' },
+            { title: 'Trading Simulator', href: 'project-trading-simulator.html' },
+            { title: 'Sim Cockpit', href: 'project-sim-cockpit.html' },
+            { title: 'AI Meeting Minutes', href: 'project-meeting-minutes.html' },
+            { title: 'SkySweep', href: 'project-SkySweep.html' },
+            { title: 'Audio Monitor Stands', href: 'project-Speaker Stands.html' }
+        ];
+
         function openMenuGroup(item) {
             const groupId = item.dataset.menuGroup;
             const isAlreadyOpen = activeMenuGroup === groupId;
@@ -684,21 +698,34 @@
                 return;
             }
 
-            const cards = template.content.querySelectorAll('.tactical-box');
-            cards.forEach((card, index) => {
-                const heading = card.querySelector('h3');
-                const label = heading ? heading.textContent.trim() : 'Schematic Data';
-                const submenuItem = document.createElement('li');
-                const button = document.createElement('button');
+            if (groupId === 'robotics') {
+                projectPages.forEach(project => {
+                    const submenuItem = document.createElement('li');
+                    const link = document.createElement('a');
 
-                button.type = 'button';
-                button.className = 'menu-item menu-item--secondary';
-                button.textContent = label;
-                button.dataset.template = groupId;
-                button.dataset.cardIndex = index;
-                submenuItem.appendChild(button);
-                secondaryMenu.appendChild(submenuItem);
-            });
+                    link.className = 'menu-item menu-item--secondary';
+                    link.href = project.href;
+                    link.textContent = project.title;
+                    submenuItem.appendChild(link);
+                    secondaryMenu.appendChild(submenuItem);
+                });
+            } else {
+                const cards = template.content.querySelectorAll('.tactical-box');
+                cards.forEach((card, index) => {
+                    const heading = card.querySelector('h3');
+                    const label = heading ? heading.textContent.trim() : 'Schematic Data';
+                    const submenuItem = document.createElement('li');
+                    const button = document.createElement('button');
+
+                    button.type = 'button';
+                    button.className = 'menu-item menu-item--secondary';
+                    button.textContent = label;
+                    button.dataset.template = groupId;
+                    button.dataset.cardIndex = index;
+                    submenuItem.appendChild(button);
+                    secondaryMenu.appendChild(submenuItem);
+                });
+            }
 
             activeMenuGroup = groupId;
             setActiveMenuItem(item);
@@ -746,6 +773,10 @@
             }
 
             playClickSound();
+            if (item instanceof HTMLAnchorElement) {
+                return;
+            }
+
             secondaryMenu.querySelectorAll('.menu-item.active').forEach(activeItem => {
                 activeItem.classList.remove('active');
             });

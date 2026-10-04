@@ -1,0 +1,263 @@
+@import url('https://fonts.googleapis.com/css2?family=Teko:wght@400;500;600;700&family=Share+Tech+Mono&display=swap');
+
+:root,
+[data-theme="dark"] {
+    --bg: #0b0d10;
+    --bg-elevated: #0f1216;
+    --surface: #15191e;
+    --surface-2: #1b2026;
+    --surface-border: rgba(255, 140, 0, 0.24);
+    --text: #d4d4d8;
+    --muted: #a1a1aa;
+    --text-muted: #a1a1aa;
+    --accent: #ff8c00;
+    --accent-2: #ff8c00;
+    --accent-3: #ffb347;
+    --success: #65a875;
+    --shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+    --radius: 3px;
+    --max-width: 1180px;
+    --glow-primary: rgba(255, 140, 0, 0.08);
+    --glow-secondary: rgba(255, 140, 0, 0.04);
+    --glow-hero-primary: rgba(255, 140, 0, 0.12);
+    --glow-hero-secondary: rgba(255, 140, 0, 0.06);
+    --nav-bg: rgba(11, 13, 16, 0.96);
+    --nav-bg-fade: rgba(11, 13, 16, 0.82);
+    --grid-line: transparent;
+    --about-overlay-1: rgba(255, 140, 0, 0.06);
+    --about-overlay-2: rgba(255, 140, 0, 0.03);
+    --tag-bg: rgba(255, 140, 0, 0.08);
+    --tag-border: rgba(255, 140, 0, 0.22);
+    --card-hover-border: rgba(255, 140, 0, 0.55);
+    --card-hover-shadow: rgba(0, 0, 0, 0.65);
+    --image-overlay: rgba(11, 13, 16, 0.72);
+    --contact-glow-1: rgba(255, 140, 0, 0.06);
+    --contact-glow-2: rgba(255, 140, 0, 0.03);
+    --email-bg-1: rgba(255, 140, 0, 0.12);
+    --email-bg-2: rgba(255, 140, 0, 0.06);
+    --social-hover-1: rgba(255, 140, 0, 0.16);
+    --social-hover-2: rgba(255, 140, 0, 0.08);
+    --cta-shadow: rgba(255, 140, 0, 0.24);
+    --section-tint: rgba(255, 140, 0, 0.03);
+    --project-image-overlay-1: rgba(255, 140, 0, 0.12);
+    --project-image-overlay-2: rgba(11, 13, 16, 0.2);
+    --project-cta-bg-1: rgba(255, 140, 0, 0.06);
+    --project-cta-bg-2: rgba(11, 13, 16, 0.2);
+}
+
+[data-theme="light"] {
+    --bg: #f1f1ef;
+    --bg-elevated: #ffffff;
+    --surface: #e4e3df;
+    --surface-2: #d8d6d1;
+    --surface-border: rgba(130, 72, 0, 0.24);
+    --text: #202124;
+    --muted: #57534e;
+    --text-muted: #625d56;
+    --accent: #b85e00;
+    --accent-2: #b85e00;
+    --accent-3: #d77c13;
+    --shadow: 0 18px 45px rgba(35, 28, 18, 0.14);
+    --nav-bg: rgba(241, 241, 239, 0.96);
+    --nav-bg-fade: rgba(241, 241, 239, 0.82);
+    --tag-bg: rgba(184, 94, 0, 0.08);
+    --tag-border: rgba(184, 94, 0, 0.2);
+    --card-hover-border: rgba(184, 94, 0, 0.52);
+    --image-overlay: rgba(20, 18, 14, 0.52);
+    --project-image-overlay-1: rgba(184, 94, 0, 0.14);
+    --project-image-overlay-2: rgba(20, 18, 14, 0.16);
+    --project-cta-bg-1: rgba(184, 94, 0, 0.07);
+    --project-cta-bg-2: rgba(20, 18, 14, 0.04);
+}
+
+html {
+    background: var(--bg);
+}
+
+body {
+    background:
+        radial-gradient(ellipse at 50% 35%, rgba(255, 140, 0, 0.045), transparent 65%),
+        var(--bg);
+    color: var(--text);
+}
+
+nav {
+    border-bottom-color: rgba(255, 140, 0, 0.24);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.24);
+    gap: 1rem;
+}
+
+.logo {
+    display: none;
+}
+
+.logo-text,
+.project-hero h1,
+.video-intro h1,
+.content-section h2,
+.content-section h3,
+.cta-section h2 {
+    font-family: 'Teko', sans-serif;
+    letter-spacing: 0.04em;
+}
+
+.logo-text {
+    font-size: 1.2rem;
+    color: var(--text);
+}
+
+nav a {
+    font-family: 'Share Tech Mono', monospace;
+}
+
+nav a:hover,
+nav a:focus-visible {
+    color: var(--accent);
+}
+
+nav a::after,
+.cta-section::before {
+    background: var(--accent);
+}
+
+.menu-return {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 0;
+    padding: 0.65rem 0.9rem;
+    border: 1px solid rgba(255, 140, 0, 0.42);
+    background: rgba(255, 140, 0, 0.08);
+    color: var(--accent);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+}
+
+nav .menu-return::after {
+    display: none;
+}
+
+nav .menu-return:hover,
+nav .menu-return:focus-visible {
+    border-color: var(--accent);
+    background: rgba(255, 140, 0, 0.16);
+    color: var(--accent);
+}
+
+.project-hero h1,
+.video-intro h1 {
+    color: var(--accent);
+    text-shadow: 0 0 20px rgba(255, 140, 0, 0.35), 2px 2px 0 #000;
+    letter-spacing: 0.02em;
+}
+
+.project-hero .subtitle,
+.content-section p,
+.content-section li {
+    color: var(--text-muted);
+}
+
+.meta-item,
+.content-section,
+.gallery-item,
+.image-container {
+    border-color: var(--surface-border);
+    border-radius: 3px;
+    box-shadow: var(--shadow);
+}
+
+.meta-item,
+.content-section,
+.gallery-item {
+    background: linear-gradient(180deg, var(--bg-elevated), var(--surface));
+}
+
+.content-section {
+    border-left: 2px solid rgba(255, 140, 0, 0.45);
+}
+
+.content-section h2,
+.cta-section h2 {
+    color: var(--accent);
+}
+
+.content-section li::before,
+.project-home-link .scroll-cue::before {
+    color: var(--accent);
+}
+
+.tech-item {
+    border-radius: 2px;
+    color: var(--muted);
+}
+
+.btn {
+    border-radius: 2px;
+    transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.btn-primary {
+    background: var(--accent);
+    color: #0b0d10;
+}
+
+.btn-primary:hover,
+.btn-primary:focus-visible {
+    background: #ffa52e;
+}
+
+.btn-secondary {
+    border-color: var(--surface-border);
+    color: var(--text);
+    background: var(--bg-elevated);
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus-visible,
+.project-home-link .scroll-cue:hover,
+.project-home-link .scroll-cue:focus-visible {
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
+#theme-toggle-btn {
+    border-radius: 2px;
+    border-color: var(--surface-border);
+    color: var(--accent);
+}
+
+.project-home-link .scroll-cue,
+.meta-label,
+.tech-item,
+.cta-footer {
+    font-family: 'Share Tech Mono', monospace;
+}
+
+.project-home-link .scroll-cue {
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--surface-border);
+    background: rgba(255, 140, 0, 0.06);
+}
+
+.lightbox {
+    background: rgba(5, 6, 8, 0.92);
+}
+
+@media (max-width: 768px) {
+    nav .menu-return {
+        padding: 0.55rem 0.65rem;
+        font-size: 0.7rem;
+    }
+}
+
+@media (max-width: 380px) {
+    nav .logo-text {
+        font-size: 1rem;
+    }
+
+    nav .menu-return {
+        padding: 0.5rem;
+        font-size: 0.65rem;
+    }
+}

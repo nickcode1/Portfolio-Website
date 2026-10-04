@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script>
-        (function(){ var k='portfolio-theme',t; try{t=localStorage.getItem(k);}catch(e){} if(!t&&typeof matchMedia!=='undefined'&&matchMedia('(prefers-color-scheme: light)').matches)t='light'; document.documentElement.setAttribute('data-theme',t||'dark'); })();
+        (function(){ var k='portfolio-theme',t; try{t=localStorage.getItem(k);}catch(e){} document.documentElement.setAttribute('data-theme',t||'dark'); })();
     </script>
     <title>Autonomous Flappy Bird - Nick's Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -461,26 +461,21 @@
             .content-section { padding: 1.4rem; }
         }
 </style>
+    <link rel="stylesheet" href="project-theme.css">
 </head>
 <body>
     <nav>
-        <a href="index.html" class="logo" aria-label="Home">
+        <a href="index.html" class="logo" aria-label="Back to the portfolio menu">
             <span class="logo-avatar" aria-hidden="true"></span>
             <span class="logo-text">Nicholas Harrison</span>
         </a>
-        <ul>
-            <li><a href="index.html#about">About</a></li>
-            <li><a href="index.html#projects">Projects</a></li>
-            <li><a href="index.html#publications">Research</a></li>
-            <li><a href="index.html#contact">Contact</a></li>
-        </ul>
+        <a href="index.html" class="menu-return" aria-label="Back to the portfolio menu">&#8592; BACK TO MENU</a>
         <div class="theme-toggle">
             <button type="button" id="theme-toggle-btn" aria-label="Switch to light mode">☀</button>
         </div>
     </nav>
 
     <section class="project-hero">
-        <!-- <a href="index.html#projects" class="back-link">← Back to Projects</a> -->
         <h1>Autonomous Flappy Bird Player</h1>
         <p class="subtitle"></p>
         
@@ -621,9 +616,6 @@
                 <div class="tech-item">pygame</div>
                 <div class="tech-item">Model Predictive Control</div>
             </div>
-        </div>
-        <div class="project-home-link">
-            <a href="index.html" class="scroll-cue">Return Home</a>
         </div>
     </section>
 
