@@ -294,9 +294,7 @@
             content: '';
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 20px 20px;
+            background: transparent;
             pointer-events: none;
             z-index: -1;
         }
@@ -367,9 +365,9 @@
         <nav class="portfolio-navigation pointer-events-auto" aria-label="Portfolio sections">
             <div class="menu-primary">
                 <ul id="mainMenu" class="flex flex-col gap-2">
-                    <li><button type="button" class="menu-item" data-menu-group="robotics" aria-controls="secondaryMenu" aria-expanded="false">Robotics & Software</button></li>
-                    <li><button type="button" class="menu-item" data-menu-group="teams" aria-controls="secondaryMenu" aria-expanded="false">Teams & Research</button></li>
-                    <li><button type="button" class="menu-item" data-menu-group="hardware" aria-controls="secondaryMenu" aria-expanded="false">Hardware & CAD</button></li>
+                    <li><button type="button" class="menu-item" data-menu-group="robotics" aria-controls="secondaryMenu" aria-expanded="false">Projects</button></li>
+                    <li><button type="button" class="menu-item" data-menu-group="teams" aria-controls="secondaryMenu" aria-expanded="false">Research</button></li>
+                
                     <li class="my-4"><div class="w-full h-px bg-white/10"></div></li>
                     <li><button type="button" class="menu-item menu-item--secondary" data-target="about">About Me</button></li>
                     <li><button type="button" class="menu-item menu-item--secondary" data-target="contact">Resume & Contact</button></li>
@@ -837,16 +835,6 @@
             // Motion blur effect
             ctx.fillStyle = 'rgba(11, 13, 16, 0.4)';
             ctx.fillRect(0, 0, width, height);
-
-            // Optional: Draw a subtle grid or lines to enhance tech feel on canvas
-            ctx.strokeStyle = 'rgba(255, 140, 0, 0.02)';
-            ctx.lineWidth = 1;
-            ctx.beginPath();
-            for(let i=0; i<height; i+=50) {
-                ctx.moveTo(0, i);
-                ctx.lineTo(width, i);
-            }
-            ctx.stroke();
 
             particles.forEach(p => {
                 p.update();
