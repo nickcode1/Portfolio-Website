@@ -104,6 +104,19 @@
             font-size: clamp(1.5rem, 3.25vw, 2rem);
         }
 
+        .menu-item--link {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 0.75rem;
+        }
+
+        .menu-item--link svg {
+            flex: 0 0 auto;
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+
         .menu-item:hover, .menu-item.active, .menu-item:focus-visible {
             color: var(--bo2-orange);
             border-left-color: var(--bo2-orange);
@@ -370,7 +383,7 @@
                 
                     <li class="my-4"><div class="w-full h-px bg-white/10"></div></li>
                     <li><button type="button" class="menu-item menu-item--secondary" data-target="about">About Me</button></li>
-                    <li><button type="button" class="menu-item menu-item--secondary" data-target="contact">Resume & Contact</button></li>
+                    <li><button type="button" class="menu-item menu-item--secondary" data-menu-group="contact" aria-controls="secondaryMenu" aria-expanded="false">Resume & Contact</button></li>
                 </ul>
             </div>
             <ul id="secondaryMenu" class="menu-secondary flex flex-col gap-2" aria-label="Projects" hidden></ul>
@@ -528,7 +541,7 @@
             
             <a href="/resume.pdf" download class="tactical-box p-6 flex items-center justify-between group cursor-pointer hover:bg-white/5 transition-colors">
                 <div>
-                    <h3 class="text-3xl text-white uppercase tracking-wide group-hover:text-[var(--bo2-orange)] transition-colors">View Resume</h3>
+                    <h3 class="text-3xl text-white uppercase tracking-wide group-hover:text-[var(--bo2-orange)] transition-colors">Resume</h3>
                     <p class="font-mono text-sm text-gray-400 mt-1">Download PDF Document</p>
                 </div>
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-500 group-hover:text-[var(--bo2-orange)] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -606,9 +619,10 @@
         let isPanelOpen = false;
         let activeMenuGroup = null;
 
-        function setPanelOpen(isOpen) {
+        function setPanelOpen(isOpen, isWide = false) {
             dataPanel.classList.toggle('translate-x-full', !isOpen);
-            mainUi.classList.toggle('md:pr-[600px]', isOpen);
+            mainUi.classList.toggle('md:pr-[50vw]', isOpen && isWide);
+            mainUi.classList.toggle('md:pr-[600px]', isOpen && !isWide);
             mainUi.classList.toggle('opacity-30', isOpen);
             isPanelOpen = isOpen;
         }
@@ -635,9 +649,12 @@
                 content.appendChild(card.cloneNode(true));
             }
 
+            const isWidePanel = templateId === 'about' || templateId === 'contact';
+            dataPanel.classList.toggle('md:w-1/2', isWidePanel);
+            dataPanel.classList.toggle('md:w-[600px]', !isWidePanel);
             panelTitle.textContent = title;
             panelContentArea.replaceChildren(content);
-            setPanelOpen(true);
+            setPanelOpen(true, isWidePanel);
         }
 
         function setActiveMenuItem(item) {
@@ -698,6 +715,31 @@
                     submenuItem.appendChild(link);
                     secondaryMenu.appendChild(submenuItem);
                 });
+            } else if (groupId === 'contact') {
+                const cards = template.content.querySelectorAll('.tactical-box');
+                cards.forEach(card => {
+                    const sourceLink = card.matches('a') ? card : card.querySelector('a');
+                    const heading = sourceLink?.querySelector('h3');
+                    if (!sourceLink || !heading) {
+                        return;
+                    }
+
+                    const link = sourceLink.cloneNode(true);
+                    const icon = link.querySelector('svg');
+                    const label = document.createElement('span');
+                    const submenuItem = document.createElement('li');
+
+                    label.textContent = heading.textContent.trim();
+                    link.className = 'menu-item menu-item--secondary menu-item--link group';
+                    link.replaceChildren(label);
+                    if (icon) {
+                        icon.setAttribute('aria-hidden', 'true');
+                        link.appendChild(icon);
+                    }
+
+                    submenuItem.appendChild(link);
+                    secondaryMenu.appendChild(submenuItem);
+                });
             } else {
                 const cards = template.content.querySelectorAll('.tactical-box');
                 cards.forEach((card, index) => {
@@ -719,6 +761,9 @@
             activeMenuGroup = groupId;
             setActiveMenuItem(item);
             item.setAttribute('aria-expanded', 'true');
+            secondaryMenu.setAttribute('aria-label', groupId === 'robotics'
+                ? 'Projects'
+                : groupId === 'contact' ? 'Resume and contact links' : 'Research');
             secondaryMenu.hidden = false;
 
             if (window.matchMedia('(min-width: 641px)').matches) {
