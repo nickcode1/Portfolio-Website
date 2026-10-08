@@ -47,7 +47,7 @@
         }
 
         .vignette {
-            background: radial-gradient(circle at center, transparent 20%, rgba(0,0,0,0.9) 100%);
+            background: radial-gradient(circle at center, transparent 20%, rgba(0,0,0,0.55) 100%);
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
             pointer-events: none;
@@ -82,7 +82,7 @@
             line-height: 1;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            color: #a1a1aa;
+            color: #d4d4d8;
             border-left: 8px solid transparent;
             transition: color 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94),
                 padding-left 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94),
@@ -377,7 +377,7 @@
         </nav>
 
         <!-- Bottom HUD Elements -->
-        <footer class="w-full flex justify-between items-end mt-auto pointer-events-auto font-mono text-xs text-white/40">
+        <footer class="w-full flex justify-between items-end mt-auto pointer-events-auto font-mono text-xs text-white/60">
             <div>
                 <div>SYS.VER: 2.0.26</div>
                 <div>LOC: TORONTO, ON</div>
@@ -446,25 +446,13 @@
 
     <template id="tpl-teams">
         <div class="space-y-8 animate-fade-in">
+           
             <div class="tactical-box p-5">
                 <div class="flex justify-between items-start mb-2">
-                    <h3 class="text-2xl text-[var(--bo2-orange)] uppercase tracking-wide">UNB Electric Formula</h3>
-                    <span class="font-mono text-xs text-gray-500 mt-2">Drivetrain Lead</span>
+                    <h3 class="text-2xl text-[var(--bo2-orange)] uppercase tracking-wide">2026 International Conference on Vehicle Engineering and Intelligent Control. SAE.</h3>
+                    
                 </div>
-                <p class="font-sans text-gray-300 text-sm mb-4 leading-relaxed">Spearheaded the design and integration of the mechanical drivetrain for a high-performance electric racecar. Managed a sub-team, conducted FEA analysis on load-bearing components, and optimized power delivery from the motor to the wheels.</p>
-                <ul class="font-mono text-xs text-gray-400 space-y-1 list-disc list-inside">
-                    <li>Led design reviews and manufacturing processes.</li>
-                    <li>Reduced overall unsprung mass by 12%.</li>
-                    <li>Collaborated closely with electrical/controls teams.</li>
-                </ul>
-            </div>
-
-            <div class="tactical-box p-5">
-                <div class="flex justify-between items-start mb-2">
-                    <h3 class="text-2xl text-[var(--bo2-orange)] uppercase tracking-wide">SAE Technical Paper</h3>
-                    <span class="font-mono text-xs text-gray-500 mt-2">Co-Author</span>
-                </div>
-                <p class="font-sans text-gray-300 text-sm mb-4 leading-relaxed">Contributed to research and publication regarding "CurveGuard," an advanced predictive speed advisory system. The system leverages geospatial data and vehicle dynamics to improve safety on complex road geometries.</p>
+                <p class="font-sans text-gray-300 text-sm mb-4 leading-relaxed">Contributed to a research paper "CurveGuard," an advanced predictive speed advisory system. The system leverages geospatial data and vehicle dynamics to improve safety on for transport trucks. <br>Zhang, Q., Jiang, X., Harrison, N., Ali, S., Khirallah, Y., Lu, Y.* (2026, September). CurveGuard: A Physics-Informed Predictive Speed and Braking Advisory System for Heavy Trucks. 2026 International Conference on Vehicle Engineering and Intelligent Control (VEIC). SAE.</p>
                 <div class="flex gap-2">
                     <span class="text-xs font-mono bg-white/10 px-2 py-1 rounded text-gray-400">Research</span>
                     <span class="text-xs font-mono bg-white/10 px-2 py-1 rounded text-gray-400">Data Analysis</span>
@@ -538,7 +526,7 @@
     <template id="tpl-contact">
         <div class="space-y-8 animate-fade-in flex flex-col h-full justify-center">
             
-            <a href="#" class="tactical-box p-6 flex items-center justify-between group cursor-pointer hover:bg-white/5 transition-colors">
+            <a href="/resume.pdf" download class="tactical-box p-6 flex items-center justify-between group cursor-pointer hover:bg-white/5 transition-colors">
                 <div>
                     <h3 class="text-3xl text-white uppercase tracking-wide group-hover:text-[var(--bo2-orange)] transition-colors">View Resume</h3>
                     <p class="font-mono text-sm text-gray-400 mt-1">Download PDF Document</p>
@@ -548,23 +536,24 @@
                 </svg>
             </a>
 
-            <a href="#" class="tactical-box p-6 flex items-center justify-between group cursor-pointer hover:bg-white/5 transition-colors">
+            <a href="https://github.com/nickcode1" target="_blank" rel="noopener noreferrer" class="tactical-box p-6 flex items-center justify-between group cursor-pointer hover:bg-white/5 transition-colors">
                 <div>
                     <h3 class="text-3xl text-white uppercase tracking-wide group-hover:text-[var(--bo2-orange)] transition-colors">GitHub</h3>
                     <p class="font-mono text-sm text-gray-400 mt-1">Access Source Repositories</p>
                 </div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-500 group-hover:text-[var(--bo2-orange)] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-500 group-hover:text-[var(--bo2-orange)] transition-colors" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.083-.73.083-.73 1.205.085 1.84 1.237 1.84 1.237 1.07 1.834 2.807 1.304 3.492.997.108-.775.418-1.305.762-1.605-2.665-.3-5.467-1.334-5.467-5.931 0-1.31.468-2.381 1.236-3.221-.124-.303-.536-1.523.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.655 1.653.243 2.873.12 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.628-5.479 5.921.43.372.823 1.102.823 2.222 0 1.604-.015 2.896-.015 3.286 0 .322.216.694.825.576C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
                 </svg>
             </a>
 
-            <a href="#" class="tactical-box p-6 flex items-center justify-between group cursor-pointer hover:bg-white/5 transition-colors">
+            <a href="https://www.linkedin.com/in/nickharrison-/" target="_blank" rel="noopener noreferrer" class="tactical-box p-6 flex items-center justify-between group cursor-pointer hover:bg-white/5 transition-colors">
                 <div>
                     <h3 class="text-3xl text-white uppercase tracking-wide group-hover:text-[var(--bo2-orange)] transition-colors">LinkedIn</h3>
                     <p class="font-mono text-sm text-gray-400 mt-1">Professional Network</p>
                 </div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-500 group-hover:text-[var(--bo2-orange)] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-500 group-hover:text-[var(--bo2-orange)] transition-colors" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <circle cx="5.3" cy="5.4" r="1.8" />
+                    <path d="M3.5 9h3.6v11.45H3.5zM9.35 9h3.4v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35z" />
                 </svg>
             </a>
 
@@ -659,16 +648,16 @@
         }
 
         const projectPages = [
-            { title: 'Ball Sorting Robot', href: 'project-Ball-Sorter.html' },
             { title: 'Quadcopter Drone', href: 'project-quadcopter-drone.html' },
-            { title: 'Landing Gear Mechanism', href: 'project-landing-gear.html' },
-            { title: 'RC Plane with Flight Controller', href: 'project-RC Plane1.html' },
             { title: 'Autonomous Flappy Bird', href: 'project-flappyBirdAI.html' },
-            { title: 'Suspension Model', href: 'project-suspension-model.html' },
-            { title: 'Trading Simulator', href: 'project-trading-simulator.html' },
+            { title: 'Ball Sorting Robot', href: 'project-Ball-Sorter.html' },
+            { title: 'RC Plane with Flight Controller', href: 'project-RC Plane1.html' },
+            { title: 'SkySweep (Hackathon 2nd Place)', href: 'project-SkySweep.html' },
+            { title: 'Landing Gear Mechanism', href: 'project-landing-gear.html' },
+            // { title: 'Suspension Model', href: 'project-suspension-model.html' },
+            // { title: 'Trading Simulator', href: 'project-trading-simulator.html' },
             { title: 'Sim Cockpit', href: 'project-sim-cockpit.html' },
             { title: 'AI Meeting Minutes', href: 'project-meeting-minutes.html' },
-            { title: 'SkySweep', href: 'project-SkySweep.html' },
             { title: 'Audio Monitor Stands', href: 'project-Speaker Stands.html' }
         ];
 
