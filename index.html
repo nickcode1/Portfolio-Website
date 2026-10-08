@@ -29,23 +29,6 @@
             font-family: 'Share Tech Mono', monospace;
         }
 
-        .scanlines {
-            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.2));
-            background-size: 100% 4px;
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            pointer-events: none;
-            z-index: 10;
-        }
-
-        .noise {
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
-            pointer-events: none;
-            z-index: 11;
-        }
-
         .vignette {
             background: radial-gradient(circle at center, transparent 20%, rgba(0,0,0,0.55) 100%);
             position: absolute;
@@ -421,8 +404,6 @@
     </div>
 
     <!-- Background effects applied over everything except panel -->
-    <div class="noise pointer-events-none z-50 mix-blend-overlay opacity-20"></div>
-    <div class="scanlines pointer-events-none z-50"></div>
     <div class="vignette pointer-events-none z-50"></div>
 
     <!-- TEMPLATES FOR PANEL CONTENT -->
@@ -619,10 +600,11 @@
         let isPanelOpen = false;
         let activeMenuGroup = null;
 
-        function setPanelOpen(isOpen, isWide = false) {
+        function setPanelOpen(isOpen, panelSize = 'default') {
             dataPanel.classList.toggle('translate-x-full', !isOpen);
-            mainUi.classList.toggle('md:pr-[50vw]', isOpen && isWide);
-            mainUi.classList.toggle('md:pr-[600px]', isOpen && !isWide);
+            mainUi.classList.toggle('md:pr-[33.333333vw]', isOpen && panelSize === 'about');
+            mainUi.classList.toggle('md:pr-[50vw]', isOpen && panelSize === 'contact');
+            mainUi.classList.toggle('md:pr-[600px]', isOpen && panelSize === 'default');
             mainUi.classList.toggle('opacity-30', isOpen);
             isPanelOpen = isOpen;
         }
@@ -649,12 +631,14 @@
                 content.appendChild(card.cloneNode(true));
             }
 
-            const isWidePanel = templateId === 'about' || templateId === 'contact';
-            dataPanel.classList.toggle('md:w-1/2', isWidePanel);
-            dataPanel.classList.toggle('md:w-[600px]', !isWidePanel);
+            const isAboutPanel = templateId === 'about';
+            const isContactPanel = templateId === 'contact';
+            dataPanel.classList.toggle('md:w-1/3', isAboutPanel);
+            dataPanel.classList.toggle('md:w-1/2', isContactPanel);
+            dataPanel.classList.toggle('md:w-[600px]', !isAboutPanel && !isContactPanel);
             panelTitle.textContent = title;
             panelContentArea.replaceChildren(content);
-            setPanelOpen(true, isWidePanel);
+            setPanelOpen(true, isAboutPanel ? 'about' : isContactPanel ? 'contact' : 'default');
         }
 
         function setActiveMenuItem(item) {
