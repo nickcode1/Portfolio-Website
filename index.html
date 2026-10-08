@@ -161,6 +161,185 @@
             letter-spacing: 0.02em;
         }
 
+        .project-teaser {
+            position: absolute;
+            top: 50%;
+            right: clamp(2rem, 4vw, 4rem);
+            width: min(38vw, 40rem);
+            transform: translateY(-50%);
+            z-index: 21;
+            pointer-events: auto;
+            transition: opacity 0.25s ease, visibility 0.25s ease;
+        }
+
+        .project-navigation-open .project-teaser,
+        .portfolio-panel-open .project-teaser {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .project-teaser__topline,
+        .project-teaser__category,
+        .project-teaser__image-index,
+        .project-teaser__view,
+        .project-teaser__footer-label {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .project-teaser__topline,
+        .project-teaser__caption,
+        .project-teaser__footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .project-teaser__topline {
+            margin-bottom: 0.65rem;
+            color: rgba(212, 212, 216, 0.7);
+        }
+
+        .project-teaser__topline span:first-child,
+        .project-teaser__category {
+            color: var(--bo2-orange);
+        }
+
+        .project-teaser__media {
+            position: relative;
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 10;
+            overflow: hidden;
+            background: #08090b;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-left: 2px solid var(--bo2-orange);
+        }
+
+        .project-teaser__image {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            opacity: 1;
+            transition: opacity 0.2s ease;
+        }
+
+        .project-teaser__image.is-changing {
+            opacity: 0.25;
+        }
+
+        .project-teaser__image-index,
+        .project-teaser__view {
+            position: absolute;
+            padding: 0.45rem 0.6rem;
+            color: #fff;
+            background: rgba(5, 6, 8, 0.78);
+        }
+
+        .project-teaser__image-index {
+            top: 0.75rem;
+            left: 0.75rem;
+        }
+
+        .project-teaser__view {
+            right: 0.75rem;
+            bottom: 0.75rem;
+            color: var(--bo2-orange);
+        }
+
+        .project-teaser__caption {
+            gap: 1rem;
+            margin-top: 0.8rem;
+        }
+
+        .project-teaser__category {
+            margin: 0 0 0.15rem;
+        }
+
+        .project-teaser__title {
+            margin: 0;
+            color: #f4f4f5;
+            font-size: 2.25rem;
+            line-height: 0.95;
+            text-transform: uppercase;
+        }
+
+        .project-teaser__controls {
+            display: flex;
+            flex: 0 0 auto;
+            gap: 0.4rem;
+        }
+
+        .project-teaser__control {
+            display: grid;
+            place-items: center;
+            width: 2.5rem;
+            height: 2.5rem;
+            color: #d4d4d8;
+            background: rgba(15, 18, 22, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+        }
+
+        .project-teaser__control:hover,
+        .project-teaser__control:focus-visible {
+            color: var(--bo2-orange);
+            border-color: var(--bo2-orange);
+            background: rgba(255, 140, 0, 0.1);
+        }
+
+        .project-teaser__control svg {
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+
+        .project-teaser__footer {
+            gap: 1rem;
+            margin-top: 0.65rem;
+            color: rgba(212, 212, 216, 0.58);
+        }
+
+        .project-teaser__dots {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .project-teaser__dot {
+            width: 1rem;
+            height: 0.35rem;
+            padding: 0;
+            background: rgba(212, 212, 216, 0.35);
+            border: 0;
+            cursor: pointer;
+            transition: width 0.2s ease, background 0.2s ease;
+        }
+
+        .project-teaser__dot[aria-pressed="true"] {
+            width: 1.6rem;
+            background: var(--bo2-orange);
+        }
+
+        @media (max-width: 900px) {
+            .project-teaser {
+                display: none;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .project-teaser,
+            .project-teaser__image,
+            .project-teaser__control,
+            .project-teaser__dot {
+                transition: none;
+            }
+        }
+
         @media (max-width: 640px) {
             #mainUi {
                 padding: 1.5rem;
@@ -371,6 +550,36 @@
             </div>
             <ul id="secondaryMenu" class="menu-secondary flex flex-col gap-2" aria-label="Projects" hidden></ul>
         </nav>
+
+        <aside class="project-teaser" id="projectTeaser" aria-label="Featured projects">
+            <div class="project-teaser__topline">
+                <span>Project Spotlight</span>
+                <span id="projectSlideCount">01 / 09</span>
+            </div>
+            <a class="project-teaser__media" id="projectSlideLink" href="project-quadcopter-drone.html" aria-label="View Quadcopter Drone project">
+                <img class="project-teaser__image" id="projectSlideImage" src="images/Projects/Quadcopter/Top%20view.png" alt="Top-down CAD render of a quadcopter frame" fetchpriority="high">
+                <span class="project-teaser__image-index" id="projectSlideIndex">PROJECT 01</span>
+                <span class="project-teaser__view">View Project &rarr;</span>
+            </a>
+            <div class="project-teaser__caption">
+                <div>
+                    <p class="project-teaser__category" id="projectSlideCategory">Flight Systems</p>
+                    <h2 class="project-teaser__title" id="projectSlideTitle">Quadcopter Drone</h2>
+                </div>
+                <div class="project-teaser__controls" aria-label="Project slideshow controls">
+                    <button type="button" class="project-teaser__control" id="projectSlidePrevious" aria-label="Previous project" title="Previous project">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m15 18-6-6 6-6" /></svg>
+                    </button>
+                    <button type="button" class="project-teaser__control" id="projectSlideNext" aria-label="Next project" title="Next project">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+                    </button>
+                </div>
+            </div>
+            <div class="project-teaser__footer">
+                <span class="project-teaser__footer-label">Selected Work</span>
+                <div class="project-teaser__dots" id="projectSlideDots" role="group" aria-label="Choose a featured project"></div>
+            </div>
+        </aside>
 
         <!-- Bottom HUD Elements -->
         <footer class="w-full flex justify-between items-end mt-auto pointer-events-auto font-mono text-xs text-white/60">
@@ -599,13 +808,176 @@
         let isPanelOpen = false;
         let activeMenuGroup = null;
 
+        const projectTeaser = document.getElementById('projectTeaser');
+        const projectSlideImage = document.getElementById('projectSlideImage');
+        const projectSlideLink = document.getElementById('projectSlideLink');
+        const projectSlideTitle = document.getElementById('projectSlideTitle');
+        const projectSlideCategory = document.getElementById('projectSlideCategory');
+        const projectSlideCount = document.getElementById('projectSlideCount');
+        const projectSlideIndex = document.getElementById('projectSlideIndex');
+        const projectSlideDots = document.getElementById('projectSlideDots');
+        const featuredProjects = [
+            {
+                title: 'Quadcopter Drone',
+                category: 'Flight Systems',
+                image: 'images/Projects/Quadcopter/Top%20view.png',
+                alt: 'Top-down CAD render of a quadcopter frame',
+                href: 'project-quadcopter-drone.html'
+            },
+            {
+                title: 'SkySweep',
+                category: 'Autonomous Systems',
+                image: 'images/Projects/SKYSWEEP/Vehicle-mounted-Centauri-TriAD-counter-drone-system.jpg',
+                alt: 'Vehicle-mounted counter-drone system in a field',
+                href: 'project-SkySweep.html'
+            },
+            {
+                title: 'AI Meeting Minutes',
+                category: 'AI / Software',
+                image: 'images/Projects/AI%20Meet/HOME.png',
+                alt: 'MeetNote AI meeting-minutes application interface',
+                href: 'project-meeting-minutes.html'
+            },
+            {
+                title: 'Landing Gear Mechanism',
+                category: 'Mechanical Design',
+                image: 'images/Projects/Landing%20Gear/Ortho1.png',
+                alt: 'CAD render of a landing gear assembly',
+                href: 'project-landing-gear.html'
+            },
+            {
+                title: 'Autonomous Flappy Bird',
+                category: 'AI / Game Simulation',
+                image: 'images/Projects/Flappy/mygame.png',
+                alt: 'Autonomous Flappy Bird game simulation in progress',
+                href: 'project-flappyBirdAI.html'
+            },
+            {
+                title: 'Ball Sorting Robot',
+                category: 'Mobile Robotics',
+                image: 'images/Projects/Mechatronics%20Applications/Main%20Assembly%20v100%20side.png',
+                alt: 'CAD render of a mobile ball-sorting robot',
+                href: 'project-Ball-Sorter.html'
+            },
+            {
+                title: 'RC Plane with Flight Controller',
+                category: 'Flight Controls',
+                image: 'images/Projects/EFC/top%20view.png',
+                alt: 'Top view of an RC aircraft with flight controller',
+                href: 'project-RC Plane1.html'
+            },
+            {
+                title: 'Sim Cockpit',
+                category: 'Mechanical Design',
+                image: 'images/Projects/Sim%20Cockpit/render.png',
+                alt: 'Rendered wooden sim-racing cockpit assembly',
+                href: 'project-sim-cockpit.html'
+            },
+            {
+                title: 'Audio Monitor Stands',
+                category: 'Product Design',
+                image: 'images/Projects/Speaker%20Stands/Speaker%20Assembly%20Render.png',
+                alt: 'Rendered speaker monitor and stand assembly',
+                href: 'project-Speaker Stands.html'
+            }
+        ];
+        let activeProjectSlide = 0;
+        let projectSlideshowTimer = null;
+
+        function stopProjectSlideshow() {
+            window.clearInterval(projectSlideshowTimer);
+            projectSlideshowTimer = null;
+        }
+
+        function startProjectSlideshow() {
+            stopProjectSlideshow();
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches
+                || document.hidden
+                || document.body.classList.contains('project-navigation-open')
+                || document.body.classList.contains('portfolio-panel-open')
+                || projectTeaser.matches(':hover, :focus-within')) {
+                return;
+            }
+
+            projectSlideshowTimer = window.setInterval(() => {
+                showProjectSlide(activeProjectSlide + 1);
+            }, 6500);
+        }
+
+        function showProjectSlide(index) {
+            activeProjectSlide = (index + featuredProjects.length) % featuredProjects.length;
+            const project = featuredProjects[activeProjectSlide];
+            const formattedIndex = String(activeProjectSlide + 1).padStart(2, '0');
+
+            projectSlideImage.classList.add('is-changing');
+            projectSlideImage.onload = () => projectSlideImage.classList.remove('is-changing');
+            projectSlideImage.onerror = () => projectSlideImage.classList.remove('is-changing');
+            projectSlideImage.src = project.image;
+            projectSlideImage.alt = project.alt;
+            projectSlideLink.href = project.href;
+            projectSlideLink.setAttribute('aria-label', `View ${project.title} project`);
+            projectSlideTitle.textContent = project.title;
+            projectSlideCategory.textContent = project.category;
+            projectSlideCount.textContent = `${formattedIndex} / ${String(featuredProjects.length).padStart(2, '0')}`;
+            projectSlideIndex.textContent = `PROJECT ${formattedIndex}`;
+
+            projectSlideDots.querySelectorAll('button').forEach((dot, dotIndex) => {
+                dot.setAttribute('aria-pressed', String(dotIndex === activeProjectSlide));
+            });
+        }
+
+        featuredProjects.forEach((project, index) => {
+            const dot = document.createElement('button');
+            dot.type = 'button';
+            dot.className = 'project-teaser__dot';
+            dot.setAttribute('aria-label', `Show ${project.title}`);
+            dot.setAttribute('aria-pressed', 'false');
+            dot.addEventListener('click', () => {
+                showProjectSlide(index);
+                startProjectSlideshow();
+            });
+            projectSlideDots.appendChild(dot);
+        });
+
+        document.getElementById('projectSlidePrevious').addEventListener('click', () => {
+            showProjectSlide(activeProjectSlide - 1);
+            startProjectSlideshow();
+        });
+        document.getElementById('projectSlideNext').addEventListener('click', () => {
+            showProjectSlide(activeProjectSlide + 1);
+            startProjectSlideshow();
+        });
+        projectTeaser.addEventListener('mouseenter', stopProjectSlideshow);
+        projectTeaser.addEventListener('mouseleave', startProjectSlideshow);
+        projectTeaser.addEventListener('focusin', stopProjectSlideshow);
+        projectTeaser.addEventListener('focusout', event => {
+            if (!projectTeaser.contains(event.relatedTarget)) {
+                startProjectSlideshow();
+            }
+        });
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                stopProjectSlideshow();
+            } else {
+                startProjectSlideshow();
+            }
+        });
+        showProjectSlide(0);
+        startProjectSlideshow();
+
         function setPanelOpen(isOpen, panelSize = 'default') {
             dataPanel.classList.toggle('translate-x-full', !isOpen);
+            document.body.classList.toggle('portfolio-panel-open', isOpen);
             mainUi.classList.toggle('md:pr-[33.333333vw]', isOpen && panelSize === 'about');
             mainUi.classList.toggle('md:pr-[50vw]', isOpen && panelSize === 'contact');
             mainUi.classList.toggle('md:pr-[600px]', isOpen && panelSize === 'default');
             mainUi.classList.toggle('opacity-30', isOpen);
             isPanelOpen = isOpen;
+            if (isOpen) {
+                stopProjectSlideshow();
+            } else {
+                startProjectSlideshow();
+            }
         }
 
         function showPanel(title, templateId, cardIndex = null) {
@@ -678,6 +1050,8 @@
                 activeMenuGroup = null;
                 secondaryMenu.hidden = true;
                 item.classList.remove('active');
+                document.body.classList.remove('project-navigation-open');
+                startProjectSlideshow();
                 return;
             }
 
@@ -742,6 +1116,8 @@
             }
 
             activeMenuGroup = groupId;
+            document.body.classList.add('project-navigation-open');
+            stopProjectSlideshow();
             setActiveMenuItem(item);
             item.setAttribute('aria-expanded', 'true');
             secondaryMenu.setAttribute('aria-label', groupId === 'robotics'
@@ -774,6 +1150,7 @@
             }
 
             activeMenuGroup = null;
+            document.body.classList.remove('project-navigation-open');
             secondaryMenu.hidden = true;
             secondaryMenu.replaceChildren();
             mainMenu.querySelectorAll('[data-menu-group]').forEach(groupButton => {
