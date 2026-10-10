@@ -37,24 +37,6 @@
             z-index: 12;
         }
 
-        .ambient-glow {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 100vw;
-            height: 100vw;
-            transform: translate(-50%, -50%);
-            background: radial-gradient(circle, rgba(255, 140, 0, 0.05) 0%, transparent 70%);
-            pointer-events: none;
-            z-index: 1;
-            animation: pulseGlow 5s infinite alternate ease-in-out;
-        }
-
-        @keyframes pulseGlow {
-            0% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
-            100% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
-        }
-
         .menu-item {
             position: relative;
             display: block;
@@ -516,9 +498,6 @@
     </style>
 </head>
 <body class="relative w-full h-screen flex">
-
-    <canvas id="embersCanvas" class="absolute top-0 left-0 w-full h-full z-0"></canvas>
-    <div class="ambient-glow"></div>
     
     <!-- UI Container -->
     <div class="relative z-20 w-full h-full flex flex-col p-8 md:p-16 pointer-events-none transition-all duration-500" id="mainUi">
@@ -728,10 +707,11 @@
     <template id="tpl-contact">
         <div class="space-y-8 animate-fade-in flex flex-col h-full justify-center">
             
-            <a href="/resume.pdf" download class="tactical-box p-6 flex items-center justify-between group cursor-pointer hover:bg-white/5 transition-colors">
+            <a id="resumeLink" href="/resume.pdf" download class="tactical-box p-6 flex items-center justify-between group cursor-pointer hover:bg-white/5 transition-colors">
                 <div>
                     <h3 class="text-3xl text-white uppercase tracking-wide group-hover:text-[var(--bo2-orange)] transition-colors">Resume</h3>
                     <p class="font-mono text-sm text-gray-400 mt-1">Download PDF Document</p>
+                    <p id="resumeStatus" class="font-mono text-sm text-red-400 mt-2 hidden">No resume file attached.</p>
                 </div>
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-500 group-hover:text-[var(--bo2-orange)] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
@@ -1196,80 +1176,28 @@
             if (audioCtx.state === 'suspended') audioCtx.resume();
         }, { once: true });
 
+        const resumeLink = document.getElementById('resumeLink');
+        const resumeStatus = document.getElementById('resumeStatus');
 
-        // --- STREAMING_CHUNK:Setting up canvas particle system... ---
-        const canvas = document.getElementById('embersCanvas');
-        const ctx = canvas.getContext('2d');
-        
-        let width, height;
-        let particles = [];
+        if (resumeLink && resumeStatus) {
+            resumeLink.addEventListener('click', async (event) => {
+                const href = resumeLink.getAttribute('href');
 
-        function initCanvas() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-        }
-
-        window.addEventListener('resize', initCanvas);
-        initCanvas();
-
-        class Particle {
-            constructor() {
-                this.reset();
-                this.y = Math.random() * height; 
-            }
-
-            reset() {
-                this.x = Math.random() * width;
-                this.y = height + 10;
-                this.size = Math.random() * 2.5 + 0.5;
-                this.speedY = (Math.random() * 1.5 + 0.5) * -1; // Drift up
-                this.speedX = (Math.random() - 0.5) * 1; // Drift side
-                this.life = Math.random() * 0.5 + 0.5; // Opacity
-                this.decay = Math.random() * 0.005 + 0.002;
-                
-                // Color variation (orange to red/yellow)
-                const hue = Math.floor(Math.random() * 30 + 15); 
-                this.color = `hsla(${hue}, 100%, 60%, `; 
-            }
-
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                this.life -= this.decay;
-                this.speedX += (Math.random() - 0.5) * 0.1;
-
-                if (this.life <= 0 || this.y < -10) {
-                    this.reset();
+                try {
+                    const response = await fetch(href, { method: 'HEAD' });
+                    if (!response.ok) {
+                        event.preventDefault();
+                        resumeStatus.classList.remove('hidden');
+                        resumeStatus.textContent = 'No resume file attached.';
+                    }
+                } catch (error) {
+                    event.preventDefault();
+                    resumeStatus.classList.remove('hidden');
+                    resumeStatus.textContent = 'No resume file attached.';
                 }
-            }
-
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fillStyle = this.color + Math.max(0, this.life) + ')';
-                ctx.fill();
-            }
-        }
-
-        const particleCount = 120;
-        for (let i = 0; i < particleCount; i++) {
-            particles.push(new Particle());
-        }
-
-        function animate() {
-            // Motion blur effect
-            ctx.fillStyle = 'rgba(11, 13, 16, 0.4)';
-            ctx.fillRect(0, 0, width, height);
-
-            particles.forEach(p => {
-                p.update();
-                p.draw();
             });
-
-            requestAnimationFrame(animate);
         }
 
-        window.onload = animate;
     </script>
 </body>
 </html>
