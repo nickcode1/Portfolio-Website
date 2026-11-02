@@ -1,0 +1,546 @@
+/* ---------- Phosphor themes ---------- */
+
+:root {
+    --fg-rgb: 26 255 128;
+    --bg-center: #0b1d11;
+    --bg-edge: #030a05;
+    --ink: #03140a;
+    --cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpolygon points='2,2 2,19 6.5,15 9.5,22 12.5,20.8 9.6,14 15.5,14' fill='%231aff80' stroke='%23020a05' stroke-width='1.2' stroke-linejoin='round'/%3E%3C/svg%3E") 2 2, default;
+
+    --fg: rgb(var(--fg-rgb));
+    --fg-dim: rgb(var(--fg-rgb) / 0.62);
+    --glow: 0 0 1px rgb(var(--fg-rgb) / 0.85), 0 0 6px rgb(var(--fg-rgb) / 0.4);
+    --line: 1.4em;
+
+    color-scheme: dark;
+}
+
+:root[data-phosphor="amber"] {
+    --fg-rgb: 255 182 65;
+    --bg-center: #1c1206;
+    --bg-edge: #090502;
+    --ink: #160d02;
+    --cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpolygon points='2,2 2,19 6.5,15 9.5,22 12.5,20.8 9.6,14 15.5,14' fill='%23ffb641' stroke='%23120a02' stroke-width='1.2' stroke-linejoin='round'/%3E%3C/svg%3E") 2 2, default;
+}
+
+:root[data-phosphor="white"] {
+    --fg-rgb: 222 238 228;
+    --bg-center: #141816;
+    --bg-edge: #060807;
+    --ink: #0a0c0b;
+    --cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpolygon points='2,2 2,19 6.5,15 9.5,22 12.5,20.8 9.6,14 15.5,14' fill='%23deeee4' stroke='%23050605' stroke-width='1.2' stroke-linejoin='round'/%3E%3C/svg%3E") 2 2, default;
+}
+
+/* ---------- Room and monitor ---------- */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    overflow: hidden;
+    background: #080907;
+    font-family: 'Share Tech Mono', ui-monospace, Consolas, 'Courier New', monospace;
+    cursor: var(--cursor);
+}
+
+a,
+button,
+video {
+    cursor: inherit;
+}
+
+.room {
+    display: grid;
+    place-items: center;
+    height: 100vh;
+    height: 100dvh;
+    padding: 1.5rem;
+}
+
+.monitor {
+    position: relative;
+    width: min(100%, calc((100dvh - 3rem) * 4 / 3));
+    height: 100%;
+    padding: 1.75rem 1.75rem 2.75rem;
+    border-radius: 2.25rem;
+    background: linear-gradient(180deg, #252722 0%, #1b1c19 45%, #131411 100%);
+    box-shadow:
+        inset 0 1px 0 rgb(255 255 255 / 0.06),
+        inset 0 -3px 8px rgb(0 0 0 / 0.5),
+        0 0 0 1px #040404,
+        0 40px 90px -30px rgb(0 0 0 / 0.9);
+}
+
+.screen {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 24px;
+    background: radial-gradient(ellipse at 50% 45%, var(--bg-center) 0%, var(--bg-edge) 100%);
+    box-shadow:
+        0 0 0 3px #0b0c0a,
+        0 0 0 4px #2b2d28,
+        0 0 36px rgb(var(--fg-rgb) / 0.07);
+    color: var(--fg);
+    container-type: inline-size;
+}
+
+.hints {
+    position: absolute;
+    right: 2.25rem;
+    bottom: 0.85rem;
+    left: 2.25rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 2.5ch;
+    margin: 0;
+    color: #81847b;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.hints b {
+    color: #b3b6ac;
+    font-weight: normal;
+}
+
+/* ---------- Screen layers ---------- */
+
+.scroller {
+    position: absolute;
+    inset: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 2em 2.4em 2.2em;
+    font-size: 18px;
+    font-size: clamp(15px, 2.05cqi, 24px);
+    line-height: 1.4;
+    text-shadow: var(--glow);
+    scrollbar-width: thin;
+    scrollbar-color: rgb(var(--fg-rgb) / 0.4) transparent;
+    animation: flicker 7s infinite;
+}
+
+.scroller::-webkit-scrollbar {
+    width: 6px;
+}
+
+.scroller::-webkit-scrollbar-thumb {
+    background: rgb(var(--fg-rgb) / 0.4);
+}
+
+.fx {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.fx-scan {
+    background: repeating-linear-gradient(to bottom, transparent 0 2px, rgb(0 0 0 / 0.2) 2px 3px);
+}
+
+.fx-roll {
+    bottom: auto;
+    height: 18%;
+    background: linear-gradient(to bottom, transparent, rgb(var(--fg-rgb) / 0.035) 70%, transparent);
+    animation: roll 9s linear infinite;
+}
+
+.fx-vignette {
+    border-radius: inherit;
+    background: radial-gradient(ellipse 115% 100% at 50% 50%, transparent 60%, rgb(0 0 0 / 0.5) 100%);
+    box-shadow: inset 0 0 70px rgb(0 0 0 / 0.6), inset 0 0 10px rgb(0 0 0 / 0.85);
+}
+
+@keyframes flicker {
+    0%, 100% { opacity: 1; }
+    37% { opacity: 1; }
+    38% { opacity: 0.985; }
+    39% { opacity: 1; }
+    71% { opacity: 0.99; }
+    72% { opacity: 1; }
+}
+
+@keyframes roll {
+    from { transform: translateY(-100%); }
+    to { transform: translateY(560%); }
+}
+
+/* ---------- Text ---------- */
+
+:where(.scroller) :where(p, h1, h2, h3, figure, ul, ol, dl) {
+    margin: 0;
+}
+
+.scroller h1,
+.scroller h2,
+.scroller h3 {
+    font-size: inherit;
+    font-weight: normal;
+    text-transform: uppercase;
+}
+
+.scroller a {
+    color: inherit;
+}
+
+::selection {
+    background: var(--fg);
+    color: var(--ink);
+    text-shadow: none;
+}
+
+.term-header {
+    text-transform: uppercase;
+}
+
+.t-rule {
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.t-view {
+    margin-top: var(--line);
+}
+
+/* One blank terminal line between blocks */
+.t-view > * + * {
+    margin-top: var(--line);
+}
+
+.t-view > .t-h + *,
+.t-view > .t-sub + * {
+    margin-top: 0;
+}
+
+.t-view > .t-h + .t-sub {
+    margin-top: var(--line);
+}
+
+.t-sub {
+    color: var(--fg-dim);
+}
+
+.t-upper {
+    text-transform: uppercase;
+}
+
+.t-dim {
+    color: var(--fg-dim);
+}
+
+.t-status {
+    text-transform: uppercase;
+}
+
+/* ---------- Selectable items ---------- */
+
+.t-item {
+    display: block;
+    width: calc(100% + 1ch);
+    margin-left: -0.5ch;
+    padding: 0 0.5ch;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    line-height: inherit;
+    text-align: left;
+    text-decoration: none;
+    text-shadow: inherit;
+    scroll-margin-block: 1.5em;
+}
+
+.t-item:focus {
+    outline: none;
+}
+
+.t-item.is-selected {
+    background: var(--fg);
+    color: var(--ink);
+    text-shadow: none;
+    box-shadow: 0 0 10px rgb(var(--fg-rgb) / 0.45);
+}
+
+/* ---------- Records ---------- */
+
+.t-meta {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr);
+    column-gap: 2ch;
+    text-transform: uppercase;
+}
+
+.t-meta > div {
+    display: contents;
+}
+
+.t-meta dt {
+    color: var(--fg-dim);
+}
+
+.t-meta dd {
+    margin: 0;
+}
+
+.t-list {
+    padding: 0;
+    list-style: none;
+}
+
+.t-list li {
+    padding-left: 2ch;
+    text-indent: -2ch;
+}
+
+ol.t-list li {
+    padding-left: 3ch;
+    text-indent: -3ch;
+}
+
+.t-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.t-table th,
+.t-table td {
+    padding: 0 2ch 0 0;
+    font-weight: normal;
+    text-align: left;
+    vertical-align: top;
+}
+
+.t-table thead th {
+    color: var(--fg-dim);
+    text-transform: uppercase;
+}
+
+.t-table td:not(:first-child) {
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.t-dossier {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 1em 3ch;
+    align-items: start;
+}
+
+.t-portrait {
+    width: 8.5em;
+}
+
+.t-portrait .t-img {
+    width: 100%;
+    max-height: none;
+    aspect-ratio: 1;
+    object-fit: cover;
+}
+
+/* ---------- Images and recordings ---------- */
+
+.t-media {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 19em), 1fr));
+    gap: var(--line) 3ch;
+}
+
+.t-media.is-single {
+    grid-template-columns: minmax(0, 1fr);
+}
+
+.t-fig {
+    min-width: 0;
+}
+
+.t-fig figcaption {
+    color: var(--fg-dim);
+    text-transform: uppercase;
+}
+
+.t-frame {
+    display: flex;
+}
+
+.t-img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    max-height: 22em;
+    filter: url(#tint) contrast(1.06);
+}
+
+.t-img.tone-invert {
+    filter: url(#tint-invert);
+}
+
+.t-img.tone-dim {
+    filter: url(#tint) brightness(0.6) contrast(1.15);
+}
+
+.t-media:not(.is-single) .t-img {
+    width: 100%;
+    max-height: none;
+    aspect-ratio: 4 / 3;
+    object-fit: contain;
+    object-position: left center;
+}
+
+video.t-img {
+    width: 100%;
+    max-width: 40em;
+    aspect-ratio: 16 / 9;
+    object-fit: contain;
+    background: rgb(0 0 0 / 0.35);
+}
+
+.is-scanning {
+    animation: scan 0.45s steps(12, end) both;
+}
+
+@keyframes scan {
+    from { clip-path: inset(0 0 100% 0); }
+    to { clip-path: inset(0 0 0 0); }
+}
+
+/* ---------- Typewriter and prompt ---------- */
+
+/* Elements the typewriter has not reached yet */
+.tw {
+    display: none !important;
+}
+
+.prompt {
+    margin-top: var(--line);
+}
+
+.cursor,
+.caret {
+    display: inline-block;
+    width: 1ch;
+    height: 1.1em;
+    margin-left: 0.1ch;
+    vertical-align: -0.2em;
+    background: currentColor;
+    box-shadow: 0 0 6px rgb(var(--fg-rgb) / 0.5);
+}
+
+.t-item .caret {
+    box-shadow: none;
+}
+
+.cursor {
+    animation: blink 1.06s steps(1) infinite;
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+.filters {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+/* ---------- Small screens ---------- */
+
+@media (max-width: 640px) {
+    .room {
+        padding: 0;
+    }
+
+    .monitor {
+        width: 100%;
+        padding: 0;
+        border-radius: 0;
+        background: none;
+        box-shadow: none;
+    }
+
+    .screen {
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .hints {
+        display: none;
+    }
+
+    .scroller {
+        padding: 1.25rem 1rem 1.5rem;
+        font-size: 15px;
+    }
+
+    .t-dossier {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .t-table thead {
+        display: none;
+    }
+
+    .t-table tr {
+        display: block;
+    }
+
+    .t-table tr + tr {
+        margin-top: var(--line);
+    }
+
+    .t-table td {
+        display: inline-block;
+        padding: 0 3ch 0 0;
+    }
+
+    .t-table td:first-child {
+        display: block;
+        padding: 0;
+    }
+
+    .t-table td:not(:first-child)::before {
+        content: attr(data-label) ": ";
+        color: var(--fg-dim);
+    }
+}
+
+@media (max-height: 520px) and (min-width: 641px) {
+    .room {
+        padding: 0.5rem;
+    }
+
+    .monitor {
+        width: min(100%, calc((100dvh - 1rem) * 16 / 9));
+        padding: 0.75rem 0.75rem 1.75rem;
+        border-radius: 1.25rem;
+    }
+
+    .hints {
+        bottom: 0.3rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .scroller,
+    .cursor,
+    .is-scanning {
+        animation: none;
+    }
+
+    .fx-roll {
+        display: none;
+    }
+}
