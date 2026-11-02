@@ -29,7 +29,7 @@ window.PORTFOLIO = {
     },
 
     personnel: {
-        portrait: 'images/profile_trans_headshot.png',
+        portrait: 'images/person.jpg',
         meta: [
             ['Name', 'Nicholas Harrison'],
             ['Program', 'MEng, Robotics'],

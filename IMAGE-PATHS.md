@@ -57,7 +57,7 @@ your-portfolio/
 ## Where Each Image Appears
 
 ### index.html
-- `images/profile.jpg` → About section (your photo)
+- `images/person.png` → About section (your photo)
 - `images/projects/ai-platform-thumb.jpg` → Project card 1
 - `images/projects/defi-dashboard-thumb.jpg` → Project card 2
 - `images/projects/creative-studio-thumb.jpg` → Project card 3
