@@ -18,9 +18,8 @@
 window.PORTFOLIO = {
     owner: {
         name: 'Nicholas Harrison',
-        lines: [
-            'MEng Robotics - University of Toronto',
-            'Status: Seeking Summer 2027 Internship'
+        lines: ["",""
+            
         ],
         email: 'n.harrison@mail.utoronto.ca',
         github: 'https://github.com/nickcode1',
