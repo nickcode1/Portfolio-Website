@@ -155,7 +155,7 @@
         const tone = item.tone ? ` tone-${item.tone}` : '';
         if (item.video) {
             return `<figure class="t-fig">`
-                + `<div class="t-frame"><video class="t-img${tone}" src="${esc(encodeURI(item.video))}#t=0.1" preload="metadata" muted loop playsinline aria-label="${esc(item.caption)}"></video></div>`
+                + `<div class="t-frame"><video class="t-img${tone}" src="${esc(encodeURI(item.video))}#t=0.1" preload="metadata"${reduceMotion ? '' : ' autoplay'} muted loop playsinline aria-label="${esc(item.caption)}"></video></div>`
                 + `<figcaption>${esc(item.caption)}</figcaption>`
                 + actionItem('Play Recording', 'play')
                 + `</figure>`;
@@ -563,9 +563,6 @@
         if (!video) return;
         Sound.enter();
         if (video.paused) {
-            view.querySelectorAll('video').forEach(v => {
-                if (v !== video) v.pause();
-            });
             const playing = video.play();
             if (playing) playing.catch(() => {});
         } else {
