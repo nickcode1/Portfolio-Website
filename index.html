@@ -71,6 +71,23 @@
             </feComponentTransfer>
             <feColorMatrix class="tint-matrix" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"/>
         </filter>
+        <!-- Desktop variants: same mapping, but let some of the original colour through -->
+        <filter id="tint-soft" color-interpolation-filters="sRGB">
+            <feComponentTransfer>
+                <feFuncR type="gamma" exponent="0.7"/>
+                <feFuncG type="gamma" exponent="0.7"/>
+                <feFuncB type="gamma" exponent="0.7"/>
+            </feComponentTransfer>
+            <feColorMatrix class="tint-matrix-soft" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"/>
+        </filter>
+        <filter id="tint-invert-soft" color-interpolation-filters="sRGB">
+            <feComponentTransfer>
+                <feFuncR type="table" tableValues="1 0"/>
+                <feFuncG type="table" tableValues="1 0"/>
+                <feFuncB type="table" tableValues="1 0"/>
+            </feComponentTransfer>
+            <feColorMatrix class="tint-matrix-soft" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"/>
+        </filter>
     </svg>
 
     <script src="content.js"></script>

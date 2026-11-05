@@ -11,6 +11,8 @@
     const prompt = document.getElementById('prompt');
     const promptText = document.getElementById('prompt-text');
     const tintMatrices = document.querySelectorAll('.tint-matrix');
+    const tintMatricesSoft = document.querySelectorAll('.tint-matrix-soft');
+    const TINT_SOFT_STRENGTH = 0.5; // desktop images/videos: 20% less tint
 
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -44,9 +46,14 @@
         root.dataset.phosphor = settings.phosphor;
         const rgb = getComputedStyle(root).getPropertyValue('--fg-rgb').trim().split(/\s+/).map(v => Number(v) / 255);
         const luma = [0.2126, 0.7152, 0.0722];
-        const row = channel => luma.map(weight => (weight * channel * 0.92).toFixed(4)).join(' ') + ' 0 0';
-        const values = rgb.map(row).concat('0 0 0 1 0').join('  ');
-        tintMatrices.forEach(matrix => matrix.setAttribute('values', values));
+        // strength 1 = full phosphor tint; lower values mix the original colour back in.
+        const matrix = strength => rgb.map((channel, i) =>
+            luma.map((weight, j) => (strength * weight * channel * 0.92 + (i === j ? 1 - strength : 0)).toFixed(4)).join(' ') + ' 0 0'
+        ).concat('0 0 0 1 0').join('  ');
+        const full = matrix(1);
+        const soft = matrix(TINT_SOFT_STRENGTH);
+        tintMatrices.forEach(m => m.setAttribute('values', full));
+        tintMatricesSoft.forEach(m => m.setAttribute('values', soft));
     }
 
     // --- Sound (synthesised; no audio files) ---

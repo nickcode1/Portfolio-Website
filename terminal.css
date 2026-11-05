@@ -390,6 +390,21 @@ ol.t-list li {
     filter: url(#tint) brightness(0.6) contrast(1.15);
 }
 
+/* Desktop: lighter tint so project media is easier to make out */
+@media (min-width: 641px) {
+    .t-img {
+        filter: url(#tint-soft) contrast(1.06);
+    }
+
+    .t-img.tone-invert {
+        filter: url(#tint-invert-soft);
+    }
+
+    .t-img.tone-dim {
+        filter: url(#tint-soft) brightness(0.6) contrast(1.15);
+    }
+}
+
 .t-media:not(.is-single) .t-img {
     width: 100%;
     max-height: none;
