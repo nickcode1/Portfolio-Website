@@ -65,7 +65,7 @@ window.PORTFOLIO = {
             ],
             stack: ['SolidWorks', 'C++', 'PID Control', 'ESP32'],
             body: [
-                { media: [{ video: 'Videos/Timeline 1.mp4', caption: 'Flight footage' }] },
+                { media: [{ video: 'Videos/Timeline 1.mp4'}] },
                 { p: 'This project is a fully custom-built quadcopter, from the flight controller firmware up. It runs on an ESP32 handling gamepad input via Bluepad32 and motor output through ESP32Servo, with a custom driveMotors() function blending per-motor speeds for roll, pitch, and yaw. Orientation sensing comes from an MPU6500 IMU, and the build uses 40A brushless ESCs driving A2212/10T 1400KV motors off a 3S LiPo.' },
                 { p: 'Along the way I\'ve debugged everything from IMU axis misalignment causing takeoff tipping, to a faulty ESC unit, to voltage-related low-battery cutoffs, and various other embedded systems issues.' },
                 { media: [
