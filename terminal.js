@@ -153,16 +153,17 @@
 
     function figure(item) {
         const tone = item.tone ? ` tone-${item.tone}` : '';
+        const caption = item.caption ? `<figcaption>${esc(item.caption)}</figcaption>` : '';
         if (item.video) {
             return `<figure class="t-fig">`
-                + `<div class="t-frame"><video class="t-img${tone}" src="${esc(encodeURI(item.video))}#t=0.1" preload="metadata"${reduceMotion ? '' : ' autoplay'} muted loop playsinline aria-label="${esc(item.caption)}"></video></div>`
-                + `<figcaption>${esc(item.caption)}</figcaption>`
+                + `<div class="t-frame"><video class="t-img${tone}" src="${esc(encodeURI(item.video))}#t=0.1" preload="metadata"${reduceMotion ? '' : ' autoplay'} muted loop playsinline${item.caption ? ` aria-label="${esc(item.caption)}"` : ''}></video></div>`
+                + caption
                 + actionItem('Play Recording', 'play')
                 + `</figure>`;
         }
         return `<figure class="t-fig">`
-            + `<div class="t-frame"><img class="t-img${tone}" src="${esc(encodeURI(item.image))}" alt="${esc(item.alt || item.caption)}" decoding="async"></div>`
-            + `<figcaption>${esc(item.caption)}</figcaption>`
+            + `<div class="t-frame"><img class="t-img${tone}" src="${esc(encodeURI(item.image))}" alt="${esc(item.alt || item.caption || '')}" decoding="async"></div>`
+            + caption
             + `</figure>`;
     }
 
