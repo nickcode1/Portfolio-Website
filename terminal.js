@@ -12,7 +12,7 @@
     const promptText = document.getElementById('prompt-text');
     const tintMatrices = document.querySelectorAll('.tint-matrix');
     const tintMatricesSoft = document.querySelectorAll('.tint-matrix-soft');
-    const TINT_SOFT_STRENGTH = 0.5; // desktop images/videos: 20% less tint
+    const TINT_SOFT_STRENGTH = 0.3; // desktop images/videos: 20% less tint
 
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 

@@ -128,7 +128,6 @@ window.PORTFOLIO = {
             stack: ['Autodesk CAD', 'C Programming', 'Embedded', 'Inverse Kinematics', 'RC'],
             body: [
                 { media: [{ image: 'images/Projects/Mechatronics Applications/Main Assembly v100 side.png', caption: 'Main assembly, side view' }] },
-                { p: 'Mechatronics Applications was a project-based course that concluded with a class competition in which teams of two competed to collect and store the most balls.' },
                 { media: [
                     { image: 'images/Projects/Mechatronics Applications/Container Collector Assembly MKIII v61.png', caption: 'Container collector assembly MKIII' },
                     { image: 'images/Projects/Mechatronics Applications/Container Collector Prototype .png', caption: 'Container collector prototype' },
@@ -151,7 +150,6 @@ window.PORTFOLIO = {
             body: [
                 { media: [{ image: 'images/Projects/EFC/top view.png', caption: 'Top view' }] },
                 { h: 'The Challenge' },
-                { p: 'For my technical elective, ME5953 Embedded Flight Control Systems, we were tasked with designing and building a wing as part of a model plane assembly.' },
                 { p: 'The tasks of the project were as follows:' },
                 { list: [
                     'Using airfoil data, determine a suitable airfoil shape',
