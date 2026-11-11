@@ -370,6 +370,16 @@ ol.t-list li {
     text-transform: uppercase;
 }
 
+/* Gallery media is centered in its cell, so its caption and controls follow */
+.t-media:not(.is-single) figcaption {
+    text-align: center;
+}
+
+.t-media:not(.is-single) .t-fig .t-item {
+    width: fit-content;
+    margin-inline: auto;
+}
+
 .t-frame {
     display: flex;
 }
