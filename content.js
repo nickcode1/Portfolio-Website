@@ -121,7 +121,6 @@ window.PORTFOLIO = {
             label: 'Ball Sorting Robot',
             title: 'Ball Collecting Robot',
             meta: [
-                ['Course', 'ME 4683'],
                 ['Date', 'Fall 2024'],
                 ['Duration', '3 Months'],
                 ['Status', 'Complete']
@@ -144,7 +143,6 @@ window.PORTFOLIO = {
             id: 'fixed-wing',
             label: 'Fixed Wing Drone',
             meta: [
-                ['Course', 'ME 5953'],
                 ['Date', 'Fall 2025'],
                 ['Duration', '3 Months'],
                 ['Status', 'Complete']
@@ -257,7 +255,6 @@ window.PORTFOLIO = {
             id: 'landing-gear',
             label: 'Landing Gear Mechanism',
             meta: [
-                ['Course', 'ME 2145'],
                 ['Date', 'Winter 2023'],
                 ['Duration', '3 Months'],
                 ['Status', 'Complete']
