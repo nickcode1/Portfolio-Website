@@ -410,7 +410,7 @@ ol.t-list li {
     max-height: none;
     aspect-ratio: 4 / 3;
     object-fit: contain;
-    object-position: left center;
+    object-position: center;
 }
 
 video.t-img {
@@ -422,10 +422,9 @@ video.t-img {
 }
 
 /* In a gallery the cell is a fixed 4:3 box; without a backdrop, portrait
-   recordings sit centered in the cell instead of showing an empty frame */
+   recordings sit centered in the cell like the images instead of showing an empty frame */
 .t-media:not(.is-single) video.t-img {
     background: none;
-    object-position: center;
 }
 
 .is-scanning {
